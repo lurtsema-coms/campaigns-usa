@@ -1,121 +1,526 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html class="scroll-smooth" lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        @hasSection('title')
+            <title>@yield('title') - {{ config('app.name') }}</title>
+        @else
+            <title>{{ config('app.name') }}</title>
+        @endif
 
-        <title>Laravel</title>
+        <!-- Favicon -->
+		<link rel="shortcut icon" href="{{ url(asset('favicon.ico')) }}">
+        {{-- Animate Sroll Libray --}}
+        <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 
         <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+        <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
 
-        <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+        @livewireStyles
+        @livewireScripts
+
+        <!-- CSRF Token -->
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+
+        <style>
+            .u-bg-fixed{
+                background: linear-gradient(to right, #152034, #0B0029);
+            }
+
+            .u-bg-contact{
+                background: linear-gradient(to right, #0B0029, #152034);
+            }
+
+            html{
+                font-size: 14px;
+            }
+
+            @media (max-width: 1400px) {
+                #call-now{
+                    flex: 0;
+                    text-align: center;
+                }
+
+                html{
+                    font-size: 12px;
+                }
+            }
+
+        </style>
     </head>
-    <body class="antialiased">
-        <div class="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter dark:bg-gray-900 selection:bg-red-500 selection:text-white">
-            @if (Route::has('login'))
-                <livewire:welcome.navigation />
-            @endif
 
-            <div class="max-w-7xl mx-auto p-6 lg:p-8">
-                <div class="flex justify-center">
-                    <svg viewBox="0 0 62 65" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-16 w-auto bg-gray-100 dark:bg-gray-900">
-                        <path d="M61.8548 14.6253C61.8778 14.7102 61.8895 14.7978 61.8897 14.8858V28.5615C61.8898 28.737 61.8434 28.9095 61.7554 29.0614C61.6675 29.2132 61.5409 29.3392 61.3887 29.4265L49.9104 36.0351V49.1337C49.9104 49.4902 49.7209 49.8192 49.4118 49.9987L25.4519 63.7916C25.3971 63.8227 25.3372 63.8427 25.2774 63.8639C25.255 63.8714 25.2338 63.8851 25.2101 63.8913C25.0426 63.9354 24.8666 63.9354 24.6991 63.8913C24.6716 63.8838 24.6467 63.8689 24.6205 63.8589C24.5657 63.8389 24.5084 63.8215 24.456 63.7916L0.501061 49.9987C0.348882 49.9113 0.222437 49.7853 0.134469 49.6334C0.0465019 49.4816 0.000120578 49.3092 0 49.1337L0 8.10652C0 8.01678 0.0124642 7.92953 0.0348998 7.84477C0.0423783 7.8161 0.0598282 7.78993 0.0697995 7.76126C0.0884958 7.70891 0.105946 7.65531 0.133367 7.6067C0.152063 7.5743 0.179485 7.54812 0.20192 7.51821C0.230588 7.47832 0.256763 7.43719 0.290416 7.40229C0.319084 7.37362 0.356476 7.35243 0.388883 7.32751C0.425029 7.29759 0.457436 7.26518 0.498568 7.2415L12.4779 0.345059C12.6296 0.257786 12.8015 0.211853 12.9765 0.211853C13.1515 0.211853 13.3234 0.257786 13.475 0.345059L25.4531 7.2415H25.4556C25.4955 7.26643 25.5292 7.29759 25.5653 7.32626C25.5977 7.35119 25.6339 7.37362 25.6625 7.40104C25.6974 7.43719 25.7224 7.47832 25.7523 7.51821C25.7735 7.54812 25.8021 7.5743 25.8196 7.6067C25.8483 7.65656 25.8645 7.70891 25.8844 7.76126C25.8944 7.78993 25.9118 7.8161 25.9193 7.84602C25.9423 7.93096 25.954 8.01853 25.9542 8.10652V33.7317L35.9355 27.9844V14.8846C35.9355 14.7973 35.948 14.7088 35.9704 14.6253C35.9792 14.5954 35.9954 14.5692 36.0053 14.5405C36.0253 14.4882 36.0427 14.4346 36.0702 14.386C36.0888 14.3536 36.1163 14.3274 36.1375 14.2975C36.1674 14.2576 36.1923 14.2165 36.2272 14.1816C36.2559 14.1529 36.292 14.1317 36.3244 14.1068C36.3618 14.0769 36.3942 14.0445 36.4341 14.0208L48.4147 7.12434C48.5663 7.03694 48.7383 6.99094 48.9133 6.99094C49.0883 6.99094 49.2602 7.03694 49.4118 7.12434L61.3899 14.0208C61.4323 14.0457 61.4647 14.0769 61.5021 14.1055C61.5333 14.1305 61.5694 14.1529 61.5981 14.1803C61.633 14.2165 61.6579 14.2576 61.6878 14.2975C61.7103 14.3274 61.7377 14.3536 61.7551 14.386C61.7838 14.4346 61.8 14.4882 61.8199 14.5405C61.8312 14.5692 61.8474 14.5954 61.8548 14.6253ZM59.893 27.9844V16.6121L55.7013 19.0252L49.9104 22.3593V33.7317L59.8942 27.9844H59.893ZM47.9149 48.5566V37.1768L42.2187 40.4299L25.953 49.7133V61.2003L47.9149 48.5566ZM1.99677 9.83281V48.5566L23.9562 61.199V49.7145L12.4841 43.2219L12.4804 43.2194L12.4754 43.2169C12.4368 43.1945 12.4044 43.1621 12.3682 43.1347C12.3371 43.1097 12.3009 43.0898 12.2735 43.0624L12.271 43.0586C12.2386 43.0275 12.2162 42.9888 12.1887 42.9539C12.1638 42.9203 12.1339 42.8916 12.114 42.8567L12.1127 42.853C12.0903 42.8156 12.0766 42.7707 12.0604 42.7283C12.0442 42.6909 12.023 42.656 12.013 42.6161C12.0005 42.5688 11.998 42.5177 11.9931 42.4691C11.9881 42.4317 11.9781 42.3943 11.9781 42.3569V15.5801L6.18848 12.2446L1.99677 9.83281ZM12.9777 2.36177L2.99764 8.10652L12.9752 13.8513L22.9541 8.10527L12.9752 2.36177H12.9777ZM18.1678 38.2138L23.9574 34.8809V9.83281L19.7657 12.2459L13.9749 15.5801V40.6281L18.1678 38.2138ZM48.9133 9.14105L38.9344 14.8858L48.9133 20.6305L58.8909 14.8846L48.9133 9.14105ZM47.9149 22.3593L42.124 19.0252L37.9323 16.6121V27.9844L43.7219 31.3174L47.9149 33.7317V22.3593ZM24.9533 47.987L39.59 39.631L46.9065 35.4555L36.9352 29.7145L25.4544 36.3242L14.9907 42.3482L24.9533 47.987Z" fill="#FF2D20"/>
-                    </svg>
-                </div>
+    <body class="text-white min-h-screen antialiased u-bg-fixed" x-data="{ brooksPitcher: false, jubileeUnderwood: false, robertYundt: false, isOpenSidebar: false }">
 
-                <div class="mt-16">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-                        <a href="https://laravel.com/docs" class="scale-100 p-6 bg-white dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500">
-                            <div>
-                                <div class="h-16 w-16 bg-red-50 dark:bg-red-800/20 flex items-center justify-center rounded-full">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="w-7 h-7 stroke-red-500">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
-                                    </svg>
-                                </div>
-
-                                <h2 class="mt-6 text-xl font-semibold text-gray-900 dark:text-white">Documentation</h2>
-
-                                <p class="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
-                                    Laravel has wonderful documentation covering every aspect of the framework. Whether you are a newcomer or have prior experience with Laravel, we recommend reading our documentation from beginning to end.
-                                </p>
-                            </div>
-
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="self-center shrink-0 stroke-red-500 w-6 h-6 mx-6">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" />
-                            </svg>
-                        </a>
-
-                        <a href="https://laracasts.com" class="scale-100 p-6 bg-white dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500">
-                            <div>
-                                <div class="h-16 w-16 bg-red-50 dark:bg-red-800/20 flex items-center justify-center rounded-full">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="w-7 h-7 stroke-red-500">
-                                        <path stroke-linecap="round" d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25h-9A2.25 2.25 0 002.25 7.5v9a2.25 2.25 0 002.25 2.25z" />
-                                    </svg>
-                                </div>
-
-                                <h2 class="mt-6 text-xl font-semibold text-gray-900 dark:text-white">Laracasts</h2>
-
-                                <p class="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
-                                    Laracasts offers thousands of video tutorials on Laravel, PHP, and JavaScript development. Check them out, see for yourself, and massively level up your development skills in the process.
-                                </p>
-                            </div>
-
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="self-center shrink-0 stroke-red-500 w-6 h-6 mx-6">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" />
-                            </svg>
-                        </a>
-
-                        <a href="https://laravel-news.com" class="scale-100 p-6 bg-white dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500">
-                            <div>
-                                <div class="h-16 w-16 bg-red-50 dark:bg-red-800/20 flex items-center justify-center rounded-full">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="w-7 h-7 stroke-red-500">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 01-2.25 2.25M16.5 7.5V18a2.25 2.25 0 002.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 002.25 2.25h13.5M6 7.5h3v3H6v-3z" />
-                                    </svg>
-                                </div>
-
-                                <h2 class="mt-6 text-xl font-semibold text-gray-900 dark:text-white">Laravel News</h2>
-
-                                <p class="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
-                                    Laravel News is a community driven portal and newsletter aggregating all of the latest and most important news in the Laravel ecosystem, including new package releases and tutorials.
-                                </p>
-                            </div>
-
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="self-center shrink-0 stroke-red-500 w-6 h-6 mx-6">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" />
-                            </svg>
-                        </a>
-
-                        <div class="scale-100 p-6 bg-white dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500">
-                            <div>
-                                <div class="h-16 w-16 bg-red-50 dark:bg-red-800/20 flex items-center justify-center rounded-full">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="w-7 h-7 stroke-red-500">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6.115 5.19l.319 1.913A6 6 0 008.11 10.36L9.75 12l-.387.775c-.217.433-.132.956.21 1.298l1.348 1.348c.21.21.329.497.329.795v1.089c0 .426.24.815.622 1.006l.153.076c.433.217.956.132 1.298-.21l.723-.723a8.7 8.7 0 002.288-4.042 1.087 1.087 0 00-.358-1.099l-1.33-1.108c-.251-.21-.582-.299-.905-.245l-1.17.195a1.125 1.125 0 01-.98-.314l-.295-.295a1.125 1.125 0 010-1.591l.13-.132a1.125 1.125 0 011.3-.21l.603.302a.809.809 0 001.086-1.086L14.25 7.5l1.256-.837a4.5 4.5 0 001.528-1.732l.146-.292M6.115 5.19A9 9 0 1017.18 4.64M6.115 5.19A8.965 8.965 0 0112 3c1.929 0 3.716.607 5.18 1.64" />
-                                    </svg>
-                                </div>
-
-                                <h2 class="mt-6 text-xl font-semibold text-gray-900 dark:text-white">Vibrant Ecosystem</h2>
-
-                                <p class="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
-                                    Laravel's robust library of first-party tools and libraries, such as <a href="https://forge.laravel.com" class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Forge</a>, <a href="https://vapor.laravel.com" class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Vapor</a>, <a href="https://nova.laravel.com" class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Nova</a>, and <a href="https://envoyer.io" class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Envoyer</a> help you take your projects to the next level. Pair them with powerful open source libraries like <a href="https://laravel.com/docs/billing" class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Cashier</a>, <a href="https://laravel.com/docs/dusk" class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Dusk</a>, <a href="https://laravel.com/docs/broadcasting" class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Echo</a>, <a href="https://laravel.com/docs/horizon" class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Horizon</a>, <a href="https://laravel.com/docs/sanctum" class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Sanctum</a>, <a href="https://laravel.com/docs/telescope" class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Telescope</a>, and more.
-                                </p>
-                            </div>
+        {{-- BROOKS PITCHER --}}
+        <div class="fixed flex min-h-screen min-w-screen p-10 inset-0 bg-black bg-opacity-85 z-20"
+            x-cloak
+            x-show="brooksPitcher"
+            x-transition>
+            <div class="m-auto text-black w-full max-w-7xl bg-white border-2 relative rounded-[1.9rem] lg:h-[28rem]"
+                @click.outside="brooksPitcher=false;">
+                <div class="flex justify-center flex-wrap h-full">
+                    <!-- First Div (30%) -->
+                    <div class="flex relative w-full max-w-md">
+                        <img class="w-96 sm:relative bottom-0 -left-24 object-contain max-w-xl sm:w-auto lg:absolute" src="{{ asset('frontend/campaign1-modal.png') }}" alt="">
+                    </div>
+                    <!-- Second Div (70%) -->
+                    <div class="flex-grow flex-shrink basis-96 sm:min-w-[35rem] flex flex-col justify-center py-10 px-5 sm:px-16 text-[#001A47] space-y-5">
+                        <div>
+                            <p class="text-4xl font-bold mb-3 tracking-wider sm:text-6xl">BROOKS PITCHER</p>
+                            <p class="font-bold text-2xl tracking-wider sm:text-xl">FOR SCHOOL BOARD</p>
                         </div>
-                    </div>
-                </div>
-
-                <div class="flex justify-center mt-16 px-0 sm:items-center sm:justify-between">
-                    <div class="text-center text-sm sm:text-start">
-                        &nbsp;
-                    </div>
-
-                    <div class="text-center text-sm text-gray-500 dark:text-gray-400 sm:text-end sm:ms-0">
-                        Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
+                        <p class="text-xl">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Blanditiis nobis, quibusdam, totam, alias tempora vitae modi sit sint tenetur ex quis voluptates reprehenderit consequatur. Expedita nam non hic corrupti placeat!</p>
+                        <p class="text-xl">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Atque earum at corporis vitae assumenda aliquid sequi ab temporibus veniam eaque.</p>
                     </div>
                 </div>
             </div>
         </div>
+        {{-- JUBILEE UNDERWOOD --}}
+        <div class="fixed flex min-h-screen min-w-screen p-10 inset-0 bg-black bg-opacity-85 z-20"
+            x-cloak
+            x-show="jubileeUnderwood"
+            x-transition>
+            <div class="m-auto text-black w-full max-w-7xl bg-white border-2 relative rounded-[1.9rem] lg:h-[30rem]"
+                @click.outside="jubileeUnderwood=false;">
+                <div class="flex justify-center flex-wrap h-full">
+                    <!-- First Div (30%) -->
+                    <div class="flex relative w-full max-w-md">
+                        <img class="w-96 sm:relative -bottom-1 -left-24 object-contain max-w-xl sm:w-auto lg:absolute" src="{{ asset('frontend/campaign2-modal.png') }}" alt="">
+                    </div>
+                    <!-- Second Div (70%) -->
+                    <div class="flex-grow flex-shrink basis-96 sm:min-w-[35rem] flex flex-col justify-center py-10 px-5 sm:px-16 text-[#001A47] space-y-5">
+                        <div>
+                            <p class="text-4xl font-bold mb-3 tracking-wider sm:text-6xl">JUBILEE</p>
+                            <p class="text-4xl font-bold mb-3 tracking-wider sm:text-6xl">UNDERWOOD</p>
+                            <p class="font-bold text-2xl tracking-wider sm:text-xl">FOR STATE HOUSE</p>
+                        </div>
+                        <p class="text-xl">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Blanditiis nobis, quibusdam, totam, alias tempora vitae modi sit sint tenetur ex quis voluptates reprehenderit consequatur. Expedita nam non hic corrupti placeat!</p>
+                        <p class="text-xl">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Atque earum at corporis vitae assumenda aliquid sequi ab temporibus veniam eaque.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{-- BROOKS PITCHER --}}
+        <div class="fixed flex min-h-screen min-w-screen p-10 inset-0 bg-black bg-opacity-85 z-20"
+            x-cloak
+            x-show="robertYundt"
+            x-transition>
+            <div class="m-auto text-black w-full max-w-7xl bg-white border-2 relative rounded-[1.9rem] lg:h-[28rem]"
+                @click.outside="robertYundt=false;">
+                <div class="flex justify-center flex-wrap h-full">
+                    <!-- First Div (30%) -->
+                    <div class="flex relative w-full max-w-md">
+                        <img class="w-96 sm:relative bottom-0 -left-24 object-contain max-w-xl sm:w-auto lg:absolute" src="{{ asset('frontend/campaign3-modal.png') }}" alt="">
+                    </div>
+                    <!-- Second Div (70%) -->
+                    <div class="flex-grow flex-shrink basis-96 sm:min-w-[35rem] flex flex-col justify-center py-10 px-5 sm:px-16 text-[#001A47] space-y-5">
+                        <div>
+                            <p class="text-4xl font-bold mb-3 tracking-wider sm:text-6xl">ROBERT YUNDT</p>
+                            <p class="font-bold text-2xl tracking-wider sm:text-xl">FOR STATE SENATE</p>
+                        </div>
+                        <p class="text-xl">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Blanditiis nobis, quibusdam, totam, alias tempora vitae modi sit sint tenetur ex quis voluptates reprehenderit consequatur. Expedita nam non hic corrupti placeat!</p>
+                        <p class="text-xl">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Atque earum at corporis vitae assumenda aliquid sequi ab temporibus veniam eaque.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- Navbar --}}
+        <div class="w-full h-40 z-10 u-bg-fixed sticky top-0 sm:relative" id="navbar" data-aos="fade-down">
+            <div class="h-full w-full m-auto max-w-[120rem]">
+                <div class="h-full flex items-center px-5 sm:px-12 md:px-20 lg:px-28">
+                    <!-- Logo SVG -->
+                    <div class="flex-1 flex-shrink-0 min-w-[100px] sm:min-w-[150px] md:min-w-[200px]">
+                        <a href="/">
+                            <img class="w-64 sm:w-auto" src="{{ asset('frontend/Logo SVG.png') }}" alt="">
+                        </a>
+                    </div>
+
+                    <!-- Navigation Links -->
+                    <div class="hidden flex-1 gap-4 text-lg md:text-xl justify-center md:justify-end xl:flex">
+                        <a class="hover:opacity-70" href="">HOME</a>
+                        <a class="hover:opacity-70" href="">COURSES</a>
+                        <a class="hover:opacity-70" href="">PRICING</a>
+                        <a class="hover:opacity-70" href="">ABOUT</a>
+                        <a class="hover:opacity-70" href="">CONTACT</a>
+                    </div>
+
+                    <!-- Call Now Button -->
+                    <div class="hidden flex-1 flex-shrink-0 text-end min-w-[100px] sm:min-w-[150px] md:min-w-[200px] xl:block" id="call-now">
+                        <a class="text-lg md:text-xl font-medium p-2 sm:p-3 md:p-4 rounded-xl bg-red-600 transition-all hover:bg-white hover:text-red-600" href="">
+                        CALL NOW
+                        </a>
+                    </div>
+
+                    <div class="block text-white cursor-pointer z-30 xl:hidden">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-10"
+                        @click="isOpenSidebar=true; console.log('clicked')">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                        </svg>
+                    </div>
+
+                    <div class="h-dvh text-gray-600 bg-white fixed top-0 right-0 w-72 z-30 p-10 space-y-5"
+                        x-cloak
+                        x-show="isOpenSidebar"
+                        @click.outside="isOpenSidebar=false">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-10 cursor-pointer hover:opacity-70"
+                        @click="isOpenSidebar=false;">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                        </svg>
+                        <div class="flex flex-col space-y-4 text-lg">
+                            <a class="hover:opacity-70 text-2xl" href="">HOME</a>
+                            <a class="hover:opacity-70 text-2xl" href="">COURSES</a>
+                            <a class="hover:opacity-70 text-2xl" href="">PRICING</a>
+                            <a class="hover:opacity-70 text-2xl" href="">ABOUT</a>
+                            <a class="hover:opacity-70 text-2xl" href="">CONTACT</a>
+                        </div>
+                        <div>
+                            <a href="">
+                                <div class="text-lg text-white p-3 text-center rounded font-medium bg-red-600 hover:bg-gray-600 hover:text-white">CALL NOW</div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="w-full m-auto max-w-[120rem]">
+            <div class="pt-20 px-5 sm:px-12 md:px-20 lg:px-28">
+                <div class="flex flex-wrap">
+                    <div class="flex-1">
+                        <div class="flex flex-col pt-10 px-5"
+                            x-data="{ show1: false, show2: false, show3: false, show4: false }" 
+                            x-init="
+                                setTimeout(() => show1 = true, 500);
+                                setTimeout(() => show2 = true, 800);
+                                setTimeout(() => show3 = true, 1100);
+                                setTimeout(() => show4 = true, 1400);
+                            ">
+                            <!-- First Paragraph -->
+                            <p class="font-bold text-5xl sm:text-8xl"
+                                x-cloak
+                                x-show="show1" 
+                                x-transition:enter="transition transform ease-out duration-100"
+                                x-transition:enter-start="opacity-0 translate-y-10" 
+                                x-transition:enter-end="opacity-100 translate-y-0"
+                            >
+                                Join and
+                            </p>
+                            
+                            <!-- Second Paragraph -->
+                            <p 
+                                class="font-bold text-5xl sm:text-8xl"
+                                x-cloak
+                                    x-show="show2" 
+                                x-transition:enter="transition transform ease-out duration-100"
+                                x-transition:enter-start="opacity-0 translate-y-10" 
+                                x-transition:enter-end="opacity-100 translate-y-0"
+                            >
+                                Learn from
+                            </p>
+                            
+                            <!-- Third Paragraph -->
+                            <p class="font-bold text-5xl sm:text-8xl"
+                                x-cloak
+                                x-show="show3" 
+                                x-transition:enter="transition transform ease-out duration-100"
+                                x-transition:enter-start="opacity-0 translate-y-10"
+                                x-transition:enter-end="opacity-100 translate-y-0"
+                            >
+                                The Best.
+                            </p>
+                            
+                            <!-- Fourth Paragraph -->
+                            <p class="font-bold text-2xl mt-5 min-w-[28rem] max-w-[41rem] tracking-widest sm:text-3xl" 
+                                x-cloak
+                                x-show="show4" 
+                                x-transition:enter="transition transform ease-out duration-100"
+                                x-transition:enter-start="opacity-0 translate-y-10" 
+                                x-transition:enter-end="opacity-100 translate-y-0"
+                            >
+                                We help win hundreds of campaigns in the last 3 years!
+                            </p>
+                        </div>
+                    </div>
+                    <div class="flex-1 flex m-auto justify-center flex-wrap lg:flex-nowrap lg:justify-start" data-aos="fade-left">
+                        <div class="w-[30rem] flex flex-col items-center">
+                            <div x-data="{ hover: false }">
+                                <img class="h-[30rem] w-full"
+                                    :src="hover ? '{{ asset('frontend/poli1-hovered.png') }}' : '{{ asset('frontend/poli1.png') }}'"
+                                    @mouseover="hover = true" 
+                                    @mouseleave="hover = false"
+                                alt="">
+                            </div>
+                            <a class="">
+                                <div class="font-medium text-xl bg-red-600 w-60 py-4 text-center rounded-3xl cursor-pointer transition-all hover:bg-white hover:text-red-600">JOIN THE WINNERS</div>
+                            </p>
+                        </div>
+                        <div class="w-[30rem] flex flex-col items-center">
+                            <div x-data="{ hover: false }">
+                                <img class="h-[30rem] w-full" alt=""
+                                    :src="hover ? '{{ asset('frontend/poli2-hovered.png') }}' : '{{ asset('frontend/poli2.png') }}'"
+                                    @mouseover="hover = true" 
+                                    @mouseleave="hover = false"
+                                >
+                            </div>
+                            <a class="">
+                                <div class="font-medium text-xl bg-[#002E80] w-60 py-4 text-center rounded-3xl border border-white transition-all hover:bg-white hover:text-[#002E80] cursor-pointer">VIEW COURSE</div>
+                            </p>       
+                        </div>               
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="w-full m-auto max-w-[120rem]">
+            <div class="pt-56 px-5 sm:px-12 md:px-20 lg:px-28">
+                <div class="w-full max-w-[96rem] m-auto" data-aos="fade-up">
+                    <p class="text-3xl text-[#FFFFFFCC] font-bold">Notable Campaigns</p>
+                    <div class="mt-5 w-full rounded-2xl bg-[#FFFFFF4D] flex gap-5 items-center p-10">
+                        <div class="flex-1"
+                            x-data="{ hover: false }"
+                            @click="brooksPitcher = true;">
+                            <img class="mx-auto object-contain h-full cursor-pointer" alt=""
+                                :src="hover ? '{{ asset('frontend/campaign1-colored.png') }}' : '{{ asset('frontend/campaign1.png') }}'"
+                                @mouseover="hover = true" 
+                                @mouseleave="hover = false"
+                            >
+                        </div>
+                        <div class="flex-1"
+                            x-data="{ hover: false }"
+                            @click="jubileeUnderwood = true;">
+                            <img class="mx-auto object-contain h-full cursor-pointer" alt=""
+                                :src="hover ? '{{ asset('frontend/campaign2-colored.png') }}' : '{{ asset('frontend/campaign2.png') }}'"
+                                @mouseover="hover = true" 
+                                @mouseleave="hover = false"
+                            >
+                        </div>
+                        <div class="flex-1"
+                            x-data="{ hover: false }"
+                            @click="robertYundt = true;">
+                            <img class="mx-auto object-contain h-full cursor-pointer" alt=""
+                                :src="hover ? '{{ asset('frontend/campaign3-colored.png') }}' : '{{ asset('frontend/campaign3.png') }}'"
+                                @mouseover="hover = true" 
+                                @mouseleave="hover = false"
+                            >
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="w-full m-auto max-w-[120rem]">
+            <div class="pt-28 px-5 lg:pt-72 sm:px-12 md:px-20 lg:px-28">
+                <div class="m-auto max-w-[96rem]">
+                    <div class="flex flex-wrap justify-center" data-aos="fade-up">
+                        <img class="object-contain h-60 sm:h-80" src="{{ asset('frontend/floating_book.gif') }}" alt="">
+                        <div class="flex flex-col justify-center text-center">
+                            <p class="text-5xl font-bold tracking-widest sm:text-8xl">LATEST CLASSES</p>
+                            <p class="mt-4 text-2xl tracking-wide">Learn the Ins & Outs from Joseph Lurtsema!</p>
+                        </div>
+                    </div>
+                    <div class="pt-16 flex flex-wrap justify-center gap-12">
+                        <div class="h-[45rem] flex-grow max-w-[28rem] sm:max-w-[30rem] shrink-0 w-full flex flex-col rounded-3xl bg-white shadow-md font-medium text-[#303030] p-10 transition-all hover:scale-105 sm:hover:scale-110" data-aos="fade-right">
+                            <div class="h-48 w-full bg-gray-300 rounded-lg">
+                            </div>
+                            <div class="mt-10 flex-1 space-y-3 ">
+                                <div class="text-3xl font-bold text-black" id="class-title">CLASS TITLE</div>
+                                <div id="class-star">
+                                    <div class="flex items-center gap-2">
+                                        <span class="flex flex-row-reverse">
+                                            <svg class="text-gray-600 cursor-pointer peer peer-hover:text-yellow-400 hover:text-yellow-400 duration-100 " width="23" height="23" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
+                                            </svg>
+    
+                                            <svg class="text-gray-600 cursor-pointer peer peer-hover:text-yellow-400 hover:text-yellow-400 duration-100 " width="23" height="23" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
+                                            </svg>
+    
+                                            <svg class="text-gray-600 cursor-pointer peer peer-hover:text-yellow-400 hover:text-yellow-400 duration-100 " width="23" height="23" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
+                                            </svg>
+    
+                                            <svg class="text-gray-600 cursor-pointer peer peer-hover:text-yellow-400 hover:text-yellow-400 duration-100 " width="23" height="23" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
+                                            </svg>
+    
+                                            <svg class="text-gray-600 cursor-pointer peer peer-hover:text-yellow-400 hover:text-yellow-400 duration-100 " width="23" height="23" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
+                                            </svg>
+                                        </span>
+                                        <span>(000)</span> 
+                                    </div>
+                                </div>
+                                <div class="text-xl">Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate laudantium dolorem dicta non molestiae omnis ipsum blanditiis ad aperiam alias? Neque sequi at tempora laboriosam magni iure facere dolorum error.</div>
+                            </div>
+                            <div class="flex items-center gap-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                                </svg>
+                                <span>(0000)</span>
+                                <Span>User reviews</Span>
+                            </div>
+                        </div>
+                        <div class="h-[45rem] flex-grow max-w-[28rem] sm:max-w-[30rem] shrink-0 w-full flex flex-col rounded-3xl bg-white shadow-md font-medium text-[#303030] p-10 transition-all hover:scale-105 sm:hover:scale-110" data-aos="fade-right">
+                            <div class="h-48 w-full bg-gray-300 rounded-lg">
+                            </div>
+                            <div class="mt-10 flex-1 space-y-3 ">
+                                <div class="text-3xl font-bold text-black" id="class-title">CLASS TITLE</div>
+                                <div id="class-star">
+                                    <div class="flex items-center gap-2">
+                                        <span class="flex flex-row-reverse">
+                                            <svg class="text-gray-600 cursor-pointer peer peer-hover:text-yellow-400 hover:text-yellow-400 duration-100 " width="23" height="23" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
+                                            </svg>
+    
+                                            <svg class="text-gray-600 cursor-pointer peer peer-hover:text-yellow-400 hover:text-yellow-400 duration-100 " width="23" height="23" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
+                                            </svg>
+    
+                                            <svg class="text-gray-600 cursor-pointer peer peer-hover:text-yellow-400 hover:text-yellow-400 duration-100 " width="23" height="23" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
+                                            </svg>
+    
+                                            <svg class="text-gray-600 cursor-pointer peer peer-hover:text-yellow-400 hover:text-yellow-400 duration-100 " width="23" height="23" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
+                                            </svg>
+    
+                                            <svg class="text-gray-600 cursor-pointer peer peer-hover:text-yellow-400 hover:text-yellow-400 duration-100 " width="23" height="23" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
+                                            </svg>
+                                        </span>
+                                        <span>(000)</span> 
+                                    </div>
+                                </div>
+                                <div class="text-xl">Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate laudantium dolorem dicta non molestiae omnis ipsum blanditiis ad aperiam alias? Neque sequi at tempora laboriosam magni iure facere dolorum error.</div>
+                            </div>
+                            <div class="flex items-center gap-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                                </svg>
+                                <span>(0000)</span>
+                                <Span>User reviews</Span>
+                            </div>
+                        </div>
+                        <div class="h-[45rem] flex-grow max-w-[28rem] sm:max-w-[30rem] shrink-0 w-full flex flex-col rounded-3xl bg-white shadow-md font-medium text-[#303030] p-10 transition-all hover:scale-105 sm:hover:scale-110" data-aos="fade-right">
+                            <div class="h-48 w-full bg-gray-300 rounded-lg">
+                            </div>
+                            <div class="mt-10 flex-1 space-y-3 ">
+                                <div class="text-3xl font-bold text-black" id="class-title">CLASS TITLE</div>
+                                <div id="class-star">
+                                    <div class="flex items-center gap-2">
+                                        <span class="flex flex-row-reverse">
+                                            <svg class="text-gray-600 cursor-pointer peer peer-hover:text-yellow-400 hover:text-yellow-400 duration-100 " width="23" height="23" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
+                                            </svg>
+    
+                                            <svg class="text-gray-600 cursor-pointer peer peer-hover:text-yellow-400 hover:text-yellow-400 duration-100 " width="23" height="23" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
+                                            </svg>
+    
+                                            <svg class="text-gray-600 cursor-pointer peer peer-hover:text-yellow-400 hover:text-yellow-400 duration-100 " width="23" height="23" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
+                                            </svg>
+    
+                                            <svg class="text-gray-600 cursor-pointer peer peer-hover:text-yellow-400 hover:text-yellow-400 duration-100 " width="23" height="23" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
+                                            </svg>
+    
+                                            <svg class="text-gray-600 cursor-pointer peer peer-hover:text-yellow-400 hover:text-yellow-400 duration-100 " width="23" height="23" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
+                                            </svg>
+                                        </span>
+                                        <span>(000)</span> 
+                                    </div>
+                                </div>
+                                <div class="text-xl">Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate laudantium dolorem dicta non molestiae omnis ipsum blanditiis ad aperiam alias? Neque sequi at tempora laboriosam magni iure facere dolorum error.</div>
+                            </div>
+                            <div class="flex items-center gap-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                                </svg>
+                                <span>(0000)</span>
+                                <Span>User reviews</Span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-20 flex justify-center">
+                        <a href="">
+                            <div class="text-2xl font-medium bg-[#002E80] p-4 text-center rounded-3xl border border-white hover:bg-white hover:text-[#002E80]">BROWSE COURSES</div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="w-full pt-72" data-aos="fade-right">
+            <div class="m-auto max-w-[136rem] relative overflow-hidden">
+                <div class="absolute -top-20 -right-48 inset-0 bg-no-repeat bg-right-bottom bg-contain -z-10 hidden lg:block" style="background-image: url('{{ asset('frontend/lurtsema_logo.png') }}');">
+                </div>
+                <div class="m-auto max-w-[120rem] mb-20 xl:mb-0">
+                    <p class="text-5xl font-bold px-5 sm:px-12 sm:text-8xl md:px-20 lg:px-28">ABOUT</p>
+                </div>
+                <div class="m-auto flex justify-center items-center flex-col relative max-w-2xl rounded-2xl bg-white lg:[background-color:rgba(255,255,255,0.8)] xl:bg-transparent xl:h-auto xl:items-start lg:h-[49rem] lg:max-w-full lg:flex-row lg:w-full xl:[clip-path:polygon(0%_1%,100%_0%,100%_70%,0%_90%)]">
+                    <div class="relative -bottom-9 lg:shrink-0">
+                        <img class="h-[30rem] w-auto object-contain sm:h-[40rem] lg:h-[65rem]" src="{{ asset('frontend/joe.png') }}" alt="">
+                    </div>
+                    <div class="my-20 mx-10 max-w-4xl flex flex-col space-y-16 text-slate-600 tracking-widest mr-5 xl:mt-80 xl:mr-0">
+                        <p class="text-xl sm:text-3xl">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nobis fugiat laboriosam expedita suscipit odio! Labore eos repellat laboriosam ut veritatis.</p>
+                        <p class="text-xl sm:text-3xl">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Atque, amet?</p>
+                        <div class="mt-20 flex justify-center">
+                            <a href="">
+                                <div class="text-2xl bg-[#002E80] py-4 px-6 text-center rounded-3xl text-white transition-all hover:bg-white hover:text-[#002E80] sm:text-3xl">LEARN MORE ></div>
+                            </a>
+                        </div>                </div>
+                    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 h-[40rem] w-full -z-10 xl:bg-white opacity-80 xl:-skew-y-6">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="w-full pt-72" data-aos="fade-up">
+            <div class="m-auto max-w-[136rem] relative">
+                <img class="absolute w-full bottom-0" src="{{ asset('frontend/usa.png') }}" alt="">
+                <div class="m-auto max-w-[106rem]">
+                    <div class="h-[30rem] w-full rounded-tl-[4rem] rounded-tr-[4rem] u-bg-contact sm:h-[47rem]">
+                        <div class="p-20 space-y-10">
+                            <div class="flex items-center gap-10 flex-col sm:flex-row">
+                                <div class="flex-1 text-2xl sm:text-4xl font-bold">
+                                    PREPARED TO BE CAMPAIGN READY?
+                                </div>
+                                <div class="flex-1 flex justify-end gap-10">
+                                    <a href="">
+                                        <img class="object-contain  h-10 sm:h-14" src="{{ asset('frontend/facebook.png') }}" alt="">
+                                    </a>
+                                    <a href="">
+                                        <img class="object-contain  h-10 sm:h-14" src="{{ asset('frontend/ig.png') }}" alt="">
+                                    </a>
+                                    <a href="">
+                                        <img class="object-contain  h-10 sm:h-14" src="{{ asset('frontend/youtube.png') }}" alt="">
+                                    </a>
+                                    <a href="">
+                                        <img class="object-contain  h-10 sm:h-14 filter brightness-0 invert" src="{{ asset('frontend/tiktok.png') }}" alt="">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="mt-15 sm:m-0">
+                                <a class="text-2xl font-medium bg-red-600 p-4 rounded-full hover:bg-white hover:text-red-600" href="">
+                                    CALL NOW!
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+        <script>
+            AOS.init({
+                offset: 300, // Offset (in pixels) from the original trigger point
+                delay: 100,    // Delay in milliseconds
+                duration: 600, // Animation duration in milliseconds
+                easing: 'ease', // Default easing for AOS animations
+                once: true
+            });
+        </script>
     </body>
 </html>
+
