@@ -99,7 +99,10 @@
                         </div>
                         <div class="flex justify-center mt-8">
                         <a href="flex">
-                                <div class="bg-[#002E80] py-2 px-4 text-center text-2xl rounded-3xl text-white transition-all cursor-pointer hover:bg-white hover:text-[#002E80]">LEARN MORE ABOUT ME ></div>
+                                <div class="flex items-center gap-1 bg-[#002E80] py-3 px-4 text-center text-xl rounded-3xl text-white transition-all cursor-pointer hover:bg-white hover:text-[#002E80]">
+                                    <span>LEARN MORE ABOUT ME</span>
+                                    <span class="relative -top-[1px]">></span>
+                                </div>
                             </a>
                         </div> 
                     </div>
@@ -384,7 +387,7 @@
                         </div>
                     </div>
                     <div class="pt-16 flex flex-wrap justify-center gap-12">
-                        <div class="h-[45rem] flex-grow max-w-[28rem] sm:max-w-[30rem] shrink-0 w-full flex flex-col rounded-3xl bg-white shadow-md font-medium text-[#303030] p-10 transition-all hover:!scale-105 sm:hover:!scale-110" data-aos="fade-right">
+                        <div class="h-[45rem] flex-grow max-w-[28rem] sm:max-w-[30rem] shrink-0 w-full flex flex-col rounded-3xl bg-white shadow-md font-medium text-[#303030] p-10 transition ease hover:!scale-105 sm:hover:!scale-110" data-aos="fade-right">
                             <div class="h-48 w-full bg-gray-300 rounded-lg">
                             </div>
                             <div class="mt-10 flex-1 space-y-3 ">
@@ -532,7 +535,10 @@
                         <p class="text-xl sm:text-3xl">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Atque, amet?</p>
                         <div class="mt-20 flex justify-center">
                             <a href="">
-                                <div class="text-2xl bg-[#002E80] py-4 px-6 text-center rounded-3xl text-white transition-all hover:bg-white hover:text-[#002E80] sm:text-3xl">LEARN MORE ></div>
+                                <div class="text-2xl bg-[#002E80] py-4 px-6 text-center rounded-3xl text-white transition-all hover:bg-white hover:text-[#002E80] sm:text-3xl">
+                                    <span>LEARN MORE</span>
+                                    <span class="relative -top-[1px]">></span>
+                                </div>
                             </a>
                         </div>                </div>
                     <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 h-[40rem] w-full -z-10 xl:bg-white opacity-80 xl:-skew-y-6">
@@ -582,10 +588,8 @@
                     document.querySelector("body").style.visibility = "hidden";
                     document.querySelector("#loader").style.visibility = "visible";
                 } else {
-                    setTimeout(() => {
-                        document.querySelector("#loader").style.display = "none";
-                        document.querySelector("body").style.visibility = "visible";
-                    }, 2000);
+                    document.querySelector("#loader").style.display = "none";
+                    document.querySelector("body").style.visibility = "visible";
                 }
             };
 
