@@ -52,7 +52,44 @@
         </style>
     </head>
 
-    <body class="text-white min-h-screen antialiased u-bg-fixed" x-data="{ brooksPitcher: false, jubileeUnderwood: false, robertYundt: false, isOpenSidebar: false }">
+    <body class="text-white min-h-screen antialiased u-bg-fixed" x-data="{ joeLurtsema: false, brooksPitcher: false, jubileeUnderwood: false, robertYundt: false, isOpenSidebar: false }">
+
+        {{-- JOE LURTSEMA --}}
+        <div class="fixed flex min-h-screen min-w-screen p-10 inset-0 bg-black bg-opacity-85 z-20"
+            x-cloak
+            x-init="setTimeout(() => joeLurtsema = true, 10000)" 
+            x-show="joeLurtsema"
+            x-transition>
+            <div class="m-auto text-black w-full max-w-5xl bg-white border-2 relative rounded-[1.9rem] lg:h-[28rem]"
+                @click.outside="joeLurtsema=false;">
+                <div class="flex justify-center flex-wrap h-full">
+                    <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 p-3 rounded-lg text-white text-2xl font-bold z-10 bg-[#C4172E] sm:text-5xl">
+                        BOOK NOW!
+                    </div>
+                    <!-- First Div (30%) -->
+                    <div class="relative flex justify-center w-full max-w-md sm:justify-start">
+                        <img class="w-96 sm:relative bottom-0 -left-12 object-contain max-w-xl sm:w-auto lg:absolute" src="{{ asset('frontend/joe-edited.png') }}" alt="">
+                    </div>
+                    <!-- Second Div (70%) -->
+                    <div class="relative flex-grow flex-shrink basis-96 sm:min-w-[35rem] flex flex-col justify-center py-10 px-5 sm:px-16 text-[#001A47]">
+                        <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2  p-3 rounded-lg text-white text-lg font-bold [background:linear-gradient(to_bottom,#C4172E,#4A000A)] sm:text-2xl">
+                            FREE CONSULTATION!
+                        </div>
+                        <div class="text-center space-y-2">
+                            <p class="text-lg font-bold tracking-wider sm:text-xl">1 on 1 class with</p>
+                            <p class="text-4xl font-bold tracking-wider sm:text-6xl">JOSEPH</p>
+                            <p class="text-4xl font-bold tracking-wider sm:text-6xl">LURTSEMA</p>
+                            <p class="text-lg tracking-wider sm:text-xl">CEO | CAMPAIGN SPECIALIST | FOUNDER</p>
+                        </div>
+                        <div class="flex justify-center mt-8">
+                        <a href="flex">
+                                <div class="bg-[#002E80] py-2 px-4 text-center rounded-3xl text-white transition-all hover:bg-white hover:text-[#002E80]">LEARN MORE ABOUT ME ></div>
+                            </a>
+                        </div> 
+                    </div>
+                </div>
+            </div>
+        </div>
 
         {{-- BROOKS PITCHER --}}
         <div class="fixed flex min-h-screen min-w-screen p-10 inset-0 bg-black bg-opacity-85 z-20"
