@@ -54,16 +54,32 @@
 
     <body class="text-white min-h-screen antialiased u-bg-fixed" x-data="{ joeLurtsema: false, brooksPitcher: false, jubileeUnderwood: false, robertYundt: false, isOpenSidebar: false }">
 
+        <div id="loader" class="fixed inset-0 flex items-center justify-center">
+            <img class="h-96" src="{{ asset('frontend/CUSA-Logo-Loading.gif') }}" alt="Loading...">
+        </div>
+
         {{-- JOE LURTSEMA --}}
         <div class="fixed flex min-h-screen min-w-screen p-10 inset-0 bg-black bg-opacity-85 z-20"
             x-cloak
-            x-init="setTimeout(() => joeLurtsema = true, 10000)" 
+            x-init="
+                setTimeout(() => { 
+                    brooksPitcher = false;
+                    jubileeUnderwood = false;
+                    robertYundt = false; 
+                    joeLurtsema = true; 
+
+                    document.documentElement.style.overflow = 'hidden';
+                }, 12000)
+            " 
             x-show="joeLurtsema"
             x-transition>
-            <div class="m-auto text-black w-full max-w-5xl bg-white border-2 relative rounded-[1.9rem] lg:h-[28rem]"
-                @click.outside="joeLurtsema=false;">
+            <div class="m-auto text-black w-full max-w-5xl bg-white bg-opacity-80 border-2 relative rounded-[1.9rem] lg:h-[28rem]"
+                @click.outside="
+                    joeLurtsema=false;
+                    document.documentElement.style.overflow = 'auto';
+                ">
                 <div class="flex justify-center flex-wrap h-full">
-                    <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 p-3 rounded-lg text-white text-2xl font-bold z-10 bg-[#C4172E] sm:text-5xl">
+                    <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 p-3 rounded-lg text-white text-2xl font-bold z-10 bg-[#C4172E] hover:bg-white hover:text-[#C4172E] sm:text-5xl">
                         BOOK NOW!
                     </div>
                     <!-- First Div (30%) -->
@@ -83,7 +99,7 @@
                         </div>
                         <div class="flex justify-center mt-8">
                         <a href="flex">
-                                <div class="bg-[#002E80] py-2 px-4 text-center rounded-3xl text-white transition-all hover:bg-white hover:text-[#002E80]">LEARN MORE ABOUT ME ></div>
+                                <div class="bg-[#002E80] py-2 px-4 text-center text-2xl rounded-3xl text-white transition-all cursor-pointer hover:bg-white hover:text-[#002E80]">LEARN MORE ABOUT ME ></div>
                             </a>
                         </div> 
                     </div>
@@ -97,7 +113,9 @@
             x-show="brooksPitcher"
             x-transition>
             <div class="m-auto text-black w-full max-w-7xl bg-white border-2 relative rounded-[1.9rem] lg:h-[28rem]"
-                @click.outside="brooksPitcher=false;">
+                @click.outside="
+                    brooksPitcher=false;
+                    document.documentElement.style.overflow = 'auto';">
                 <div class="flex justify-center flex-wrap h-full">
                     <!-- First Div (30%) -->
                     <div class="flex relative w-full max-w-md">
@@ -121,7 +139,9 @@
             x-show="jubileeUnderwood"
             x-transition>
             <div class="m-auto text-black w-full max-w-7xl bg-white border-2 relative rounded-[1.9rem] lg:h-[30rem]"
-                @click.outside="jubileeUnderwood=false;">
+                @click.outside="
+                    jubileeUnderwood=false;"
+                    document.documentElement.style.overflow = 'auto';>
                 <div class="flex justify-center flex-wrap h-full">
                     <!-- First Div (30%) -->
                     <div class="flex relative w-full max-w-md">
@@ -146,7 +166,9 @@
             x-show="robertYundt"
             x-transition>
             <div class="m-auto text-black w-full max-w-7xl bg-white border-2 relative rounded-[1.9rem] lg:h-[28rem]"
-                @click.outside="robertYundt=false;">
+                @click.outside="
+                robertYundt=false;
+                document.documentElement.style.overflow = 'auto';">
                 <div class="flex justify-center flex-wrap h-full">
                     <!-- First Div (30%) -->
                     <div class="flex relative w-full max-w-md">
@@ -166,9 +188,9 @@
         </div>
 
         {{-- Navbar --}}
-        <div class="w-full h-40 z-10 u-bg-fixed sticky top-0 sm:relative" id="navbar" data-aos="fade-down">
+        <div class="w-ful p-5 l h-40 z-10 u-bg-fixed sticky top-0 sm:p-0 sm:relative" id="navbar" data-aos="fade-down">
             <div class="h-full w-full m-auto max-w-[120rem]">
-                <div class="h-full flex items-center px-5 sm:px-12 md:px-20 lg:px-28">
+                <div class="h-full flex items-center sm:px-12 md:px-20 lg:px-28">
                     <!-- Logo SVG -->
                     <div class="flex-1 flex-shrink-0 min-w-[100px] sm:min-w-[150px] md:min-w-[200px]">
                         <a href="/">
@@ -224,7 +246,7 @@
             </div>
         </div>
         <div class="w-full m-auto max-w-[120rem]">
-            <div class="pt-20 px-5 sm:px-12 md:px-20 lg:px-28">
+            <div class="pt-20 sm:px-12 md:px-20 lg:px-28">
                 <div class="flex flex-wrap">
                     <div class="flex-1">
                         <div class="flex flex-col pt-10 px-5"
@@ -236,7 +258,7 @@
                                 setTimeout(() => show4 = true, 1400);
                             ">
                             <!-- First Paragraph -->
-                            <p class="font-bold text-5xl sm:text-8xl"
+                            <p class="font-bold text-5xl sm:text-8xl min-w-[20rem]"
                                 x-cloak
                                 x-show="show1" 
                                 x-transition:enter="transition transform ease-out duration-100"
@@ -270,7 +292,7 @@
                             </p>
                             
                             <!-- Fourth Paragraph -->
-                            <p class="font-bold text-2xl mt-5 min-w-[28rem] max-w-[41rem] tracking-widest sm:text-3xl" 
+                            <p class="font-bold text-2xl mt-5 max-w-[41rem] tracking-widest 400px:min-w-[28rem] sm:text-3xl" 
                                 x-cloak
                                 x-show="show4" 
                                 x-transition:enter="transition transform ease-out duration-100"
@@ -282,25 +304,23 @@
                         </div>
                     </div>
                     <div class="flex-1 flex m-auto justify-center flex-wrap lg:flex-nowrap lg:justify-start" data-aos="fade-left">
-                        <div class="w-[30rem] flex flex-col items-center">
+                        <div class="w-full min-w-[20rem] flex flex-col items-center 400px:w-[30rem] 400px:max-w-auto">
                             <div x-data="{ hover: false }">
                                 <img class="h-[30rem] w-full"
                                     :src="hover ? '{{ asset('frontend/poli1-hovered.png') }}' : '{{ asset('frontend/poli1.png') }}'"
                                     @mouseover="hover = true" 
-                                    @mouseleave="hover = false"
-                                alt="">
+                                    @mouseleave="hover = false">
                             </div>
                             <a class="">
                                 <div class="font-medium text-xl bg-red-600 w-60 py-4 text-center rounded-3xl cursor-pointer transition-all hover:bg-white hover:text-red-600">JOIN THE WINNERS</div>
                             </p>
                         </div>
-                        <div class="w-[30rem] flex flex-col items-center">
+                        <div class="w-full max-w-[30rem] flex flex-col items-center 400px:w-[30rem] 400px:max-w-auto">
                             <div x-data="{ hover: false }">
-                                <img class="h-[30rem] w-full" alt=""
+                                <img class="h-[30rem] w-full"
                                     :src="hover ? '{{ asset('frontend/poli2-hovered.png') }}' : '{{ asset('frontend/poli2.png') }}'"
                                     @mouseover="hover = true" 
-                                    @mouseleave="hover = false"
-                                >
+                                    @mouseleave="hover = false">
                             </div>
                             <a class="">
                                 <div class="font-medium text-xl bg-[#002E80] w-60 py-4 text-center rounded-3xl border border-white transition-all hover:bg-white hover:text-[#002E80] cursor-pointer">VIEW COURSE</div>
@@ -317,7 +337,9 @@
                     <div class="mt-5 w-full rounded-2xl bg-[#FFFFFF4D] flex gap-5 items-center p-10">
                         <div class="flex-1"
                             x-data="{ hover: false }"
-                            @click="brooksPitcher = true;">
+                            @click="
+                                brooksPitcher = true;
+                                document.documentElement.style.overflow = 'hidden';">
                             <img class="mx-auto object-contain h-full cursor-pointer" alt=""
                                 :src="hover ? '{{ asset('frontend/campaign1-colored.png') }}' : '{{ asset('frontend/campaign1.png') }}'"
                                 @mouseover="hover = true" 
@@ -326,7 +348,10 @@
                         </div>
                         <div class="flex-1"
                             x-data="{ hover: false }"
-                            @click="jubileeUnderwood = true;">
+                            @click="
+                                jubileeUnderwood = true;
+                                document.documentElement.style.overflow = 'hidden';
+                            ">
                             <img class="mx-auto object-contain h-full cursor-pointer" alt=""
                                 :src="hover ? '{{ asset('frontend/campaign2-colored.png') }}' : '{{ asset('frontend/campaign2.png') }}'"
                                 @mouseover="hover = true" 
@@ -335,7 +360,9 @@
                         </div>
                         <div class="flex-1"
                             x-data="{ hover: false }"
-                            @click="robertYundt = true;">
+                            @click="
+                                robertYundt = true;
+                                document.documentElement.style.overflow = 'hidden';">
                             <img class="mx-auto object-contain h-full cursor-pointer" alt=""
                                 :src="hover ? '{{ asset('frontend/campaign3-colored.png') }}' : '{{ asset('frontend/campaign3.png') }}'"
                                 @mouseover="hover = true" 
@@ -357,7 +384,7 @@
                         </div>
                     </div>
                     <div class="pt-16 flex flex-wrap justify-center gap-12">
-                        <div class="h-[45rem] flex-grow max-w-[28rem] sm:max-w-[30rem] shrink-0 w-full flex flex-col rounded-3xl bg-white shadow-md font-medium text-[#303030] p-10 transition-all hover:scale-105 sm:hover:scale-110" data-aos="fade-right">
+                        <div class="h-[45rem] flex-grow max-w-[28rem] sm:max-w-[30rem] shrink-0 w-full flex flex-col rounded-3xl bg-white shadow-md font-medium text-[#303030] p-10 transition-all hover:!scale-105 sm:hover:!scale-110" data-aos="fade-right">
                             <div class="h-48 w-full bg-gray-300 rounded-lg">
                             </div>
                             <div class="mt-10 flex-1 space-y-3 ">
@@ -398,7 +425,7 @@
                                 <Span>User reviews</Span>
                             </div>
                         </div>
-                        <div class="h-[45rem] flex-grow max-w-[28rem] sm:max-w-[30rem] shrink-0 w-full flex flex-col rounded-3xl bg-white shadow-md font-medium text-[#303030] p-10 transition-all hover:scale-105 sm:hover:scale-110" data-aos="fade-right">
+                        <div class="h-[45rem] flex-grow max-w-[28rem] sm:max-w-[30rem] shrink-0 w-full flex flex-col rounded-3xl bg-white shadow-md font-medium text-[#303030] p-10 transition-all hover:!scale-105 sm:hover:!scale-110" data-aos="fade-right">
                             <div class="h-48 w-full bg-gray-300 rounded-lg">
                             </div>
                             <div class="mt-10 flex-1 space-y-3 ">
@@ -439,7 +466,7 @@
                                 <Span>User reviews</Span>
                             </div>
                         </div>
-                        <div class="h-[45rem] flex-grow max-w-[28rem] sm:max-w-[30rem] shrink-0 w-full flex flex-col rounded-3xl bg-white shadow-md font-medium text-[#303030] p-10 transition-all hover:scale-105 sm:hover:scale-110" data-aos="fade-right">
+                        <div class="h-[45rem] flex-grow max-w-[28rem] sm:max-w-[30rem] shrink-0 w-full flex flex-col rounded-3xl bg-white shadow-md font-medium text-[#303030] p-10 transition-all hover:!scale-105 sm:hover:!scale-110" data-aos="fade-right">
                             <div class="h-48 w-full bg-gray-300 rounded-lg">
                             </div>
                             <div class="mt-10 flex-1 space-y-3 ">
@@ -550,6 +577,18 @@
         </div>
         <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
         <script>
+            document.onreadystatechange = function () {
+                if (document.readyState !== "complete") {
+                    document.querySelector("body").style.visibility = "hidden";
+                    document.querySelector("#loader").style.visibility = "visible";
+                } else {
+                    setTimeout(() => {
+                        document.querySelector("#loader").style.display = "none";
+                        document.querySelector("body").style.visibility = "visible";
+                    }, 2000);
+                }
+            };
+
             AOS.init({
                 offset: 300, // Offset (in pixels) from the original trigger point
                 delay: 100,    // Delay in milliseconds
