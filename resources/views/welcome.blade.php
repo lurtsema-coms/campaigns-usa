@@ -244,6 +244,16 @@
                     <div class="h-dvh text-gray-600 bg-white fixed top-0 right-0 w-72 z-30 p-10 space-y-5"
                         x-cloak
                         x-show="isOpenSidebar"
+                        x-init="
+                            window.addEventListener('resize', () => {
+                                if (window.innerWidth > 1280) {
+                                    isOpenSidebar = false;
+                                }
+                            });
+                            if (window.innerWidth > 1280) {
+                                isOpenSidebar = false;
+                            }
+                        "
                         @click.outside="isOpenSidebar=false">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-10 cursor-pointer hover:opacity-70"
                         @click="isOpenSidebar=false;">
