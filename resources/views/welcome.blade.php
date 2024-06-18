@@ -365,39 +365,50 @@
                 <div class="w-full max-w-[96rem] m-auto" data-aos="fade-up">
                     <p class="text-3xl text-[#FFFFFFCC] font-bold">Notable Campaigns</p>
                     <div class="mt-5 w-full rounded-2xl bg-[#FFFFFF4D] flex flex-col gap-10 items-center p-10 sm:flex-row">
-                        <div class="flex-1"
-                            x-data="{ hover: false }"
-                            @click="
-                                brooksPitcher = true;
-                                document.documentElement.style.overflow = 'hidden';">
-                            <img class="mx-auto object-contain h-full cursor-pointer" alt=""
-                                :src="hover ? '{{ asset('frontend/campaign1-colored.png') }}' : '{{ asset('frontend/campaign1.png') }}'"
-                                @mouseover="hover = true" 
-                                @mouseleave="hover = false"
-                            >
+                        {{-- BROOKS Img --}}
+                        <div class="flex-1 relative" x-data="{ hover: false }" @click="brooksPitcher = true; document.documentElement.style.overflow = 'hidden';">
+                            <img class="mx-auto object-contain h-full cursor-pointer transition-opacity duration-300 absolute inset-0"
+                                :class="{'opacity-0': !hover, 'opacity-100': hover}"
+                                src="{{ asset('frontend/campaign1-colored.png') }}"
+                                alt=""
+                                @mouseover="hover = true"
+                                @mouseleave="hover = false">
+                            <img class="mx-auto object-contain h-full cursor-pointer transition-opacity duration-300"
+                                :class="{'opacity-100': !hover, 'opacity-0': hover}"
+                                src="{{ asset('frontend/campaign1.png') }}"
+                                alt=""
+                                @mouseover="hover = true"
+                                @mouseleave="hover = false">
                         </div>
-                        <div class="flex-1"
-                            x-data="{ hover: false }"
-                            @click="
-                                jubileeUnderwood = true;
-                                document.documentElement.style.overflow = 'hidden';
-                            ">
-                            <img class="mx-auto object-contain h-full cursor-pointer" alt=""
-                                :src="hover ? '{{ asset('frontend/campaign2-colored.png') }}' : '{{ asset('frontend/campaign2.png') }}'"
-                                @mouseover="hover = true" 
-                                @mouseleave="hover = false"
-                            >
+                        {{-- JUBILEE Img --}}
+                        <div class="flex-1 relative" x-data="{ hover: false }" @click="jubileeUnderwood = true; document.documentElement.style.overflow = 'hidden';">
+                            <img class="mx-auto object-contain h-full cursor-pointer transition-opacity duration-300 absolute inset-0"
+                                :class="{'opacity-0': !hover, 'opacity-100': hover}"
+                                src="{{ asset('frontend/campaign2-colored.png') }}"
+                                alt=""
+                                @mouseover="hover = true"
+                                @mouseleave="hover = false">
+                            <img class="mx-auto object-contain h-full cursor-pointer transition-opacity duration-300"
+                                :class="{'opacity-100': !hover, 'opacity-0': hover}"
+                                src="{{ asset('frontend/campaign2.png') }}"
+                                alt=""
+                                @mouseover="hover = true"
+                                @mouseleave="hover = false">
                         </div>
-                        <div class="flex-1"
-                            x-data="{ hover: false }"
-                            @click="
-                                robertYundt = true;
-                                document.documentElement.style.overflow = 'hidden';">
-                            <img class="mx-auto object-contain h-full cursor-pointer" alt=""
-                                :src="hover ? '{{ asset('frontend/campaign3-colored.png') }}' : '{{ asset('frontend/campaign3.png') }}'"
-                                @mouseover="hover = true" 
-                                @mouseleave="hover = false"
-                            >
+                        {{-- ROBERT Img --}}
+                        <div class="flex-1 relative" x-data="{ hover: false }" @click="robertYundt = true; document.documentElement.style.overflow = 'hidden';">
+                            <img class="mx-auto object-contain h-full cursor-pointer transition-opacity duration-300 absolute inset-0"
+                                :class="{'opacity-0': !hover, 'opacity-100': hover}"
+                                src="{{ asset('frontend/campaign3-colored.png') }}"
+                                alt=""
+                                @mouseover="hover = true"
+                                @mouseleave="hover = false">
+                            <img class="mx-auto object-contain h-full cursor-pointer transition-opacity duration-300"
+                                :class="{'opacity-100': !hover, 'opacity-0': hover}"
+                                src="{{ asset('frontend/campaign3.png') }}"
+                                alt=""
+                                @mouseover="hover = true"
+                                @mouseleave="hover = false">
                         </div>
                     </div>
                 </div>
