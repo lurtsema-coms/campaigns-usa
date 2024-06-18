@@ -61,7 +61,7 @@
         </div>
 
         {{-- JOE LURTSEMA --}}
-        <div class="fixed flex min-h-screen min-w-screen p-10 inset-0 bg-black bg-opacity-85 z-20"
+        <div class="fixed flex min-h-screen min-w-screen p-10 inset-0 bg-black bg-opacity-85 z-20 overflow-auto"
             x-cloak
             x-init="
                 setTimeout(() => { 
@@ -113,7 +113,7 @@
         </div>
 
         {{-- BROOKS PITCHER --}}
-        <div class="fixed flex min-h-screen min-w-screen p-10 inset-0 bg-black bg-opacity-85 z-20"
+        <div class="fixed flex min-h-screen min-w-screen p-10 inset-0 bg-black bg-opacity-85 z-20 overflow-auto"
             x-cloak
             x-show="brooksPitcher"
             x-transition>
@@ -139,7 +139,7 @@
             </div>
         </div>
         {{-- JUBILEE UNDERWOOD --}}
-        <div class="fixed flex min-h-screen min-w-screen p-10 inset-0 bg-black bg-opacity-85 z-20"
+        <div class="fixed flex min-h-screen min-w-screen p-10 inset-0 bg-black bg-opacity-85 z-20 overflow-auto"
             x-cloak
             x-show="jubileeUnderwood"
             x-transition>
@@ -166,7 +166,7 @@
             </div>
         </div>
         {{-- BROOKS PITCHER --}}
-        <div class="fixed flex min-h-screen min-w-screen p-10 inset-0 bg-black bg-opacity-85 z-20"
+        <div class="fixed flex min-h-screen min-w-screen p-10 inset-0 bg-black bg-opacity-85 z-20 overflow-auto"
             x-cloak
             x-show="robertYundt"
             x-transition>
