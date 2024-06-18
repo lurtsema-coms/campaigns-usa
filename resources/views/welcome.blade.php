@@ -54,8 +54,10 @@
 
     <body class="text-white min-h-screen antialiased u-bg-fixed" x-data="{ joeLurtsema: false, brooksPitcher: false, jubileeUnderwood: false, robertYundt: false, isOpenSidebar: false }">
 
-        <div id="loader" class="fixed inset-0 flex items-center justify-center">
-            <img class="h-96" src="{{ asset('frontend/CUSA-Logo-Loading.gif') }}" alt="Loading...">
+        <div id="loader" class="absolute u-bg-fixed inset-0 flex">
+            <div class="m-auto">
+                <img class="object-contain w-full max-w-96" src="{{ asset('frontend/CUSA-Logo-Loading.gif') }}" alt="Loading...">
+            </div>
         </div>
 
         {{-- JOE LURTSEMA --}}
@@ -143,8 +145,8 @@
             x-transition>
             <div class="m-auto text-black w-full max-w-7xl bg-white border-2 relative rounded-[1.9rem] lg:h-[30rem]"
                 @click.outside="
-                    jubileeUnderwood=false;"
-                    document.documentElement.style.overflow = 'auto';>
+                    jubileeUnderwood=false;
+                    document.documentElement.style.overflow = 'auto';">
                 <div class="flex justify-center flex-wrap h-full">
                     <!-- First Div (30%) -->
                     <div class="flex relative w-full max-w-md">
@@ -203,11 +205,26 @@
 
                     <!-- Navigation Links -->
                     <div class="hidden flex-1 gap-4 text-lg md:text-xl justify-center md:justify-end xl:flex">
-                        <a class="hover:opacity-70" href="">HOME</a>
-                        <a class="hover:opacity-70" href="">COURSES</a>
-                        <a class="hover:opacity-70" href="">PRICING</a>
-                        <a class="hover:opacity-70" href="">ABOUT</a>
-                        <a class="hover:opacity-70" href="">CONTACT</a>
+                        <a class="relative group" href="">
+                            HOME
+                            <span class="absolute -bottom-1 left-0 w-0 transition-all h-1 bg-white group-hover:w-full"></span>
+                        </a>
+                        <a class="relative group" href="">
+                            COURSES
+                            <span class="absolute -bottom-1 left-0 w-0 transition-all h-1 bg-white group-hover:w-full"></span>
+                        </a>
+                        <a class="relative group" href="">
+                            PRICING
+                            <span class="absolute -bottom-1 left-0 w-0 transition-all h-1 bg-white group-hover:w-full"></span>
+                        </a>
+                        <a class="relative group" href="">
+                            ABOUT
+                            <span class="absolute -bottom-1 left-0 w-0 transition-all h-1 bg-white group-hover:w-full"></span>
+                        </a>
+                        <a class="relative group" href="">
+                            CONTACT
+                            <span class="absolute -bottom-1 left-0 w-0 transition-all h-1 bg-white group-hover:w-full"></span>
+                        </a>
                     </div>
 
                     <!-- Call Now Button -->
@@ -337,7 +354,7 @@
             <div class="pt-56 px-5 sm:px-12 md:px-20 lg:px-28">
                 <div class="w-full max-w-[96rem] m-auto" data-aos="fade-up">
                     <p class="text-3xl text-[#FFFFFFCC] font-bold">Notable Campaigns</p>
-                    <div class="mt-5 w-full rounded-2xl bg-[#FFFFFF4D] flex gap-5 items-center p-10">
+                    <div class="mt-5 w-full rounded-2xl bg-[#FFFFFF4D] flex flex-col gap-10 items-center p-10 sm:flex-row">
                         <div class="flex-1"
                             x-data="{ hover: false }"
                             @click="
