@@ -550,7 +550,7 @@
                         </div>
                     </div>
                     <div class="mt-20 flex justify-center">
-                        <a href="">
+                        <a href="/courses">
                             <div class="text-2xl font-medium bg-[#002E80] p-4 text-center rounded-3xl border border-white hover:bg-white hover:text-[#002E80]">BROWSE COURSES</div>
                         </a>
                     </div>
