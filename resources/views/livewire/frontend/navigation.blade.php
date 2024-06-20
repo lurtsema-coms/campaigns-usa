@@ -6,12 +6,12 @@ new class extends Component {
     //
 }; ?>
 
-<div x-data="{ isNavOpen: false }">
+<div x-data="{ isNavOpen: false, isSearchBar: false }">
     <div class="flex items-center p-5 border-b border-slate-800">
         <div class="flex-grow shrink-0 flex items-center gap-10">
             <img class="h-14" src="{{ asset('frontend/Logo SVG.png') }}" alt="">
             <div class="hidden gap-3 lg:flex">
-                <a href="">Lorem</a>
+                <a href="/courses" wire:navigate>Courses</a>
                 <a href="">Lorem</a>
                 <a href="">Lorem</a>
             </div>
@@ -24,7 +24,8 @@ new class extends Component {
                 </svg>
             </div>
             {{-- Search --}}
-            <div class="bg-color-blue p-2 rounded-lg cursor-pointer transition-all hover:opacity-70">
+            <div class="bg-color-blue p-2 rounded-lg cursor-pointer transition-all hover:opacity-70"
+                @click="isSearchBar = true;">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                 </svg>
@@ -40,7 +41,8 @@ new class extends Component {
                 </div>
             </div>
             {{-- Menu --}}
-            <div class="block bg-color-blue p-2 rounded-lg cursor-pointer transition-all hover:opacity-70 lg:hidden">
+            <div class="block bg-color-blue p-2 rounded-lg cursor-pointer transition-all hover:opacity-70 lg:hidden"
+                @click="isNavOpen = true;">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5M12 17.25h8.25" />
                 </svg>
@@ -48,12 +50,66 @@ new class extends Component {
         </div>
     </div>
     
-    <div class="fixed top-0 right-0 h-screen w-96 bg-slate-800"
-        x-show="isNavOpen">
+    {{-- Responsive Menu --}}
+    <div class="fixed top-0 right-0 h-screen w-96 bg-slate-800 z-10"
+        x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="translate-x-full"
+        x-transition:leave="transition ease-in duration-300"
+        x-transition:leave-start="translate-x-0"
+        x-transition:leave-end="translate-x-full"
+        x-cloak
+        x-show="isNavOpen"
+        @click.outside="isNavOpen = false;"
+        x-init="
+            window.addEventListener('resize', () => {
+                isNavOpen = false;
+            });
+        ">
         <div class="p-5">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8 cursor-pointer hover:text-red-500"
+                @click="isNavOpen = false;">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
             </svg>
+            <div class="my-5 space-y-3">
+                <a class="block font-medium hover:opacity-70" href="">Link</a>
+                <a class="block font-medium hover:opacity-70" href="">Link</a>
+                <a class="block font-medium hover:opacity-70" href="">Link</a>
+            </div>
+            <div class="space-y-3">
+                <div class="block font-bold text-center bg-color-blue py-2 px-4 rounded-lg cursor-pointer transition-all hover:opacity-70">
+                    Login
+                </div>
+                <div class="block font-bold text-center bg-color-blue py-2 px-4 rounded-lg cursor-pointer transition-all hover:opacity-70">
+                    Sign Up
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- Search Bar --}}
+    <div class="fixed top-0 right-0 h-screen w-full max-w-96 bg-slate-800 z-20 overflow-auto sm:max-w-lg"
+        x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="translate-x-full"
+        x-transition:leave="transition ease-in duration-300"
+        x-transition:leave-start="translate-x-0"
+        x-transition:leave-end="translate-x-full"
+        x-cloak
+        x-show="isSearchBar"
+        @click.outside="isSearchBar = false;">
+        <div class="p-5 space-y-8">
+            <div class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="absolute size-8 cursor-pointer hover:text-red-500"
+                @click="isSearchBar = false;">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                </svg>
+                <div class="flex-1 text-center text-xl font-bold">
+                    Search
+                </div>
+            </div>
+            <input class="w-full rounded-lg bg-gray-200 text-slate-800 focus:bg-white focus:ring-0 focus:border-1" type="text">
+        </div>
+        <div class="p-5">
+            <p class="font-bold text-lg">Recommended Results</p>
         </div>
     </div>
 </div>
