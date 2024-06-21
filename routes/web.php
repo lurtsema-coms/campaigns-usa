@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::view('/', 'welcome');
 Route::view('courses', 'frontend.courses');
 Route::view('courses/{id}', 'frontend.course-section')->name('course-section');
+Route::view('cart', 'frontend.cart-section')->name('cart_section');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::view('dashboard', 'dashboard')->name('dashboard');
