@@ -19,6 +19,7 @@ export default {
             },
             colors: {
                 "color-blue": "rgb(15, 34, 57)",
+                "color-grey": "#181835",
             },
             backgroundImage: {
                 "custom-border-b": "linear-gradient(to right, rgba(15, 34, 57, 0), rgba(15, 34, 57, 1), rgba(15, 34, 57, 0))",
