@@ -38,19 +38,21 @@
 
         </style>
     </head>
-    <body class="text-gray-900 antialiased flex m-auto min-h-screen sm:p-6 bg-purple-50 u-bg-fixed p-4 ">
-        <div class=" w-full max-w-[30rem] sm:auto relative flex flex-row justify-center items-center m-auto u-bg-grey shadow-none sm:shadow-md  h-[35rem] rounded-3xl ">
-            <div class="w-full absolute top-0 -translate-y-12  flex flex-col items-center justify-center">
-                <img class="w-64 u-bg-linear rounded-3xl p-4" src="{{ asset('frontend/Logo SVG.png') }}" alt="">
-            </div>
-            <div class="absolute left-0 translate-left-14">
-                <img class="" src="{{ asset('frontend/flag-left.png') }}" alt="flag">
-            </div>
-            <div class="absolute right-0 translate-right-14 ">
-                <img src="{{ asset('frontend/flag-right.png') }}" alt="flag">
-            </div>
-            <div class="w-full px-14 py-4 m-auto">
-                {{ $slot }}
+    <body class="text-gray-900 antialiased flex m-auto min-h-screen max-w-[100vw] sm:p-6 bg-purple-50 u-bg-fixed p-4">
+        <div class="w-full overflow-x-hidden px-2 py-10 flex m-auto">
+            <div class=" w-full max-w-[30rem] sm:auto relative flex flex-row justify-center items-center m-auto u-bg-grey shadow-none sm:shadow-md  h-[35rem] rounded-3xl ">
+                <div class="w-full absolute top-0 -translate-y-12  flex flex-col items-center justify-center">
+                    <img class="w-64 u-bg-linear rounded-3xl p-4" src="{{ asset('frontend/Logo SVG.png') }}" alt="">
+                </div>
+                <div class="absolute left-0 translate-left-14">
+                    <img class="" src="{{ asset('frontend/flag-left.png') }}" alt="flag">
+                </div>
+                <div class="absolute right-0 translate-right-14 ">
+                    <img src="{{ asset('frontend/flag-right.png') }}" alt="flag">
+                </div>
+                <div class="w-full px-14 py-4 m-auto">
+                    {{ $slot }}
+                </div>
             </div>
         </div>
     </body>
