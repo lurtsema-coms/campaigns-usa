@@ -18,23 +18,38 @@
                 background: linear-gradient(to right, #152034, #0B0029);
                 /* background: linear-gradient(to right, #0b0029f4, #10102F); */
             }
-            .test{
-                background: radial-gradient(circle, rgba(21,32,52,1) 52%, rgba(11,0,41,1) 100%);
+            .u-bg-grey{
+                background: linear-gradient(to bottom, #D9D9D9, #BFBFBF);
             }
 
-            .test2{
-                box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;            
+            .u-bg-linear{
+                background: linear-gradient(to right, #111330, #100E2E);
             }
+
+            .translate-left-14 {
+                transform: translateX(-3.57rem); /* or translateX(-56px) */
+                top: 40%;
+            }
+            .translate-right-14 {
+                transform: translateX(4.88rem); /* or translateX(-56px) */
+                top:5%;
+            }
+
 
         </style>
     </head>
-    <body class="text-gray-900 antialiased flex m-auto min-h-screen bg-purple-50">
-        <div class="w-full max-w-6xl flex flex-row justify-center m-auto bg-white  shadow-none sm:shadow-md overflow-hidden h-[35rem] ">
-            <div class="w-2/5 hidden sm:block relative bg-contain bg-no-repeat bg-center u-bg-fixed items-center justify-center">
-                <img class="absolute inset-0 m-auto" src="{{asset('frontend/test.png')}}" alt="">
-                <div class=" test w-full h-full absolute inset-0 z-20 opacity-75"></div>
+    <body class="text-gray-900 antialiased flex m-auto min-h-screen sm:p-6 bg-purple-50 u-bg-fixed p-4 ">
+        <div class=" w-full max-w-[30rem] sm:auto relative flex flex-row justify-center items-center m-auto u-bg-grey shadow-none sm:shadow-md  h-[35rem] rounded-3xl ">
+            <div class="w-full absolute top-0 -translate-y-12  flex flex-col items-center justify-center">
+                <img class="w-64 u-bg-linear rounded-3xl p-4" src="{{ asset('frontend/Logo SVG.png') }}" alt="">
             </div>
-            <div class="w-full sm:w-3/5 px-14 py-4 m-auto">
+            <div class="absolute left-0 translate-left-14">
+                <img class="" src="{{ asset('frontend/flag-left.png') }}" alt="flag">
+            </div>
+            <div class="absolute right-0 translate-right-14 ">
+                <img src="{{ asset('frontend/flag-right.png') }}" alt="flag">
+            </div>
+            <div class="w-full px-14 py-4 m-auto">
                 {{ $slot }}
             </div>
         </div>
