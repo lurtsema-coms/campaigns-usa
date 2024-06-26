@@ -32,8 +32,7 @@ new #[Layout('layouts.guest')] class extends Component
     <form wire:submit="login">
 
         <div class="mb-6">
-
-            <span class="font-bold">Doesn't have an account yet? <a href="/register" class="text-indigo-950 underline font-bold">Sign Up</a></span>
+            <span class="font-bold text-md ">Doesn't have an account yet? <a href="/register" class="text-indigo-800 underline font-bold">Sign Up</a></span>
         </div>
 
         <!-- Email Address -->
@@ -67,7 +66,7 @@ new #[Layout('layouts.guest')] class extends Component
         </div>
 
         <div class="flex items-center justify-center mt-4">
-            <x-primary-button class=" w-full ">
+            <x-primary-button class="w-full flex items-center justify-center">
                 {{ __('LOGIN') }}
             </x-primary-button>
         </div>
