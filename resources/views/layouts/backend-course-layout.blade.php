@@ -13,13 +13,14 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
 </head>
-<body class="min-h-screen font-sans antialiased" style="background: linear-gradient(to right, #152034, #0B0029);">
-    <div class="flex">
+<body class="min-h-screen font-sans antialiased bg-color-blue">
+    <div class="flex"
+        x-data="{ sidebarOpen: true }">
         <div class="shrink-0">
             <livewire:course.course-video-sidebar />
         </div>
-        <div class="pl-80 flex-1 w-full">
-            <div class="m-auto container px-6 py-3">
+        <div class="lg:pl-80 flex-1 w-full">
+            <div class="m-auto lg:container px-6 py-3">
                 <livewire:course.navbar/>
                 <livewire:course.video-content/>
                 <div class="mt-14">

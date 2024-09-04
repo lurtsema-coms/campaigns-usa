@@ -7,7 +7,13 @@ new class extends Component {
 }; ?>
 
 <div>
-    <div class="fixed h-screen w-80 flex flex-col bg-slate-900 overflow-hidden">
+    <div class="fixed h-screen w-80 flex flex-col bg-slate-900 overflow-hidden z-20"
+        :class="{ hidden:!sidebarOpen }"
+        x-init="
+            window.addEventListener('resize', () => {
+                sidebarOpen = true;
+            });
+        ">
         <!-- Header Section -->
         <div class="py-6 px-5 flex justify-between">
             <a href="" class="flex items-center text-white gap-3">
