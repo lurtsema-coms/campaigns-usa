@@ -12,6 +12,7 @@ new class extends Component
     public string $first_name = '';
     public string $last_name = '';
     public string $email = '';
+    public string $contact_number = '';
 
     /**
      * Mount the component.
@@ -21,6 +22,7 @@ new class extends Component
         $this->first_name = Auth::user()->first_name;
         $this->last_name = Auth::user()->last_name;
         $this->email = Auth::user()->email;
+        $this->contact_number = Auth::user()->contact_number;
     }
 
     /**
@@ -34,6 +36,7 @@ new class extends Component
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($user->id)],
+            'contact_number' => ['required', 'string', 'max:255'],
         ]);
 
         $user->fill($validated);
@@ -88,7 +91,11 @@ new class extends Component
             <x-text-input wire:model="last_name" id="last_name" name="last_name" type="text" class="mt-1 block w-full" required autofocus autocomplete="last_name" />
             <x-input-error class="mt-2" :messages="$errors->get('last_name')" />
         </div>
-
+        <div>
+            <x-input-label for="contact_number" :value="__('Contact Number')" />
+            <x-text-input wire:model="contact_number" id="contact_number" name="contact_number" type="text" class="mt-1 block w-full" required autofocus autocomplete="contact_number" />
+            <x-input-error class="mt-2" :messages="$errors->get('contact_number')" />
+        </div>
         <div>
             <x-input-label for="email" :value="__('Email')" />
             <x-text-input wire:model="email" id="email" name="email" type="email" class="mt-1 block w-full" required autocomplete="username" />

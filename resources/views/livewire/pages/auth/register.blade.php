@@ -14,6 +14,7 @@ new #[Layout('layouts.guest')] class extends Component
     public string $first_name = '';
     public string $last_name = '';
     public string $email = '';
+    public string $contact_number = '';
     public string $password = '';
     public string $password_confirmation = '';
 
@@ -26,6 +27,7 @@ new #[Layout('layouts.guest')] class extends Component
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'contact_number' => ['required', 'string', 'max:255'],
             'password' => ['required', 'string', 'confirmed', Rules\Password::defaults()],
         ]);
 
@@ -63,6 +65,13 @@ new #[Layout('layouts.guest')] class extends Component
             <x-input-label for="email" :value="__('Email')" />
             <x-text-input wire:model="email" id="email" class="block mt-1 w-full" type="email" name="email" required autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        </div>
+
+        <!-- Contact Number -->
+        <div class="mt-4">
+            <x-input-label for="contact_number" :value="__('Contact Number')" />
+            <x-text-input wire:model="contact_number" id="contact_number" class="block mt-1 w-full" type="text" name="contact_number" required autocomplete="contact_number" />
+            <x-input-error :messages="$errors->get('contact_number')" class="mt-2" />
         </div>
 
         <!-- Password -->
