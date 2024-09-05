@@ -20,7 +20,7 @@ new class extends Component {
         </div>
         <div class="relative flex items-center justify-end flex-1 gap-3">
             {{-- Cart --}}
-            <a class="p-2 transition-all rounded-lg cursor-pointer bg-color-blue hover:opacity-70" href="/cart" wire:navigate>
+            <a class="p-2 transition-all rounded-lg cursor-pointer bg-color-blue hover:opacity-70" href="{{ route('cart-section') }}" wire:navigate>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
                 </svg>
@@ -32,13 +32,23 @@ new class extends Component {
                     <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                 </svg>
             </div>
-            <a href="{{ route('login') }}" wire:navigate>
-                <div class="hidden px-4 py-2 transition-all rounded-lg cursor-pointer bg-color-blue hover:opacity-70 lg:block">
-                    <div>
-                        Login
+            @auth
+                <a href="{{ route('dashboard') }}" wire:navigate>
+                    <div class="hidden px-4 py-2 transition-all rounded-lg cursor-pointer bg-color-blue hover:opacity-70 lg:block">
+                        <div>
+                            Dashboard
+                        </div>
                     </div>
-                </div>
-            </a>
+                </a>
+                @else
+                <a href="{{ route('login') }}" wire:navigate>
+                    <div class="hidden px-4 py-2 transition-all rounded-lg cursor-pointer bg-color-blue hover:opacity-70 lg:block">
+                        <div>
+                            Login
+                        </div>
+                    </div>
+                </a>
+            @endauth
             {{-- Menu --}}
             <div class="block p-2 transition-all rounded-lg cursor-pointer bg-color-blue hover:opacity-70 lg:hidden"
                 @click="isNavOpen = true;">
@@ -74,14 +84,19 @@ new class extends Component {
                 <a class="block font-medium hover:opacity-70" href="">Link</a>
                 <a class="block font-medium hover:opacity-70" href="">Link</a>
             </div>
-            <div class="space-y-3">
-                <div class="block px-4 py-2 font-bold text-center transition-all rounded-lg cursor-pointer bg-color-blue hover:opacity-70">
-                    Login
-                </div>
-                <div class="block px-4 py-2 font-bold text-center transition-all rounded-lg cursor-pointer bg-color-blue hover:opacity-70">
-                    Sign Up
-                </div>
-            </div>
+            @auth
+                <a href="{{ route('dashboard') }}" wire:navigate>
+                    <div class="block px-4 py-2 font-bold text-center transition-all rounded-lg cursor-pointer bg-color-blue hover:opacity-70">
+                        Dashboard
+                    </div>
+                </a>
+                @else
+                <a href="{{ route('login') }}" wire:navigate>
+                    <div class="block px-4 py-2 font-bold text-center transition-all rounded-lg cursor-pointer bg-color-blue hover:opacity-70">
+                        Login
+                    </div>
+                </a>
+            @endauth
         </div>
     </div>
 

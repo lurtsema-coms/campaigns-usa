@@ -13,7 +13,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
 </head>
-<body class="min-h-screen font-sans text-gray-100 antialiased" style="background: linear-gradient(to right, #152034, #0B0029);">
+<body class="min-h-screen font-sans antialiased text-gray-100" style="background: linear-gradient(to right, #152034, #0B0029);">
     <div class="w-full">
         <livewire:frontend.navigation />
         @yield('main-content')

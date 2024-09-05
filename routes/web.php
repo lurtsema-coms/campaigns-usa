@@ -14,16 +14,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::view('/', 'welcome');
-Route::view('courses', 'frontend.courses');
+Route::view('courses', 'frontend.courses')->name('courses');
 Route::view('courses/{id}', 'frontend.course-section')->name('course-section');
-Route::view('cart', 'frontend.cart-section')->name('cart_section');
+Route::view('cart', 'frontend.cart-section')->name('cart-section');
 
 
 Route::view('course/course1', 'backend.course-video')->name('user_course');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::view('dashboard', 'dashboard')->name('dashboard');
-    Route::view('user-courses', 'subscribe-courses')->name('subscribe-courses');
+    Route::view('subscribe-courses', 'subscribe-courses')->name('subscribe-courses');
 });
 
 Route::view('profile', 'profile')
