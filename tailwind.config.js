@@ -1,5 +1,5 @@
-import defaultTheme from 'tailwindcss/defaultTheme';
-import forms from '@tailwindcss/forms';
+import defaultTheme from "tailwindcss/defaultTheme";
+import forms from "@tailwindcss/forms";
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -20,13 +20,17 @@ export default {
             colors: {
                 "color-blue": "rgb(15, 34, 57)",
                 "color-grey": "#181835",
-                "dark": "#252525",
+                dark: "#252525",
             },
             backgroundImage: {
-                "custom-border-b": "linear-gradient(to right, rgba(15, 34, 57, 0), rgba(15, 34, 57, 1), rgba(15, 34, 57, 0))",
+                "gradient": "linear-gradient(to right, #152034, #0B0029);",
+                "custom-border-b":
+                    "linear-gradient(to right, rgba(15, 34, 57, 0), rgba(15, 34, 57, 1), rgba(15, 34, 57, 0))",
             },
         },
     },
+
+    darkMode: "selector",
 
     plugins: [forms],
 };

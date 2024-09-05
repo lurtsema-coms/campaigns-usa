@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" >
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,7 +13,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
 </head>
-<body class="min-h-screen font-sans antialiased text-gray-100" style="background: linear-gradient(to right, #152034, #0B0029);">
+<body class="min-h-screen font-sans antialiased text-dark dark:text-gray-100 dark:bg-gradient">
     <div class="w-full">
         <livewire:frontend.navigation />
         @yield('main-content')

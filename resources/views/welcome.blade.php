@@ -209,7 +209,7 @@
                             HOME
                             <span class="absolute left-0 w-0 h-1 transition-all bg-white -bottom-1 group-hover:w-full"></span>
                         </a>
-                        <a class="relative group" href="{{ route('courses') }}" wire:navigate>
+                        <a class="relative group" href="{{ route('courses') }}">
                             COURSES
                             <span class="absolute left-0 w-0 h-1 transition-all bg-white -bottom-1 group-hover:w-full"></span>
                         </a>

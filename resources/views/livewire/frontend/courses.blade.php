@@ -6,49 +6,49 @@ new class extends Component {
     //
 }; ?>
 
-<div class="mt-44 px-5">
+<div class="px-5 mt-44">
     {{-- Categories --}}
-    <div class="flex flex-wrap justify-center gap-9 pb-5 md:flex-nowrap">
-        <a class="relative group px-1" href="">
+    <div class="flex flex-wrap justify-center pb-5 gap-9 md:flex-nowrap">
+        <a class="relative px-1 group" href="">
             Laravel
-            <span class="absolute -bottom-3 left-0 w-0 transition-all h-1 bg-white group-hover:w-full md:-bottom-6"></span>
+            <span class="absolute left-0 w-0 h-1 transition-all bg-color-blue dark:bg-white -bottom-3 group-hover:w-full md:-bottom-6"></span>
         </a>
-        <a class="relative group px-1" href="">
+        <a class="relative px-1 group" href="">
             Tailwind
-            <span class="absolute -bottom-3 left-0 w-0 transition-all h-1 bg-white group-hover:w-full md:-bottom-6"></span>
+            <span class="absolute left-0 w-0 h-1 transition-all bg-color-blue dark:bg-white -bottom-3 group-hover:w-full md:-bottom-6"></span>
         </a>
-        <a class="relative group px-1" href="">
+        <a class="relative px-1 group" href="">
             CSS
-            <span class="absolute -bottom-3 left-0 w-0 transition-all h-1 bg-white group-hover:w-full md:-bottom-6"></span>
+            <span class="absolute left-0 w-0 h-1 transition-all bg-color-blue dark:bg-white -bottom-3 group-hover:w-full md:-bottom-6"></span>
         </a>
-        <a class="relative group px-1" href="">
+        <a class="relative px-1 group" href="">
             Livewire
-            <span class="absolute -bottom-3 left-0 w-0 transition-all h-1 bg-white group-hover:w-full md:-bottom-6"></span>
+            <span class="absolute left-0 w-0 h-1 transition-all bg-color-blue dark:bg-white -bottom-3 group-hover:w-full md:-bottom-6"></span>
         </a>
-        <a class="relative group px-1" href="">
+        <a class="relative px-1 group" href="">
             HTMX
-            <span class="absolute -bottom-3 left-0 w-0 transition-all h-1 bg-white group-hover:w-full md:-bottom-6"></span>
+            <span class="absolute left-0 w-0 h-1 transition-all bg-color-blue dark:bg-white -bottom-3 group-hover:w-full md:-bottom-6"></span>
         </a>
     </div>
     {{-- Border --}}
-    <div class="w-full h-1 bg-custom-border-b"></div>
+    <div class="w-full h-1 bg-gray-200 dark:bg-transparent dark:bg-custom-border-b"></div>
     {{-- Categories Links --}}
-    <div class="flex justify-center flex-wrap gap-10 mt-10">
-        <a class="max-w-72 flex-grow shrink-0 flex items-center gap-5 bg-color-blue border border-gray-700 p-4 rounded-xl hover:border-gray-400" href="{{ route('course-section', 1) }}" wire:navigate>
+    <div class="flex flex-wrap justify-center gap-10 mt-10 text-dark dark:text-gray-100">
+        <a class="flex items-center flex-grow gap-5 p-4 border shadow-md dark:border-gray-700 max-w-72 shrink-0 dark:bg-color-blue rounded-xl hover:border-gray-400" href="{{ route('course-section', 1) }}" wire:navigate>
             <img class="object-contain w-16" src="https://via.placeholder.com/64" alt="Sample Image">
             <div class="space-y-2">
                 <p class="font-bold">Lorem ipsum dolor sit</p>
                 <p class="text-xs">12 Series | 118 videos</p>
             </div>
         </a>
-        <a class="max-w-72 flex-grow shrink-0 flex items-center gap-5 bg-color-blue border border-gray-700 p-4 rounded-xl hover:border-gray-400" href="{{ route('course-section', 1) }}" wire:navigate>
+        <a class="flex items-center flex-grow gap-5 p-4 border shadow-md dark:border-gray-700 max-w-72 shrink-0 dark:bg-color-blue rounded-xl hover:border-gray-400" href="{{ route('course-section', 1) }}" wire:navigate>
             <img class="object-contain w-16" src="https://via.placeholder.com/64" alt="Sample Image">
             <div class="space-y-2">
                 <p class="font-bold">Lorem ipsum dolor sit.</p>
                 <p class="text-xs">12 Series | 118 videos</p>
             </div>
         </a>
-        <a class="max-w-72 flex-grow shrink-0 flex items-center gap-5 bg-color-blue border border-gray-700 p-4 rounded-xl hover:border-gray-400" href="{{ route('course-section', 1) }}" wire:navigate>
+        <a class="flex items-center flex-grow gap-5 p-4 border shadow-md dark:border-gray-700 max-w-72 shrink-0 dark:bg-color-blue rounded-xl hover:border-gray-400" href="{{ route('course-section', 1) }}" wire:navigate>
             <img class="object-contain w-16" src="https://via.placeholder.com/64" alt="Sample Image">
             <div class="space-y-2">
                 <p class="font-bold">Lorem ipsum dolor sit.</p>
