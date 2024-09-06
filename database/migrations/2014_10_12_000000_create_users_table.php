@@ -19,11 +19,12 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('contact_number');
             $table->string('role');
+            $table->json('subscribe_courses')->nullable();
+            $table->json('cart')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
-
         });
     }
 

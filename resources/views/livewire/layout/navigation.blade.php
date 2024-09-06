@@ -23,7 +23,7 @@ new class extends Component
             <div class="flex">
                 <!-- Logo -->
                 <div class="flex items-center shrink-0">
-                    <a href="{{ route('dashboard') }}" wire:navigate>
+                    <a href="{{ route('courses') }}" wire:navigate>
                         <img class="block w-auto fill-current h-9" src="{{ asset('frontend/Logo SVG.png') }}" alt="">
                     </a>
                 </div>
@@ -35,6 +35,11 @@ new class extends Component
                     </x-nav-link>
                     @role('student')
                         <x-nav-link :href="route('subscribe-courses')" :active="request()->routeIs('subscribe-courses')" wire:navigate>
+                            {{ __('Courses') }}
+                        </x-nav-link>
+                    @endrole
+                    @role('instructor')
+                        <x-nav-link :href="route('instructor-courses')" :active="request()->routeIs('instructor-courses')" wire:navigate>
                             {{ __('Courses') }}
                         </x-nav-link>
                     @endrole

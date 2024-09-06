@@ -7,10 +7,10 @@
                 <img class="w-64" src="{{ asset('frontend/select-cart.svg') }}" alt="">
             </div>
             <div class="w-full lg:w-8/12">
-                <div class="p-5 bg-transparent border shadow-md rounded-2xl dark:border-gray-700 min-h-64">
+                <div class="p-5 bg-transparent border shadow-md border-dark/20 rounded-2xl dark:border-gray-700 min-h-64">
                     <p class="pb-2 text-2xl border-b">Cart</p>
                     <div class="mt-5 space-y-4">
-                        <div class="flex flex-col gap-5 p-5 overflow-hidden border rounded-lg dark:border-gray-700 hover:border-gray-400 400px:flex-row">
+                        <div class="flex flex-col gap-5 p-5 overflow-hidden rounded-lg shadow-md dark:border-gray-700 hover:border-gray-400 400px:flex-row">
                             <div class="shrink-0">
                                 <img class="object-cover w-24" src="https://via.placeholder.com/64" alt="Sample Image">
                             </div>
@@ -48,7 +48,7 @@
                                 </svg>
                             </div>
                         </div>
-                        <div class="flex flex-col gap-5 p-5 overflow-hidden border rounded-lg dark:border-gray-700 hover:border-gray-400 400px:flex-row">
+                        <div class="flex flex-col gap-5 p-5 overflow-hidden rounded-lg shadow-md dark:border-gray-700 hover:border-gray-400 400px:flex-row">
                             <div class="shrink-0">
                                 <img class="object-cover w-24" src="https://via.placeholder.com/64" alt="Sample Image">
                             </div>
@@ -90,7 +90,7 @@
                 </div>
             </div>
             <div class="w-8/12 md:w-6/12 lg:w-5/12">
-                <div class="p-5 space-y-3 bg-transparent border rounded-lg dark:border-gray-700 min-h-32">
+                <div class="p-5 space-y-3 bg-transparent border rounded-lg shadow-md border-dark/20 dark:border-gray-700 min-h-32">
                     <p class="pb-2 text-2xl border-b">Total</p>
                     <p class="text-xl">$30</p>
                     <p class="text-sm dark:text-gray-300">80% off</p>

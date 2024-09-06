@@ -14,8 +14,6 @@ new class extends Component {
             </a>
             <div class="hidden gap-3 lg:flex">
                 <a href="/courses" wire:navigate>Courses</a>
-                <a href="">Lorem</a>
-                <a href="">Lorem</a>
             </div>
         </div>
         <div class="relative flex items-center justify-end flex-1 gap-3">

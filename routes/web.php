@@ -24,6 +24,9 @@ Route::view('course/course1', 'backend.course-video')->name('user_course');
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::view('dashboard', 'dashboard')->name('dashboard');
     Route::view('subscribe-courses', 'subscribe-courses')->name('subscribe-courses');
+
+    Route::view('instructor-courses', 'backend.instructor.courses')->name('instructor-courses');
+    
 });
 
 Route::view('profile', 'profile')
