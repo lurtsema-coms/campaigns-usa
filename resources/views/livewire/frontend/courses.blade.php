@@ -6,7 +6,12 @@ new class extends Component {
     //
 }; ?>
 
-<div class="px-5 mt-44">
+<div class="px-5 mt-10">
+    <div class="w-full mb-28">
+        <div class="flex justify-center max-w-sm mx-auto">
+            <x-text-input class="w-full h-12 border-gray-400 dark:text-dark" type="search" placeholder="Search a topic...." />
+        </div>
+    </div>
     {{-- Categories --}}
     <div class="flex flex-wrap justify-center pb-5 gap-9 md:flex-nowrap">
         <a class="relative px-1 group" href="">

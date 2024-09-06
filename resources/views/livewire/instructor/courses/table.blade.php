@@ -8,7 +8,7 @@ new class extends Component {
 
 <div class="space-y-8">
     <div class="flex flex-col justify-between gap-4 md:flex-row">
-        <x-button-link>
+        <x-button-link href="{{ route('instructor-courses-add') }}">
             Add Course
         </x-button-link>
         <x-form.text-input type="search" placeholder="Search..."></x-form.text-input>

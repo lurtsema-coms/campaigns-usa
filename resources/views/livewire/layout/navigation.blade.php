@@ -39,7 +39,7 @@ new class extends Component
                         </x-nav-link>
                     @endrole
                     @role('instructor')
-                        <x-nav-link :href="route('instructor-courses')" :active="request()->routeIs('instructor-courses')" wire:navigate>
+                        <x-nav-link :href="route('instructor-courses')" :active="request()->routeIs('instructor-courses') || request()->routeIs('instructor-courses-add')" wire:navigate>
                             {{ __('Courses') }}
                         </x-nav-link>
                     @endrole
