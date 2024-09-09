@@ -26,12 +26,38 @@ new class extends Component {
                 {{-- Cart dropdown --}}
                 <div @mouseenter="clearTimeout(timeout); showCart = true" @mouseleave="timeout = setTimeout(() => showCart = false, 400)" x-show="showCart" x-cloak class="flex-col absolute w-80 sm:w-80 hidden md:hidden lg:flex top-[4.5rem] right-[0] bg-white text-slate-500 border shadow-sm transition-all z-10">
                     <div>
-                        <h1 class="text-xl font-bold text-start p-2 pl-4 shadow-sm">To Purchase:</h1>
+                        <h1 class="text-lg text-black font-bold text-start p-2 pl-4 shadow-sm">Total Price: $12000</h1>
                     </div>
                     <div class="overflow-y-auto max-h-96 scrollbar-thin scrollbar-thumb-cyan scrollbar-thumb-rounded">
-                        <!-- Cart items go here -->
-                        <div>
-                            <span>dashdkjasdhsjk</span>
+                        <div class="flex cursor-pointer hover:bg-gray-100">
+                            <div class="flex justify-center  items-center p-2">
+                                <img class="h-auto w-[10rem]" src="{{ asset('frontend/joe.png') }}" alt="">
+                            </div>
+                            <div class="p-2 text-sm">
+                                <p class="font-bold text-[#0E092C]">React - The Complete Guide 2024 (incl. Next.js, Redux)</p>
+                                <p class=" text-xs">Created By: Gabriel Camerone A. Quing</p>
+                                <p class="font-bold text-[#0E092C]">$4000</p>
+                            </div>
+                        </div>
+                        <div class="flex cursor-pointer hover:bg-gray-100">
+                            <div class="flex justify-center  items-center p-2">
+                                <img class="h-auto w-[10rem]" src="{{ asset('frontend/tiktok.png') }}" alt="">
+                            </div>
+                            <div class="p-2 text-sm">
+                                <p class="font-bold text-[#0E092C]">React - The Complete Guide 2024 (incl. Next.js, Redux)</p>
+                                <p class=" text-xs">Created By: Gabriel Camerone A. Quing</p>
+                                <p class="font-bold text-[#0E092C]">$4000</p>
+                            </div>
+                        </div>
+                        <div class="flex cursor-pointer hover:bg-gray-100">
+                            <div class="flex justify-center  items-center p-2">
+                                <img class="h-auto w-[10rem]" src="{{ asset('frontend/test.png') }}" alt="">
+                            </div>
+                            <div class="p-2 text-sm">
+                                <p class="font-bold text-[#0E092C]">React - The Complete Guide 2024 (incl. Next.js, Redux)</p>
+                                <p class=" text-xs">Created By: Gabriel Camerone A. Quing</p>
+                                <p class="font-bold text-[#0E092C]">$4000</p>
+                            </div>
                         </div>
                     </div>
                     <div class="shadow-custom flex justify-center">
