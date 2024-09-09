@@ -1,9 +1,23 @@
 <?php
 
+use App\Models\Courses;
 use Livewire\Volt\Component;
 
 new class extends Component {
-    //
+    
+    public $search = '';
+    
+    public function with() : array
+    {
+        return [
+            'courses' => $this->loadCourses()
+        ];
+    }
+
+    public function loadCourses()
+    {  
+        return Courses::paginate(10);
+    }
 }; ?>
 
 <div class="space-y-8">
@@ -25,9 +39,6 @@ new class extends Component {
                         Title
                     </th>
                     <th scope="col" class="px-6 py-3 text-sm tracking-wider text-left text-gray-500 uppercase whitespace-nowrap">
-                        Description
-                    </th>
-                    <th scope="col" class="px-6 py-3 text-sm tracking-wider text-left text-gray-500 uppercase whitespace-nowrap">
                         Price
                     </th>
                     <th scope="col" class="px-6 py-3 text-sm tracking-wider text-left text-gray-500 uppercase whitespace-nowrap">
@@ -42,31 +53,30 @@ new class extends Component {
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
-                <tr class="hover:bg-gray-100">
-                    <td class="px-6 py-3 text-sm text-gray-500 whitespace-nowrap">
-                        123
-                    </td>
-                    <td class="px-6 py-3 text-sm text-gray-500 whitespace-nowrap">
-                        123
-                    </td>
-                    <td class="px-6 py-3 text-sm text-gray-500 whitespace-nowrap">
-                        123
-                    </td>
-                    <td class="px-6 py-3 text-sm text-gray-500 whitespace-nowrap">
-                        123
-                    </td>
-                    <td class="px-6 py-3 text-sm text-gray-500 whitespace-nowrap">
-                        123
-                    </td>
-                    <td class="px-6 py-3 text-sm text-gray-500 whitespace-nowrap">
-                        123
-                    </td>
-                    <td class="px-6 py-3 text-sm text-gray-500 whitespace-nowrap">
-                        <div class="flex items-center gap-2">
-                            123
-                        </div>
-                    </td>
-                </tr>
+                @foreach ($courses as $course)
+                    <tr class="hover:bg-gray-100">
+                        <td class="px-6 py-3 text-sm text-gray-500 whitespace-nowrap">
+                            {{ $course->thumbnail_url }}
+                        </td>
+                        <td class="px-6 py-3 text-sm text-gray-500 whitespace-nowrap">
+                            {{ $course->title }}
+                        </td>
+                        <td class="px-6 py-3 text-sm text-gray-500 whitespace-nowrap">
+                            {{ $course->price }}
+                        </td>
+                        <td class="px-6 py-3 text-sm text-gray-500 whitespace-nowrap">
+                            {{ $course->created_at }}
+                        </td>
+                        <td class="px-6 py-3 text-sm text-gray-500 whitespace-nowrap">
+                            {{ $course->updated_at }}
+                        </td>
+                        <td class="px-6 py-3 text-sm text-gray-500 whitespace-nowrap">
+                            <div class="flex items-center gap-2">
+                                123
+                            </div>
+                        </td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
     </div>

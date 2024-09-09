@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>{{ $title ?? 'Campaigns USA' }}</title>
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
@@ -13,10 +13,10 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
 </head>
-<body class="min-h-screen font-sans antialiased text-dark bg-slate-100 dark:text-gray-100 dark:bg-gradient">
+<body class="min-h-screen font-sans antialiased bg-white text-dark dark:text-gray-100 dark:bg-gradient">
     <div class="w-full">
         <livewire:frontend.navigation />
-        @yield('main-content')
+        {{ $slot }}
     </div>
     @livewireScripts
 </body>
