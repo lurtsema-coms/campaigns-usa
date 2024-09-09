@@ -28,44 +28,12 @@ new class extends Component {
                     <div>
                         <h1 class="text-lg text-black font-bold text-start p-2 pl-4 shadow-sm">Total Price: $12000</h1>
                     </div>
-                    <div class="overflow-y-auto max-h-96 scrollbar-thin scrollbar-thumb-cyan scrollbar-thumb-rounded">
-                        <div class="flex cursor-pointer hover:bg-gray-100">
-                            <div class="flex justify-center  items-center p-2">
-                                <img class="h-auto w-[10rem]" src="{{ asset('frontend/joe.png') }}" alt="">
-                            </div>
-                            <div class="p-2 text-sm">
-                                <p class="font-bold text-[#0E092C]">React - The Complete Guide 2024 (incl. Next.js, Redux)</p>
-                                <p class=" text-xs">Created By: Gabriel Camerone A. Quing</p>
-                                <p class="font-bold text-[#0E092C]">$4000</p>
-                            </div>
-                        </div>
-                        <div class="flex cursor-pointer hover:bg-gray-100">
-                            <div class="flex justify-center  items-center p-2">
-                                <img class="h-auto w-[10rem]" src="{{ asset('frontend/tiktok.png') }}" alt="">
-                            </div>
-                            <div class="p-2 text-sm">
-                                <p class="font-bold text-[#0E092C]">React - The Complete Guide 2024 (incl. Next.js, Redux)</p>
-                                <p class=" text-xs">Created By: Gabriel Camerone A. Quing</p>
-                                <p class="font-bold text-[#0E092C]">$4000</p>
-                            </div>
-                        </div>
-                        <div class="flex cursor-pointer hover:bg-gray-100">
-                            <div class="flex justify-center  items-center p-2">
-                                <img class="h-auto w-[10rem]" src="{{ asset('frontend/test.png') }}" alt="">
-                            </div>
-                            <div class="p-2 text-sm">
-                                <p class="font-bold text-[#0E092C]">React - The Complete Guide 2024 (incl. Next.js, Redux)</p>
-                                <p class=" text-xs">Created By: Gabriel Camerone A. Quing</p>
-                                <p class="font-bold text-[#0E092C]">$4000</p>
-                            </div>
-                        </div>
-                    </div>
+                    @livewire('cart-notification')
                     <div class="shadow-custom flex justify-center">
                         <a href="{{ route('cart-section') }}" wire:navigate class="px-[30%] py-2 my-2 text-start font-bold text-white bg-gradient">Go to Cart</a>
                     </div>
                 </div>
             </div>
-            
 
             {{-- Search --}}
             <div class="p-2 transition-all rounded-lg cursor-pointer bg-color-blue hover:opacity-70"
