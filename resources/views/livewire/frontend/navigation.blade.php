@@ -26,10 +26,13 @@ new class extends Component {
                 {{-- Cart dropdown --}}
                 <div @mouseenter="clearTimeout(timeout); showCart = true" @mouseleave="timeout = setTimeout(() => showCart = false, 400)" x-show="showCart" x-cloak class="flex-col absolute w-80 sm:w-80 hidden md:hidden lg:flex top-[4.5rem] right-[0] bg-white text-slate-500 border shadow-sm transition-all z-10">
                     <div>
-                        <h1 class="text-xl font-bold text-start p-2 pl-4 shadow-sm">Ready To Purchase:</h1>
+                        <h1 class="text-xl font-bold text-start p-2 pl-4 shadow-sm">To Purchase:</h1>
                     </div>
                     <div class="overflow-y-auto max-h-96 scrollbar-thin scrollbar-thumb-cyan scrollbar-thumb-rounded">
                         <!-- Cart items go here -->
+                        <div>
+                            <span>dashdkjasdhsjk</span>
+                        </div>
                     </div>
                     <div class="shadow-custom flex justify-center">
                         <a href="{{ route('cart-section') }}" wire:navigate class="px-[30%] py-2 my-2 text-start font-bold text-white bg-gradient">Go to Cart</a>

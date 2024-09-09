@@ -32,5 +32,33 @@ export default {
 
     darkMode: "selector",
 
-    plugins: [forms],
+    plugins: [
+        forms,
+        require("preline/plugin"),
+        function ({ addUtilities }) {
+            const newUtilities = {
+                ".scrollbar-thin": {
+                    "scrollbar-width": "thin",
+                },
+                ".scrollbar-thumb-gray": {
+                    "&::-webkit-scrollbar-thumb": {
+                        "background-color": "#782424",
+                    },
+                },
+                ".scrollbar-thumb-rounded": {
+                    "&::-webkit-scrollbar-thumb": {
+                        "border-radius": "0.375rem",
+                    },
+                },
+                ".scrollbar-thin::-webkit-scrollbar": {
+                    width: "8px",
+                },
+                ".scrollbar-thin::-webkit-scrollbar-track": {
+                    background: "#f1f1f1",
+                },
+            };
+
+            addUtilities(newUtilities, ["responsive", "hover"]);
+        },
+    ],
 };
