@@ -1,3 +1,11 @@
+<?php
+
+use Livewire\Volt\Component;
+
+new class extends Component {
+    //
+}; ?>
+
 <div class="overflow-y-auto max-h-96 scrollbar-thin scrollbar-thumb-cyan scrollbar-thumb-rounded">
     <div class="flex cursor-pointer hover:bg-gray-100">
         <div class="flex justify-center  items-center p-2">
@@ -30,3 +38,4 @@
         </div>
     </div>
 </div>
+

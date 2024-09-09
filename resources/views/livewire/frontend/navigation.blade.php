@@ -28,7 +28,7 @@ new class extends Component {
                     <div>
                         <h1 class="text-lg text-black font-bold text-start p-2 pl-4 shadow-sm">Total Price: $12000</h1>
                     </div>
-                    @livewire('cart-notification')
+                    <livewire:frontend.cart-notif/>
                     <div class="shadow-custom flex justify-center">
                         <a href="{{ route('cart-section') }}" wire:navigate class="px-[30%] py-2 my-2 text-start font-bold text-white bg-gradient">Go to Cart</a>
                     </div>
