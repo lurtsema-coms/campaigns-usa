@@ -35,8 +35,12 @@ class extends Component {
 
     public function item($item_id)
     {
-        $this->cart_items = $this->toggleToCart($item_id);
-        $this->dispatch('cart-updated');
+        if (Auth::check()) {            
+            $this->cart_items = $this->toggleToCart($item_id);
+            $this->dispatch('cart-updated');
+        } else {
+            return redirect()->guest('login')->with('message', 'Please login to add items to your cart');
+        }
     }
 }; ?>
 
@@ -78,6 +82,8 @@ class extends Component {
                                     <div wire:loading.remove>
                                         @auth
                                             {{ in_array($course->id, $cart_items) ? "Remove to cart" : "Add to cart" }}
+                                            @else
+                                            Add to cart
                                         @endauth
                                     </div>
 
