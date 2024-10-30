@@ -38,13 +38,13 @@ class extends Component {
             </div>
             <div class="px-5 py-5">
                 <div
-                    x-data="{ dragging: false }"
-                    @pointerdown="dragging = true; $el.setPointerCapture($event.pointerId); $el.style.userSelect = 'none';"
-                    @pointerup="dragging = false; $el.releasePointerCapture($event.pointerId); $el.style.userSelect = '';"
-                    @pointermove="dragging && ($el.scrollLeft -= $event.movementX)"
-                    @pointerleave="dragging = false; $el.releasePointerCapture($event.pointerId); $el.style.userSelect = '';"
-                    class="flex gap-6 p-5 overflow-x-auto overflow-y-hidden"
-                >
+                x-data="{ dragging: false }"
+                @pointerdown="dragging = true; $el.setPointerCapture($event.pointerId); $el.style.userSelect = 'none'; $el.classList.add('cursor-grab')"
+                @pointerup="dragging = false; $el.releasePointerCapture($event.pointerId); $el.style.userSelect = ''; $el.classList.remove('cursor-grab')"
+                @pointermove="dragging && ($el.scrollLeft -= $event.movementX)"
+                @pointerleave="dragging = false; $el.releasePointerCapture($event.pointerId); $el.style.userSelect = ''; $el.classList.remove('cursor-grab')"
+                class="flex gap-6 p-5 overflow-x-auto overflow-y-hidden cursor-default"
+            >
                     <div class="pb-5 overflow-hidden border shadow-sm bg-gray-50 shrink-0 w-72 rounded-xl">
                         <div class="h-40">
                             <img class="object-cover w-full h-full" src="{{ asset('frontend/campaign1-modal.png') }}" alt="">
