@@ -17,11 +17,11 @@ class extends Component {
 <div>
     <div class="relative px-5 py-12 space-y-12">
         <div class="grid w-full mx-auto bg-white border shadow-sm lg:grid-cols-3 max-w-7xl rounded-xl">
-            <div class="col-start-1 p-10 lg:col-end-3">
+            <div class="col-start-1 p-5 sm:p-10 lg:col-end-3">
                 <span class="text-gray-600">Learning Path / 
                     <span class="px-2 py-1 font-medium bg-gray-100 rounded-2xl">Campaigns</span>
                 </span>
-                <p class="mt-6 text-3xl text-gray-800">Lorem ipsum dolor sit amet consectetur.</p>
+                <p class="mt-6 text-xl text-gray-800 md:text-3xl">Lorem ipsum dolor sit amet consectetur.</p>
                 <p class="mt-2 text-gray-600 lg:max-w-lg">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Animi veritatis molestiae, ut exercitationem doloribus odit aliquam! Nihil animi, illum quos sed culpa repellendus possimus, maxime ipsa recusandae aperiam sit magnam!</p>
             </div>
             <div class="flex items-center justify-center col-start-3">
@@ -29,7 +29,7 @@ class extends Component {
             </div>
         </div>
         <div class="mx-auto bg-white border shadow-sm max-w-7xl rounded-xl">
-            <div class="flex flex-wrap items-center justify-between px-10 py-3 border-b-2 sm:gap-4">
+            <div class="flex flex-wrap items-center justify-between px-5 py-3 border-b-2 sm:px-10 sm:gap-4">
                 <p class="text-lg">Course and Events for Campaigns</p>
                 {{-- <a href="">
                     <span class="flex items-center gap-2 text-gray-500 group">
@@ -40,7 +40,7 @@ class extends Component {
                     </span>
                 </a> --}}
             </div>
-            <div class="px-5 py-5">
+            <div class="px-5 py-5 sm:px-10">
                 <div
                     {{-- x-data="{ dragging: false }"
                     @pointerdown="dragging = true; $el.setPointerCapture($event.pointerId); $el.style.userSelect = 'none'; $el.classList.add('cursor-default')"
@@ -86,12 +86,4 @@ class extends Component {
             </div>
         </div>
     </div>
-
-    {{-- <div class="container py-16 mx-auto">
-        <div class="flex flex-col items-center w-full space-y-8">
-            <p class="font-sans text-4xl font-bold text-center ">EXPLORE BY TOPIC</p>
-            <p class="max-w-2xl font-sans text-xl text-center dark:text-gray-400">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptas corrupti molestias nisi minima quod ex porro similique assumenda quis maiores!</p>
-        </div>
-        <livewire:frontend.course.index-courses-section />
-    </div> --}}
 </div>
