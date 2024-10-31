@@ -19,18 +19,7 @@ class extends Component {
     
     public function mount(Courses $course, $id)
     {
-        $this->course = $course::with('createdBy')->find($id);
-        $this->title = $this->course->title;
-        $this->cart_items = $this->cartItems();
-        
-        if (!$this->course) {
-            abort(404, 'Course not found.');
-        }
-    }
-
-    public function rendering(View $view): void
-    {
-        $view->title("Campaigns USA | $this->title");
+   
     }
 
     public function item($item_id)
@@ -45,70 +34,102 @@ class extends Component {
 }; ?>
 
 <div>
-    <div class="container py-16 mx-auto">
-        <div class="flex sm:px-5">
-            <div class="flex flex-col w-3/5 space-y-4 trix">
-                <div class="max-w-2xl">
-                    <x-text-back-link href="{{ route('courses') }}">
-                        Back to Courses
-                    </x-text-back-link>
-                    <p class="mt-4 font-sans text-4xl font-semibold">{{ $course->title }}</p>
-                    <p class="mt-4">stars</p>
-                    <p class="mb-12">Created by: {{ $course->createdBy->first_name." ".$course->createdBy->last_name }}</p>
-                    <div class="dark:text-gray-200">
-                        <p class="max-w-2xl text-xl">{!! $course->description !!}</p>
-
+    <div class="p-5 m-auto my-12 dark:border rounded-xl dark:bg-white max-w-7xl">
+        <div class="flex flex-wrap items-center justify-between gap-4">
+            <div class="flex flex-col gap-4 lg:flex-row">
+                <a href="{{ route('courses') }}" wire:navigate>
+                    <div class="flex items-center justify-center w-10 bg-white border rounded-md h-9 hover:bg-gray-50">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                          </svg>
                     </div>
-                </div>
-            </div>
-            <div class="w-2/5 px-10">
-                <div class="sticky top-28 ">
-                    <div class="w-full max-w-lg p-6 mx-auto bg-white border shadow-lg rounded-2xl text-slate-800">
-                        <div class="relative mb-6">
-                            <img class="object-cover w-full h-60 rounded-t-2xl" id="course-img" src="{{ asset($course->thumbnail_url) }}" alt="{{ $course->title }}">   
-                        </div>
-                        <div class="flex flex-col space-y-6">
-                            <div class="text-xl font-semibold text-slate-900">
-                                Subscribe to <span class="text-sky-700">"{{ $course->title }}"</span>
+                </a>
+                <div class="">
+                    <div class="flex flex-col gap-2">
+                        <p class="max-w-lg text-lg font-medium">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt, delectus!</p>
+                        <div class="flex gap-4">
+                            <div class="flex items-center gap-1.5 text-sm">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="text-sky-600 size-5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="m12.75 15 3-3m0 0-3-3m3 3h-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                </svg>
+                                <span class="mt-1 text-gray-600">
+                                    38 lessons
+                                </span>
                             </div>
-                            <div class="text-xl text-slate-900">
-                                ${{ $course->price % 1 == 0 ? number_format($course->price, 0) : number_format($course->price, 2) }}
+                            <div class="flex items-center gap-1.5 text-sm">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="text-sky-600 size-5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                </svg>
+                                <span class="mt-1 text-gray-600">
+                                    4h 30min
+                                </span>
                             </div>
-                            <div class="flex flex-col space-y-3">
-                                <button 
-                                    class="w-full px-4 py-2 text-lg font-semibold text-white border cursor-pointer rounded-xl hover:opacity-70 {{ in_array($course->id, $cart_items) ? "bg-red-600" : "bg-slate-600" }}"
-                                    wire:click="item({{ $course->id }})"
-                                >
-                                    <div wire:loading.remove>
-                                        @auth
-                                            {{ in_array($course->id, $cart_items) ? "Remove to cart" : "Add to cart" }}
-                                            @else
-                                            Add to cart
-                                        @endauth
-                                    </div>
-
-                                    <div class="relative top-1" wire:loading wire:target="item({{ $course->id }})">
-                                        <svg class="w-5 h-5 text-white animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 2.042.777 3.908 2.05 5.334l1.95-2.043z"></path>
-                                        </svg>
-                                    </div>
-                                </button>
-                                <a class="cursor-pointer" href="{{ route('cart-section') }}" wire:navigate>
-                                    <button class="w-full px-4 py-2 text-lg font-semibold text-white bg-green-500 border rounded-xl hover:bg-green-600">
-                                        Subscribe to course
-                                    </button>
-                                </a>
-                            </div>
-                            <div class="space-y-1 text-center text-slate-600">
-                                <p class="text-sm">15-Day Money-Back Guarantee</p>
-                                <p class="text-sm">Full Lifetime Access</p>
+                            <div class="flex items-center gap-1.5 text-sm">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="text-sky-600 size-5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z" />
+                                </svg>
+                                <span class="mt-1 text-gray-600">
+                                    4.5 (126 reviews)
+                                </span>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
+            <div class="flex items-center gap-4">
+                <span class="text-sky-600">Share</span>
+                <button class="flex items-center gap-2 px-4 py-2 text-sm text-white rounded-md bg-slate-500 hover:bg-slate-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
+                    </svg>
+                    Enroll Now
+                </button>
+            </div>
+         
         </div>
+
+       <div class="flex flex-col gap-8 mt-8 lg:flex-row">
+            <div class="w-full lg:max-w-4xl">
+                <div class="w-full border h-96 rounded-xl">
+                </div>
+                <div class="flex flex-wrap gap-4 my-4">
+                    <button class="px-4 py-2 bg-slate-100 text-slate-600 rounded-xl">
+                        Overview
+                    </button>
+                    <button class="px-4 py-2 text-gray-400 rounded-xl hover:text-gray-500">
+                        Author
+                    </button>
+                    <button class="px-4 py-2 text-gray-400 rounded-xl hover:text-gray-500">
+                        FAQ
+                    </button>
+                    <button class="px-4 py-2 text-gray-400 rounded-xl hover:text-gray-500">
+                        Announcements
+                    </button>
+                    <button class="px-4 py-2 text-gray-400 rounded-xl hover:text-gray-500">
+                        Reviews
+                    </button>
+                </div>
+                <div class="w-full h-auto p-6 space-y-4 border rounded-md">
+                    <p class="font-medium text-dark">About Course</p>
+                    <div class="space-y-2">
+                        <p class="text-sm text-gray-600">Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur pariatur dolor et recusandae unde vitae at debitis eveniet repellendus nihil?</p>
+                        <p class="text-sm text-gray-600">Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur pariatur dolor et recusandae unde vitae at debitis eveniet repellendus nihil?</p>
+                    </div>
+                    <p class="font-medium text-dark">What You'll learn</p>
+                    <div class="space-y-2">
+                        <p class="text-sm text-gray-600">Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur pariatur dolor et recusandae unde vitae at debitis eveniet repellendus nihil?</p>
+                    </div>
+                </div>
+            </div>
+            <div class="w-full border lg:max-w-sm shrink-0 h-96 rounded-xl">
+                <div class="px-6 py-4">
+                    <p class="font-medium text-dark">Course Content</p>
+                </div>
+                <div class="px-6 py-4 border-t border-b">
+                    <p class=" text-dark">01: Intro</p>
+                </div>
+            </div>
+
+       </div>
     </div>
 </div>

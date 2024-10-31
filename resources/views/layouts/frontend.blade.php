@@ -13,7 +13,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
 </head>
-<body class="min-h-screen font-sans antialiased bg-gray-100 dark:text-dark dark:bg-gradient">
+<body class="min-h-screen font-sans antialiased bg-white dark:text-dark dark:bg-gradient">
     <div class="w-full">
         <livewire:frontend.navigation />
         {{ $slot }}

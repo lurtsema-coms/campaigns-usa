@@ -7,17 +7,19 @@ new class extends Component {
 }; ?>
 
 <div x-data="{ isNavOpen: false, isSearchBar: false }">
-    <div class="flex items-center p-5 text-gray-100 border-b border-slate-800 bg-gradient">
+    <div class="flex items-center p-4 text-gray-100 border-b border-slate-800 bg-gradient">
         <div class="flex items-center flex-grow gap-10 shrink-0">
             <a href="/">
                 <img class="h-14" src="{{ asset('frontend/Logo SVG.png') }}" alt="">
             </a>
-            <div class="hidden gap-3 lg:flex">
-                <a href="/courses" wire:navigate>Courses</a>
-            </div>
+            <a class="relative" wire:navigate href="{{ route('courses') }}">
+                Courses
+                <div class="{{ Route::is('courses') ? 'absolute w-full h-0.5 top-[3.45rem] bg-slate-300' : '' }}">
+                </div>
+            </a>
         </div>
         <div class="relative flex items-center justify-end flex-1 gap-3">
-            <div class="relative p-2 bg-color-blue rounded-lg " x-data="{ showCart: false, timeout: null }" @mouseenter="clearTimeout(timeout); showCart = true" @mouseleave="timeout = setTimeout(() => showCart = false, 200)">
+            <div class="relative p-2 rounded-lg bg-color-blue " x-data="{ showCart: false, timeout: null }" @mouseenter="clearTimeout(timeout); showCart = true" @mouseleave="timeout = setTimeout(() => showCart = false, 200)">
                 <a class="transition-all cursor-pointer hover:opacity-70" href="{{ route('cart-section') }}" wire:navigate>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
@@ -26,10 +28,10 @@ new class extends Component {
                 {{-- Cart dropdown --}}
                 <div @mouseenter="clearTimeout(timeout); showCart = true" @mouseleave="timeout = setTimeout(() => showCart = false, 400)" x-show="showCart" x-cloak class="flex-col absolute w-80 sm:w-80 hidden md:hidden lg:flex top-[4.5rem] right-[0] bg-white text-slate-500 border shadow-sm transition-all z-10">
                     <div>
-                        <h1 class="text-lg text-black font-bold text-start p-2 pl-4 shadow-sm">Total Price: $12000</h1>
+                        <h1 class="p-2 pl-4 text-lg font-bold text-black shadow-sm text-start">Total Price: $12000</h1>
                     </div>
                     <livewire:frontend.cart-notif/>
-                    <div class="shadow-custom flex justify-center">
+                    <div class="flex justify-center shadow-custom">
                         <a href="{{ route('cart-section') }}" wire:navigate class="px-[30%] py-2 my-2 text-start font-bold text-white bg-gradient">Go to Cart</a>
                     </div>
                 </div>
