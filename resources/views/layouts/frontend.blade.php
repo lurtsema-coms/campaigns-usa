@@ -10,14 +10,17 @@
 
     <!-- Fonts -->
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    
     @livewireStyles
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="min-h-screen font-sans antialiased bg-white dark:text-dark dark:bg-gradient">
     <div class="w-full">
-        <livewire:frontend.navigation />
+        <div class="sticky top-0 z-10">
+            <livewire:frontend.navigation />
+        </div>
         {{ $slot }}
+        @livewireScriptConfig
     </div>
-    @livewireScripts
 </body>
 </html>

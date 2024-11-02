@@ -23,7 +23,7 @@ export default {
                 dark: "#252525",
             },
             backgroundImage: {
-                "gradient": "linear-gradient(to right, #152034, #0B0029);",
+                "gradient": "linear-gradient(to right, rgba(21, 32, 52, 0.95), rgba(11, 0, 41, 0.95))",
                 "custom-border-b":
                     "linear-gradient(to right, rgba(15, 34, 57, 0), rgba(15, 34, 57, 1), rgba(15, 34, 57, 0))",
             },

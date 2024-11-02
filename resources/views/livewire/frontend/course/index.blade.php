@@ -30,7 +30,7 @@ class extends Component {
         </div>
         <div class="mx-auto bg-white border shadow-sm max-w-7xl rounded-xl">
             <div class="flex flex-wrap items-center justify-between px-5 py-3 border-b-2 sm:px-10 sm:gap-4">
-                <p class="text-lg">Course and Events for Campaigns</p>
+                <p class="text-lg font-medium">Course and Events for Campaigns</p>
                 {{-- <a href="">
                     <span class="flex items-center gap-2 text-gray-500 group">
                         <span class="group-hover:text-gray-600">Show All</span>

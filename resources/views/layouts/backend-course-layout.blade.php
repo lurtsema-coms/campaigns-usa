@@ -17,15 +17,15 @@
     <div class="flex"
         x-data="{ sidebarOpen: true }">
         <div class="shrink-0">
-            <livewire:course.course-video-sidebar />
+            <livewire:frontend.course.course-video-sidebar />
         </div>
-        <div class="lg:pl-80 flex-1 w-full">
-            <div class="m-auto lg:container px-6 py-3">
-                <livewire:course.navbar/>
-                <livewire:course.video-content/>
+        <div class="flex-1 w-full lg:pl-80">
+            <div class="px-6 py-3 m-auto lg:container">
+                <livewire:frontend.course.navbar/>
+                <livewire:frontend.course.video-content/>
                 <div class="mt-14">
-                    <div class="m-auto max-w-5xl">
-                        <livewire:course.video-content-details>
+                    <div class="max-w-5xl m-auto">
+                        <livewire:frontend.course.video-content-details>
                     </div>
                 </div>
             </div>

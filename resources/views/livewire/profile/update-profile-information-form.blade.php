@@ -80,7 +80,7 @@ new class extends Component
         </p>
     </header>
 
-    <form wire:submit="updateProfileInformation" class="mt-6 space-y-6">
+    <form wire:submit="updateProfileInformation" class="grid gap-6 mt-6 sm:grid-cols-2">
         <div>
             <x-input-label for="first_name" :value="__('First Name')" />
             <x-text-input wire:model="first_name" id="first_name" name="first_name" type="text" class="block w-full mt-1" required autofocus autocomplete="first_name" />

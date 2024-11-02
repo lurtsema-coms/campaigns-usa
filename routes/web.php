@@ -19,6 +19,7 @@ Volt::route('courses', 'frontend.course.index')->name('courses');
 Volt::route('courses/{id}', 'frontend.course.course-item')->name('course-item');
 Volt::route('cart', 'frontend.cart.index')->name('cart-section');
 
+Volt::route('student/dashboard', 'backend.student.dashboard')->name('student-dashboard');
 
 Route::view('course/course1', 'backend.course-video')->name('user_course');
 
