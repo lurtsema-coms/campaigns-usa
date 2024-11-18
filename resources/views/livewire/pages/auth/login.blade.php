@@ -20,8 +20,12 @@ new #[Layout('layouts.guest')] class extends Component
         $this->form->authenticate();
 
         Session::regenerate();
-
-        $this->redirectIntended(default: RouteServiceProvider::HOME, navigate: true);
+        
+        if (Auth::user()->isStudent()){
+            $this->redirectIntended(default: RouteServiceProvider::STUDENT, navigate: true);
+        }else{
+            $this->redirectIntended(default: RouteServiceProvider::INSTRUCTOR, navigate: true);
+        }
     }
 }; ?>
 
