@@ -17,9 +17,9 @@ class extends Component {
     public $title;
     public $cart_items;
     
-    public function mount(Courses $course, $id)
+    public function mount(Courses $course, int $id)
     {
-   
+        $this->course = $course->find($id);
     }
 
     public function item($item_id)
@@ -32,6 +32,33 @@ class extends Component {
         }
     }
 }; ?>
+
+<style>
+    .description ul,
+    .description ol {
+        padding-left: 1.5rem; /* Adds left padding for indentation */
+        margin-bottom: 1rem; /* Adds spacing between lists */
+    }
+
+    .description ul li {
+        list-style-type: disc;
+        color: #374151;
+    }
+
+    .description ol li {
+        list-style-type: decimal;
+        color: #374151;
+    }
+
+    strong{
+        font-weight: 500;
+        color: #252525;
+    }
+
+    .description div{
+       color: #374151;
+    }
+</style>
 
 <div class="px-5 my-12">
     <div class="p-5 mx-auto bg-white sm:p-10 rounded-xl max-w-7xl ">
@@ -46,7 +73,7 @@ class extends Component {
                 </a>
                 <div class="">
                     <div class="flex flex-col gap-2">
-                        <p class="max-w-lg text-lg font-medium">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt, delectus!</p>
+                        <p class="max-w-lg text-lg font-medium">{{ $course->title }}</p>
                         <div class="flex gap-4">
                             <div class="flex items-center gap-1.5 text-sm">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="text-sky-600 size-5">
@@ -107,7 +134,8 @@ class extends Component {
                 x-data="{activeSection: 'overview'}"
                 class="w-full lg:max-w-4xl"
             >
-                <div class="w-full border h-96 rounded-xl">
+                <div class="relative w-full overflow-hidden border h-96 rounded-xl">
+                    <img class="object-cover w-full h-full" src="{{ $course->thumbnail_url }}" alt="">
                 </div>
                 <div class="flex flex-wrap gap-4 my-4">
                     <button :class="`${activeSection == 'overview' ? 'bg-slate-100 text-slate-800 rounded-xl' : 'text-gray-400'} px-4 py-2 hover:text-gray-800`" @click="activeSection = 'overview'">
@@ -115,9 +143,6 @@ class extends Component {
                     </button>
                     <button :class="`${activeSection == 'author' ? 'bg-slate-100 text-slate-800 rounded-xl' : 'text-gray-400'} px-4 py-2 hover:text-gray-800`" @click="activeSection = 'author'">
                         Author
-                    </button>
-                    <button :class="`${activeSection == 'faq' ? 'bg-slate-100 text-slate-800 rounded-xl' : 'text-gray-400'} px-4 py-2 hover:text-gray-800`" @click="activeSection = 'faq'">
-                        FAQ
                     </button>
                     <button :class="`${activeSection == 'announcements' ? 'bg-slate-100 text-slate-800 rounded-xl' : 'text-gray-400'} px-4 py-2 hover:text-gray-800`" @click="activeSection = 'announcements'">
                         Announcements
@@ -132,27 +157,25 @@ class extends Component {
                         x-show="activeSection == 'overview'"
                         class="w-full h-auto p-6 space-y-4 border rounded-md"
                     >
-                        <p class="font-medium text-dark">About Course</p>
-                        <div class="space-y-2">
-                            <p class="text-sm text-gray-600">Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur pariatur dolor et recusandae unde vitae at debitis eveniet repellendus nihil?</p>
-                            <p class="text-sm text-gray-600">Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur pariatur dolor et recusandae unde vitae at debitis eveniet repellendus nihil?</p>
-                        </div>
-                        <p class="font-medium text-dark">What You'll learn</p>
-                        <div class="space-y-2">
-                            <p class="text-sm text-gray-600">Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur pariatur dolor et recusandae unde vitae at debitis eveniet repellendus nihil?</p>
+                        <div class="description">
+                            <p>{!! $course->description !!}</p>
                         </div>
                     </div>
                     <div 
                         x-show="activeSection == 'author'"
                         class="w-full h-auto p-6 space-y-4 border rounded-md"
                     >
-                        <p class="font-medium text-dark">About Author</p>
-                    </div>
-                    <div 
-                        x-show="activeSection == 'faq'"
-                        class="w-full h-auto p-6 space-y-4 border rounded-md"
-                    >
-                        <p class="font-medium text-dark">About FAQ</p>
+                        <p class="font-medium text-dark">About the Author</p>
+                        <div class="flex items-center space-x-4">
+                            <img src="{{ asset('frontend/campaign1-modal.png') }}" alt="Author" class="object-cover w-16 h-16 rounded-full">
+                            <div>
+                                <p class="text-lg font-semibold">John Doe</p>
+                                <p class="text-sm text-gray-600">Senior Software Engineer at XYZ Inc.</p>
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-700">
+                            John has over 10 years of experience in web development and has worked with top companies like Google and Facebook. He specializes in full-stack development and has a passion for teaching.
+                        </p>
                     </div>
                     <div 
                         x-show="activeSection == 'announcements'"
@@ -165,6 +188,32 @@ class extends Component {
                         class="w-full h-auto p-6 space-y-4 border rounded-md"
                     >
                         <p class="font-medium text-dark">Reviews</p>
+                        <div>
+                            <!-- Textarea -->
+                            <div class="relative">
+                                <textarea id="hs-textarea-ex-1" class="block w-full p-4 pb-12 text-sm border-gray-200 rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" placeholder="Add a comment..."></textarea>
+                            
+                                <!-- Toolbar -->
+                                <div class="absolute p-2 bg-white bottom-px inset-x-px rounded-b-md">
+                                <div class="flex items-center justify-end">
+                            
+                                    <!-- Button Group -->
+                                    <div class="flex items-center gap-x-1">
+                                        <!-- Send Button -->
+                                        <button type="button" class="inline-flex items-center justify-center text-white bg-blue-600 rounded-lg shrink-0 size-8 hover:bg-blue-500 focus:z-10 focus:outline-none focus:bg-blue-500">
+                                            <svg class="shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                            <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z"></path>
+                                            </svg>
+                                        </button>
+                                        <!-- End Send Button -->
+                                    </div>
+                                    <!-- End Button Group -->
+                                </div>
+                                </div>
+                                <!-- End Toolbar -->
+                            </div>
+                            <!-- End Textarea -->
+                        </div>
                     </div>
                 </div>
             </div>
@@ -180,3 +229,35 @@ class extends Component {
        </div>
     </div>
 </div>
+
+@script
+<script>
+    (function () {
+      function textareaAutoHeight(el, offsetTop = 0) {
+        el.style.height = 'auto';
+        el.style.height = `${el.scrollHeight + offsetTop}px`;
+      }
+  
+      (function () {
+        const textareas = [
+          '#hs-textarea-ex-1'
+        ];
+  
+        textareas.forEach((el) => {
+          const textarea = document.querySelector(el);
+          const overlay = textarea.closest('.hs-overlay');
+  
+          if (overlay) {
+            const { element } = HSOverlay.getInstance(overlay, true);
+  
+            element.on('open', () => textareaAutoHeight(textarea, 3));
+          } else textareaAutoHeight(textarea, 3);
+  
+          textarea.addEventListener('input', () => {
+            textareaAutoHeight(textarea, 3);
+          });
+        });
+      })();
+    })()
+  </script>
+@endscript

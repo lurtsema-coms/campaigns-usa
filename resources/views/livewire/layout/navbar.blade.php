@@ -1,9 +1,22 @@
 <?php
 
+use App\Models\User;
 use Livewire\Volt\Component;
 
 new class extends Component {
-    //
+
+    public $user;
+    public $first_name;
+    public $last_name;
+    public $contact_number;
+
+    public function mount(User $user)
+    {
+        $this->user = $user->find(auth()->user()->id);
+        $this->first_name = $this->user->first_name;
+        $this->last_name = $this->user->last_name;
+        $this->contact_number = $this->user->contact_number;
+    }
 }; ?>
 
 <div>
@@ -53,37 +66,57 @@ new class extends Component {
                     </svg>
                 </button>
             </div>
-            <div class="px-4 py-16 space-y-4 text-white">
-                <div class="space-y-2">
-                    <p>Update Profile</p>
-                    <span class="text-xs">Make changes to your personal details</span>
+            <form action="">
+                <div class="px-4 pt-16 space-y-4 text-white">
+                    <div class="space-y-2">
+                        <p>Update Profile</p>
+                        <span class="text-xs">Make changes to your personal details</span>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-sm">First Name</label>
+                        <input class="w-full px-4 text-sm border border-transparent rounded-lg h-9 focus:outline-none focus:border-none focus:ring-2 text-dark focus:ring-slate-500 focus:shadow-lg" 
+                            type="text"
+                            wire:model="first_name"
+                        >
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-sm">Last Name</label>
+                        <input class="w-full px-4 text-sm border border-transparent rounded-lg h-9 focus:outline-none focus:border-none focus:ring-2 text-dark focus:ring-slate-500 focus:shadow-lg" 
+                            type="text"
+                            wire:model="last_name"
+                        >
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-sm">Contact #</label>
+                        <input class="w-full px-4 text-sm border border-transparent rounded-lg h-9 focus:outline-none focus:border-none focus:ring-2 text-dark focus:ring-slate-500 focus:shadow-lg" 
+                            type="text"
+                            wire:model="contact_number"
+                        >
+                    </div>
+                    <div class="flex justify-end">
+                        <button class="px-4 py-2 text-sm text-white rounded-2xl bg-slate-800/90 hover:bg-slate-700/90">
+                            Save Changes
+                        </button>
+                    </div>
                 </div>
-                <div class="space-y-2">
-                    <label class="text-sm">First Name</label>
-                    <input class="w-full px-4 text-sm border border-transparent rounded-lg h-9 focus:outline-none focus:border-none focus:ring-2 text-dark focus:ring-slate-500 focus:shadow-lg" type="text">
+            </form>
+            <form action="">
+                <div class="px-4 py-4 space-y-4 text-white">
+                    <div class="space-y-2">
+                        <label class="text-sm">Password</label>
+                        <input class="w-full px-4 text-sm border border-transparent rounded-lg h-9 focus:outline-none focus:border-none focus:ring-2 text-dark focus:ring-slate-500 focus:shadow-lg" type="text">
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-sm">Confirm Password</label>
+                        <input class="w-full px-4 text-sm border border-transparent rounded-lg h-9 focus:outline-none focus:border-none focus:ring-2 text-dark focus:ring-slate-500 focus:shadow-lg" type="text">
+                    </div>
+                    <div class="flex justify-end">
+                        <button class="px-4 py-2 text-sm text-white rounded-2xl bg-slate-800/90 hover:bg-slate-700/90">
+                            Change Password
+                        </button>
+                    </div>
                 </div>
-                <div class="space-y-2">
-                    <label class="text-sm">Last Name</label>
-                    <input class="w-full px-4 text-sm border border-transparent rounded-lg h-9 focus:outline-none focus:border-none focus:ring-2 text-dark focus:ring-slate-500 focus:shadow-lg" type="text">
-                </div>
-                <div class="space-y-2">
-                    <label class="text-sm">Contact #</label>
-                    <input class="w-full px-4 text-sm border border-transparent rounded-lg h-9 focus:outline-none focus:border-none focus:ring-2 text-dark focus:ring-slate-500 focus:shadow-lg" type="text">
-                </div>
-                <div class="space-y-2">
-                    <label class="text-sm">Password</label>
-                    <input class="w-full px-4 text-sm border border-transparent rounded-lg h-9 focus:outline-none focus:border-none focus:ring-2 text-dark focus:ring-slate-500 focus:shadow-lg" type="text">
-                </div>
-                <div class="space-y-2">
-                    <label class="text-sm">Confirm Password</label>
-                    <input class="w-full px-4 text-sm border border-transparent rounded-lg h-9 focus:outline-none focus:border-none focus:ring-2 text-dark focus:ring-slate-500 focus:shadow-lg" type="text">
-                </div>
-                <div class="flex justify-end">
-                    <button class="px-4 py-2 text-sm text-white rounded-2xl bg-slate-800/90 hover:bg-slate-700/90">
-                        Save Changes
-                    </button>
-                </div>
-            </div>
+            </form>
         </div>
     
         <div 

@@ -21,6 +21,9 @@ return new class extends Migration
             $table->string('role');
             $table->string('subscribe_courses')->nullable();
             $table->string('cart')->nullable();
+            $table->text('about_author')->nullable();
+            $table->text('professional_headline')->nullable();
+            $table->string('profile_picture')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

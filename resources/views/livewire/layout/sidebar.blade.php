@@ -46,15 +46,15 @@ new class extends Component {
                 
                 <div class="flex flex-col text-white">
                     <a href="{{ route('student-dashboard') }}" wire:navigate>
-                        <div class="flex items-center gap-4 px-5 py-3 border-l-4 bg-neutral-100/5">
+                        <div class="flex items-center gap-4 px-5 py-3  {{ Route::is('student-dashboard') ? 'border-l-4 bg-neutral-100/5' : 'hover:bg-neutral-100/5' }}">
                             <div>
                                 <img class="w-7 h-7" src="{{ asset('icons/dashboard.png') }}" alt="">
                             </div>
                             <span class="tracking-wide">Dashboard</span>
                         </div>
                     </a>
-                    <a href="">
-                        <div class="flex items-center gap-4 px-5 py-3 border-l-4 border-transparent hover:bg-neutral-100/5">
+                    <a href="{{ route('student-my-courses') }}" wire:navigate>
+                        <div class="flex items-center gap-4 px-5 py-3  {{ Route::is('student-my-courses') ? 'border-l-4 bg-neutral-100/5' : 'hover:bg-neutral-100/5' }}">
                             <div>
                                 <img class="w-7 h-7" src="{{ asset('icons/online-course.png') }}" alt="">
                             </div>

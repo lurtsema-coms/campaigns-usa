@@ -16,10 +16,10 @@ class extends Component {
     <div class="px-5 my-12">
         <div class="p-5 mx-auto bg-white sm:p-10 rounded-xl max-w-7xl ">
             <div class="max-w-2xl pb-4 mx-auto lg:max-w-7xl">
-              <h1 class="text-3xl font-bold tracking-tight text-dark sm:text-4xl">Shopping Cart</h1>
+              <h1 class="text-3xl font-bold tracking-tight text-dark sm:text-4xl">Courses Cart</h1>
               <form class="mt-12 lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16">
                 <section aria-labelledby="cart-heading" class="lg:col-span-7">
-                  <h2 id="cart-heading" class="sr-only">Items in your shopping cart</h2>
+                  <h2 id="cart-heading" class="sr-only">Items in your course cart</h2>
           
                   <ul role="list" class="border-t border-b border-gray-200 divide-y divide-gray-200">
                     <li class="flex py-6 sm:py-10">

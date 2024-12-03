@@ -13,6 +13,8 @@ new class extends Component
     public string $last_name = '';
     public string $email = '';
     public string $contact_number = '';
+    public string $expertise = '';
+    public string $about_author = '';
 
     /**
      * Mount the component.
@@ -23,6 +25,8 @@ new class extends Component
         $this->last_name = Auth::user()->last_name;
         $this->email = Auth::user()->email;
         $this->contact_number = Auth::user()->contact_number;
+        $this->expertise = Auth::user()->expertise ?? '';
+        $this->about_author = Auth::user()->about_author ?? '';
     }
 
     /**
@@ -37,6 +41,8 @@ new class extends Component
             'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($user->id)],
             'contact_number' => ['required', 'string', 'max:255'],
+            'expertise' => ['required', 'string'],
+            'about_author' => ['required', 'string'],
         ]);
 
         $user->fill($validated);
@@ -47,7 +53,7 @@ new class extends Component
 
         $user->save();
 
-        $this->dispatch('profile-updated', name: $user->name);
+        $this->dispatch('profile-updated', name: $user->first_name);
     }
 
     /**
@@ -118,6 +124,15 @@ new class extends Component
                     @endif
                 </div>
             @endif
+        </div>
+        <div>
+            <x-input-label for="contact_number" :value="__('Professional Headline')" />
+            <x-text-input wire:model="expertise" id="professional_headline" name="professional_headline" type="text" placeholder="Professional Title or Role (e.g., Owner at XYZ Inc.)" class="block w-full mt-1" required autofocus autocomplete="professional_headline" />
+            <x-input-error class="mt-2" :messages="$errors->get('professional_headline')"/>
+        </div>
+        <div class="col-span-2">
+            <x-input-label for="About You" :value="__('About You')" />
+            <x-textarea wire:model="about_author" id="about_you" class="w-full mt-1" name="about_you" required />
         </div>
 
         <div class="flex items-center gap-4">

@@ -77,7 +77,7 @@ new class extends Component {
             </div>
 
             @auth
-                <a href="{{ auth()->user()->isAdmin() ? route('dashboard') : route('student-dashboard') }}" wire:navigate>
+                <a href="{{ auth()->user()->isStudent() ? route('student-dashboard') : route('dashboard') }}" wire:navigate>
                     <div class="hidden px-4 py-2 transition-all rounded-lg cursor-pointer bg-color-blue hover:opacity-70 lg:block">
                         <div>
                             Dashboard
@@ -128,8 +128,8 @@ new class extends Component {
                 <a class="block font-medium hover:opacity-70" href="{{ route('courses') }}" wire:navigate>Courses</a>
             </div>
             @auth
-                <a href="{{ auth()->user()->isAdmin() ? route('dashboard') : route('student-dashboard') }}" wire:navigate>
-                    <div class="block px-4 py-2 font-bold text-center transition-all rounded-lg cursor-pointer bg-color-blue hover:opacity-70">
+            <a href="{{ auth()->user()->isStudent() ? route('student-dashboard') : route('dashboard') }}" wire:navigate>
+                <div class="block px-4 py-2 font-bold text-center transition-all rounded-lg cursor-pointer bg-color-blue hover:opacity-70">
                         Dashboard
                     </div>
                 </a>

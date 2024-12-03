@@ -54,7 +54,7 @@ new class extends Component {
                 <x-input-error class="mt-2" :messages="$errors->get('price')" />
             </div>
             <div class="col-span-2" wire:ignore>
-                <x-input-label for="trix" :value="__('Description')" />
+                <x-input-label for="trix" :value="__('Overview')" />
                 <div class="mt-1">                    
                     <trix-editor
                         class="mt-2 border border-gray-300 rounded-lg shadow-sm focus:border-blue-400 trix"

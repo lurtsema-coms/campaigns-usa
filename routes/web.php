@@ -33,6 +33,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::group(['middleware' => ['role:student']], function () {
         Volt::route('student/dashboard', 'backend.student.dashboard')->name('student-dashboard');
+        Volt::route('student/my-courses', 'backend.student.my-courses')->name('student-my-courses');
     });
 });
 
