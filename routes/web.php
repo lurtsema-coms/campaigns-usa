@@ -14,7 +14,9 @@ use Livewire\Volt\Volt;
 |
 */
 
-Route::view('/', 'welcome');
+Volt::route('/', 'frontend.index.home')->name('home');
+Volt::route('about', 'frontend.index.about')->name('about');
+Volt::route('contact-us', 'frontend.index.contact')->name('contact');
 Volt::route('courses', 'frontend.course.index')->name('courses');
 Volt::route('courses/{id}', 'frontend.course.course-item')->name('course-item');
 Volt::route('cart', 'frontend.cart.index')->name('cart-section');
