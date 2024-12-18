@@ -117,7 +117,7 @@ class extends Component {
             </div>
         </div>
     </div>
-    {{-- BROOKS PITCHER --}}
+    {{-- ROBERT YUNDT --}}
     <div class="fixed inset-0 z-20 flex min-h-screen p-10 overflow-auto bg-black min-w-screen bg-opacity-85"
         x-cloak
         x-show="robertYundt"

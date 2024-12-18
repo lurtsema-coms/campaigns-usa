@@ -36,7 +36,7 @@ new #[Layout('layouts.guest')] class extends Component
     <form wire:submit="login">
 
         <div class="mb-6">
-            <span class="font-bold text-md ">Doesn't have an account yet? <a href="/register" class="font-bold text-indigo-800 underline">Sign Up</a></span>
+            <span class="font-bold text-md ">Doesn't have an account yet? <a wire:navigate href="/register" class="font-bold text-indigo-800 underline">Sign Up</a></span>
         </div>
 
         <!-- Email Address -->
@@ -76,7 +76,7 @@ new #[Layout('layouts.guest')] class extends Component
         </div>
 
         <div class="mt-4">            
-            <a href="/">
+            <a wire:navigate href="{{ route('home_new') }}">
                 <div class="flex items-center gap-2 font-medium text-gray-700">
                     <span>Back to home</span>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">

@@ -8,7 +8,9 @@ use Illuminate\View\View;
 use Livewire\Volt\Component;
 
 
-new #[Layout('layouts.frontend')] 
+new
+#[Layout('layouts.frontend.app')] 
+#[Title('Campaigns USA - Home')] 
 class extends Component {
 
     use CartActions;
