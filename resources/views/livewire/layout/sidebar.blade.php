@@ -39,7 +39,7 @@ new class extends Component {
         <div class="flex flex-col h-full gap-28">
             <div class="flex-1 space-y-8">
                 <div class="sticky top-0 flex items-center w-full h-16 px-5 py-10 bg-slate-900 ">
-                    <a href="{{ route('courses') }}" wire:navigate>
+                    <a href="{{ route('courses_new') }}" wire:navigate>
                         <img class="h-auto w-36 hover:opacity-70" src="{{ asset('frontend/Logo SVG.png') }}" alt="">
                     </a>
                 </div>

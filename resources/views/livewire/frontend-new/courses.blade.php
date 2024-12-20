@@ -33,16 +33,16 @@ class extends Component {
     </div> --}}
     <div class="px-5 pt-16 mx-auto">
         <div class="absolute top-0 left-0 -z-10">
-            <img class="h-48 opacity-10 lg:opacity-80" src="{{ asset('frontend/us-flag-left.png') }}" alt="">
+            <img class="h-48 opacity-10 lg:opacity-80" src="{{ asset('frontend/us-flag-left.png') }}" alt="" data-aos="flip-right">
         </div>
         <div class="absolute top-0 right-0 -z-10">
-            <img class="h-48 opacity-10 lg:opacity-80" src="{{ asset('frontend/us-flag-right.png') }}" alt="">
+            <img class="h-48 opacity-10 lg:opacity-80" src="{{ asset('frontend/us-flag-right.png') }}" alt="" data-aos="flip-left">
         </div>
         <div class="mx-auto max-w-8xl">
-            <p class="text-4xl font-medium text-center text-gray-800">Courses List</p>
+            <p class="text-2xl font-medium text-center text-gray-800 sm:text-4xl" data-aos="flip-right">Courses List</p>
             <div class="flex justify-end">
                 <div class="w-full pt-10 pb-6 max-w-80">
-                    <input type="text" class="block w-full rounded-md bg-white px-3.5 py-2.5 text-base text-gray-900 placeholder:text-gray-400 focus:ring-0 border border-gray-300">
+                    <input type="text" placeholder="Search courses..." class="block w-full rounded-md bg-white px-3.5 py-2.5 text-base text-gray-900 placeholder:text-gray-400 focus:ring-0 border border-gray-300">
                 </div>
             </div>
         </div>
@@ -61,7 +61,7 @@ class extends Component {
                 <a wire:navigate href="{{ route('course-item', $course->id) }}" class="overflow-hidden border shadow-sm hover:shadow-lg bg-zinc-50 rounded-xl" wire:key="{{ $course->id }}">
                     <div class="flex flex-col">
                         <div class="h-44">
-                            <img class="object-cover w-full h-full" src="{{ $course->thumbnail_url }}" alt="">
+                            <img class="object-cover w-full h-full" src="{{ $course->thumbnail_url }}" alt="" loading="lazy">
                         </div>
                         <div class="flex flex-col px-5 py-8 min-h-72">
                             <div class="text-lg font-medium font-inter line-clamp-2">

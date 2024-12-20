@@ -14,19 +14,20 @@ use Livewire\Volt\Volt;
 |
 */
 
-Volt::route('/home1', 'frontend-new.home')->name('home_new');
+Volt::route('/', 'frontend-new.home')->name('home_new');
 Volt::route('/courses1', 'frontend-new.courses')->name('courses_new');
 Volt::route('/contact', 'frontend-new.contact')->name('contact_new');
 Volt::route('/about', 'frontend-new.about')->name('about_new');
+Volt::route('/cart', 'frontend-new.cart')->name('cart');
 
 
 
-Volt::route('/', 'frontend.index.home')->name('home');
+// Volt::route('/', 'frontend.index.home')->name('home');
 // Volt::route('about', 'frontend.index.about')->name('about');
-Volt::route('contact-us', 'frontend.index.contact')->name('contact');
+// Volt::route('contact-us', 'frontend.index.contact')->name('contact');
 Volt::route('courses', 'frontend.course.index')->name('courses');
 Volt::route('courses/{id}', 'frontend.course.course-item')->name('course-item');
-Volt::route('cart', 'frontend.cart.index')->name('cart-section');
+// Volt::route('cart', 'frontend.cart.index')->name('cart-section');
 
 Route::view('course/course1', 'backend.course-video')->name('user_course');
 
