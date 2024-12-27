@@ -13,7 +13,8 @@ class extends Component {
     public function with() : array
     {
         return [
-            'courses' => $this->loadCourses()
+            'courses' => collect([])
+            // 'courses' => $this->loadCourses()
         ];
     }
 
@@ -28,21 +29,6 @@ class extends Component {
         <img class="h-96 lg:h-full opacity-10 lg:opacity-80" src="{{ asset('frontend/us-flag-left.png') }}" alt="">
     </div>
     <div class="relative pt-16 pb-16 mx-auto overflow-hidden lg:pt-5 lg:pb-0 max-w-8xl">
-        {{-- <div class="pt-8">
-            <div class="flex flex-col gap-8 mb-24">
-                <span class="px-8 py-2 mx-auto font-bold text-gray-700 border rounded-full border-slate-800 font-inter">
-                    WELCOME TO CAMPAIGNS USA
-                </span>
-                <span class="max-w-6xl mx-auto text-6xl font-bold text-center text-gray-800 font-inter">
-                    Meet your Professional Mentor
-                </span>
-            </div>
-            <div class="grid grid-cols-3 py-64">
-                <div class="absolute bottom-0 transform -translate-x-1/2 left-1/2">
-                    <img class="object-contain w-[30rem]" src="{{ asset('frontend/joe.png') }}" alt="">
-                </div>
-            </div>
-        </div> --}}
         <div class="absolute bottom-0 hidden sm:block -right-10 lg:right-0 -z-10">
             <img class="h-[35rem] opacity-10" src="{{ asset('frontend/us-h.png') }}" alt="">
         </div>
@@ -61,12 +47,12 @@ class extends Component {
                 </p>
                 <div class="flex gap-8">
                     <a wire:navigate href="{{ route('courses_new') }}">
-                        <button class="tracking-wider sm:text-xl group relative inline-flex sm:h-16 items-center justify-center overflow-hidden rounded-md border border-sky-600 bg-transparent px-4 sm:px-8 text-gray-600 transition-all duration-100 [box-shadow:5px_5px_rgba(80,160,255,0.4)] hover:translate-x-[3px] hover:translate-y-[3px] hover:[box-shadow:0px_0px_rgba(100,174,255,0.6)]">
+                        <button class="tracking-wider sm:text-xl group relative flex h-16 items-center justify-center overflow-hidden rounded-md border border-sky-600 bg-transparent px-4 sm:px-8 text-gray-600 transition-all duration-100 [box-shadow:5px_5px_rgba(80,160,255,0.4)] hover:translate-x-[3px] hover:translate-y-[3px] hover:[box-shadow:0px_0px_rgba(100,174,255,0.6)]">
                             Browse Courses
                         </button>
                     </a>
                     <a wire:navigate href="{{ route('about_new') }}">
-                        <button class="relative inline-flex items-center justify-center h-16 px-4 overflow-hidden duration-500 bg-red-500 rounded-md sm:px-8 sm:text-xl group text-neutral-50"><div class="translate-y-0 opacity-100 transition group-hover:-translate-y-[150%] group-hover:opacity-0">Learn More About Me</div><div class="absolute translate-y-[150%] opacity-0 transition group-hover:translate-y-0 group-hover:opacity-100"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6"><path d="M7.5 2C7.77614 2 8 2.22386 8 2.5L8 11.2929L11.1464 8.14645C11.3417 7.95118 11.6583 7.95118 11.8536 8.14645C12.0488 8.34171 12.0488 8.65829 11.8536 8.85355L7.85355 12.8536C7.75979 12.9473 7.63261 13 7.5 13C7.36739 13 7.24021 12.9473 7.14645 12.8536L3.14645 8.85355C2.95118 8.65829 2.95118 8.34171 3.14645 8.14645C3.34171 7.95118 3.65829 7.95118 3.85355 8.14645L7 11.2929L7 2.5C7 2.22386 7.22386 2 7.5 2Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg></div></button>
+                        <button class="relative flex items-center justify-center h-16 px-4 overflow-hidden duration-500 bg-red-500 rounded-md sm:px-8 sm:text-xl group text-neutral-50"><div class="translate-y-0 opacity-100 transition group-hover:-translate-y-[150%] group-hover:opacity-0">Learn More About Me</div><div class="absolute translate-y-[150%] opacity-0 transition group-hover:translate-y-0 group-hover:opacity-100"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6"><path d="M7.5 2C7.77614 2 8 2.22386 8 2.5L8 11.2929L11.1464 8.14645C11.3417 7.95118 11.6583 7.95118 11.8536 8.14645C12.0488 8.34171 12.0488 8.65829 11.8536 8.85355L7.85355 12.8536C7.75979 12.9473 7.63261 13 7.5 13C7.36739 13 7.24021 12.9473 7.14645 12.8536L3.14645 8.85355C2.95118 8.65829 2.95118 8.34171 3.14645 8.14645C3.34171 7.95118 3.65829 7.95118 3.85355 8.14645L7 11.2929L7 2.5C7 2.22386 7.22386 2 7.5 2Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg></div></button>
                     </a>
                 </div>
             </div>
@@ -211,7 +197,22 @@ class extends Component {
     <div class="px-5 py-16 mx-auto max-w-8xl">
         <p class="mx-auto text-4xl font-medium text-center text-gray-800 sm:text-5xl font-sourceserif">Latest Classes</p>
         <p class="mx-auto mt-4 text-xl text-center text-gray-800 font-sourceserif">Learn the Ins & Outs from Joseph Lurtsema!</p>
-        <div
+        @if ($courses->isEmpty())
+            <div class="flex justify-center mt-16">
+                <p class="text-xl font-medium text-center text-gray-800">We're still creating courses, but you can learn more about Joseph Lurtsema in the meantime.</p>
+            </div>
+            <div class="flex justify-center">
+                <a wire:navigate href="{{ route('about_new') }}">
+                    <button class="flex items-center gap-2 px-6 py-4 mt-8 bg-white rounded-md shadow group hover:opacity-70">
+                        <span>Meet Joseph Lurtsema</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 group-hover:translate-x-1">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                        </svg>
+                    </button>
+                </a>
+            </div>
+            @else
+            <div
             {{-- x-data="{ dragging: false }"
             @pointerdown="dragging = true; $el.setPointerCapture($event.pointerId); $el.style.userSelect = 'none'; $el.classList.add('cursor-default')"
             @pointerup="dragging = false; $el.releasePointerCapture($event.pointerId); $el.style.userSelect = ''; $el.classList.remove('cursor-default')"
@@ -303,6 +304,7 @@ class extends Component {
                 </button>
             </a>
         </div>
+        @endif
     </div>
     <div class="bg-white">
         <div class="px-5 py-16 mx-auto sm:px-6 sm:py-32 lg:px-8">
