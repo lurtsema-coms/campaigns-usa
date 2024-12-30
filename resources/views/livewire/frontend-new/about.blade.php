@@ -6,7 +6,7 @@ use Livewire\Volt\Component;
 
 new
 #[Layout('layouts.frontend.app')] 
-#[Title('Campaigns USA - About')] 
+#[Title('Campaigns USA | About')] 
 class extends Component {
     //
 }; ?>

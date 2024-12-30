@@ -15,6 +15,12 @@
         @vite('resources/css/app.css')
     </head>
     <body class="antialiased bg-gray-100">
+        <!-- Spinner -->
+        {{-- <div id="loader" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800/90">
+            <span class="loader"></span>
+        </div> --}}
+
+        <!-- Main Content -->
         <div class="flex flex-col min-h-screen">
             <livewire:frontend-new.components.navigation/>
             <div class="flex-1">
@@ -64,7 +70,7 @@
                 </div>
             </footer>
         </div>
-
+        
         <script>
             AOS.init({
                 offset: 300, // Offset (in pixels) from the original trigger point

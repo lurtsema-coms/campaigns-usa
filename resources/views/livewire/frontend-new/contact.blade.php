@@ -7,7 +7,7 @@ use Livewire\Volt\Component;
 
 new
 #[Layout('layouts.frontend.app')] 
-#[Title('Campaigns USA - Contact')] 
+#[Title('Campaigns USA | Contact')] 
 class extends Component {
     
 	public $first_name = '';

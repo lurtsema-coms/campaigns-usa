@@ -7,7 +7,7 @@ use Livewire\Volt\Component;
 
 new
 #[Layout('layouts.frontend.app')] 
-#[Title('Campaigns USA - Home')] 
+#[Title('Campaigns USA | Home')] 
 class extends Component {
     
     public function with() : array
@@ -195,11 +195,11 @@ class extends Component {
         </div>
     </div>
     <div class="px-5 py-16 mx-auto max-w-8xl">
-        <p class="mx-auto text-4xl font-medium text-center text-gray-800 sm:text-5xl font-sourceserif">Latest Classes</p>
+        <p class="mx-auto text-3xl font-medium text-center text-gray-800 sm:text-5xl font-sourceserif">Latest Classes</p>
         <p class="mx-auto mt-4 text-xl text-center text-gray-800 font-sourceserif">Learn the Ins & Outs from Joseph Lurtsema!</p>
         @if ($courses->isEmpty())
             <div class="flex justify-center mt-16">
-                <p class="text-xl font-medium text-center text-gray-800">We're still creating courses, but you can learn more about Joseph Lurtsema in the meantime.</p>
+                <p class="font-medium text-center text-gray-800 sm:text-xl">We're still creating courses, but you can learn more about Joseph Lurtsema in the meantime.</p>
             </div>
             <div class="flex justify-center">
                 <a wire:navigate href="{{ route('about_new') }}">
@@ -311,7 +311,7 @@ class extends Component {
             <div class="grid gap-8 mx-auto mb-16 sm:mb-32 md:grid-cols-2 max-w-7xl">
                 <div class="flex flex-col justify-center gap-6">
                     <p class="font-medium text-blue-400">Lorem ipsum dolor sit amet consectetur.</p>
-                    <p class="text-3xl font-medium">Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
+                    <p class="text-xl font-medium sm:text-3xl">Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
                     <p class="text-gray-600">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Explicabo, molestias doloremque hic perspiciatis sapiente error adipisci? Quibusdam enim ad similique ipsa animi sit, ducimus mollitia?</p>
                 </div>
                 <div class="flex items-center">
@@ -324,7 +324,7 @@ class extends Component {
                 </div>
                 <div class="flex flex-col justify-center gap-6 lg:pl-8">
                     <p class="font-medium text-blue-400">Lorem ipsum dolor sit amet consectetur.</p>
-                    <p class="text-3xl font-medium">Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
+                    <p class="text-xl font-medium sm:text-3xl">Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
                     <p class="text-gray-600">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Explicabo, molestias doloremque hic perspiciatis sapiente error adipisci? Quibusdam enim ad similique ipsa animi sit, ducimus mollitia?</p>
                     <a wire:nagigate href="{{ route('contact_new') }}">
                         <button class="px-6 py-4 text-white bg-blue-500 rounded shadow hover:bg-blue-400">Email Now!</button>
@@ -334,7 +334,7 @@ class extends Component {
 
             <!-- Component: Logos carousel -->
             <div class="py-16 mx-auto overflow-hidden sm:py-32 max-w-8xl">
-                <p class="mb-16 text-3xl font-medium text-center text-slate-600">We help win hundreds of campaigns in the last 3 years!</p>
+                <p class="mb-16 text-xl font-medium text-center sm:text-3xl text-slate-600">We help win hundreds of campaigns in the last 3 years!</p>
                 <div class="relative w-full glide-09">
                     <!-- Slides -->
                     <div data-glide-el="track">

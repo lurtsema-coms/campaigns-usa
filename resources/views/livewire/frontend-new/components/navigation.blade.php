@@ -7,7 +7,7 @@ new class extends Component {
 }; ?>
 
 <div class="sticky top-0 z-10 shadow-sm bg-slate-800">
-    <div class="relative flex items-center justify-between w-full h-20 px-5 mx-auto text-gray-300 max-w-8xl">
+    <div class="relative flex items-center justify-between w-full h-20 px-5 mx-auto text-gray-400 max-w-8xl">
         <!-- Left section: CAMPAIGNS USA -->
         <div class="flex items-center gap-10 md:gap-32">
             <a wire:navigate href="{{ route('home_new') }}" class="shrink-0">
@@ -37,7 +37,7 @@ new class extends Component {
                     <a wire:navigate href="{{ route('dashboard') }}" class="hidden hover:font-medium hover:text-gray-100 md:block">Dashboard</a>
                 @endrole
                 @else
-                <a wire:navigate href="{{ route('login') }}" class="hidden lg:block hover:font-medium hover:text-gray-100">Login</a>
+                <a wire:navigate href="{{ route('login') }}" class="hidden text-gray-300 lg:block hover:font-medium hover:text-gray-100">Login</a>
             @endauth
 
             <div x-data="{ navOpen: false}" class="lg:hidden">

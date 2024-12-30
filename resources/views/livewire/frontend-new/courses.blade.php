@@ -7,7 +7,7 @@ use Livewire\Volt\Component;
 
 new
 #[Layout('layouts.frontend.app')] 
-#[Title('Campaigns USA - Courses')] 
+#[Title('Campaigns USA | Courses')] 
 class extends Component {
 
     public function with() : array
@@ -41,7 +41,7 @@ class extends Component {
         <div class="mx-auto max-w-8xl">
             <p class="text-2xl font-medium text-center text-gray-800 sm:text-4xl" data-aos="flip-right">Courses List</p>
             <div class="flex justify-end">
-                <div class="w-full pt-10 pb-6 max-w-80">
+                <div class="w-full max-w-full pt-10 pb-6 sm:max-w-80">
                     <input type="text" placeholder="Search courses..." class="block w-full rounded-md bg-white px-3.5 py-2.5 text-base text-gray-900 placeholder:text-gray-400 focus:ring-0 border border-gray-300">
                 </div>
             </div>
