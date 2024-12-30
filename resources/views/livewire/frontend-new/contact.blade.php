@@ -2,8 +2,12 @@
 
 use Livewire\Attributes\Title;
 use Livewire\Attributes\Layout;
-use App\Models\Mail;
+use App\Models\Mail as MailModel;
+use App\Mail\ContactFormSubmitted;
 use Livewire\Volt\Component;
+use Illuminate\Support\Facades\Mail;
+
+
 
 new
 #[Layout('layouts.frontend.app')] 
@@ -18,25 +22,35 @@ class extends Component {
 	public function submitMail()
 	{
 		$this->validate();
-		
-		Mail::create([
+
+		$inputs = [
 			'first_name' => $this->first_name,
 			'last_name' => $this->last_name,
 			'email' => $this->email,
 			'message' => $this->message,
-		]);
+		];
+		// dd($inputs);
 
-		$this->reset(['first_name', 'last_name', 'email', 'message']);
-		$this->dispatch('mail-created');
+		
+		try {
+			$contact_form = MailModel::create($inputs);
+			Mail::to(env('MAIL_TO_ADDRESS'))->send(new ContactFormSubmitted($inputs));
+			$this->reset(['first_name', 'last_name', 'email', 'message']);
+			$this->dispatch('mail-created');
+		} catch (\Throwable $e) {
+			$this->dispatch('mail-error');
+		}
+		
+
 	}
 
 	public function rules()
 	{
 		return [
-			'first_name' => 'required',
-			'last_name' => 'required',
+			'first_name' => 'required|string|max:255',
+			'last_name' => 'required|string|max:255',
 			'email' => 'required|email',
-			'message' => 'required',
+			'message' => 'required|string|max:255',
 		];
 	}
 }; ?>
@@ -174,6 +188,15 @@ class extends Component {
 						class="flex justify-end mt-4 text-green-600"
 					>
 						Your message has been successfully sent.
+					</div>
+					<div 
+						x-data="{ show: false }" 
+						x-on:mail-error.window="show = true; setTimeout(() => show = false, 10000)" 
+						x-show="show" 
+						x-cloak
+						class="flex justify-end mt-4 text-red-600"
+					>
+						Emailed Failed, Please try again later.
 					</div>
 				</div>
 			</form>
