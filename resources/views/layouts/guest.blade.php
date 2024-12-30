@@ -41,7 +41,7 @@
 
         </style>
     </head>
-    <body class="text-gray-900 antialiased flex m-auto min-h-screen max-w-[100vw] sm:p-6 bg-purple-50 u-bg-fixed p-4">
+    <body class="text-gray-900 antialiased flex m-auto min-h-screen max-w-[100vw] sm:p-6  bg-gray-800 p-4">
         @if (Request::is('register'))
             <!-- Register Layout -->
             <div class="flex w-full px-2 py-10 m-auto overflow-x-hidden">
@@ -65,7 +65,7 @@
             <div class="flex w-full px-2 py-10 m-auto overflow-x-hidden">
                 <div class="w-full max-w-[30rem] sm:auto relative flex flex-row justify-center items-center m-auto u-bg-grey shadow-none sm:shadow-md  h-[35rem] rounded-3xl">
                     <div class="absolute top-0 flex flex-col items-center justify-center w-full -translate-y-12">
-                        <img class="w-64 p-4 u-bg-linear rounded-3xl" src="{{ asset('frontend/Logo SVG.png') }}" alt="">
+                        <img class="w-64 p-4 bg-gray-800 rounded-3xl" src="{{ asset('frontend/Logo SVG.png') }}" alt="">
                     </div>
                     <div class="absolute left-0 translate-left-14">
                         <img class="" src="{{ asset('frontend/flag-left.png') }}" alt="flag">
