@@ -15,12 +15,14 @@ class extends Component {
 
     use CartActions;
 
+    public $user_cart;
     public $course;
     public $title;
     public $cart_items;
     
     public function mount(Courses $course, int $id)
     {
+        $this->user_cart = auth()->user() ? explode(",", auth()->user()->cart) : [];
         $this->course = $course->find($id);
     }
 
@@ -30,43 +32,31 @@ class extends Component {
         $view->title("Campaigns USA | $course_title");
     }
 
-    public function item($item_id)
+    public function toggleItem($item_id)
     {
-        if (Auth::check()) {            
+        if (Auth::check()) {
             $this->cart_items = $this->toggleToCart($item_id);
+            $this->user_cart = $this->cart_items;
             $this->dispatch('cart-updated');
         } else {
-            return redirect()->guest('login')->with('message', 'Please login to add items to your cart');
+            session()->flash('cart_message', 'Please login to add items to cart');
+            $this->redirect('/login', navigate: true);
+        }
+    }
+
+    public function addItem($item_id)
+    {
+        if (Auth::check()) {
+            $this->cart_items = $this->addToCart($item_id);
+            $this->dispatch('cart-updated');
+            $this->redirect(route('cart'), navigate: true);
+        } else {
+            session()->flash('cart_message', 'Please login before enrolling');
+            $this->redirect('/login', navigate: true);
         }
     }
 }; ?>
 
-<style>
-    .description ul,
-    .description ol {
-        padding-left: 1.5rem; /* Adds left padding for indentation */
-        margin-bottom: 1rem; /* Adds spacing between lists */
-    }
-
-    .description ul li {
-        list-style-type: disc;
-        color: #374151;
-    }
-
-    .description ol li {
-        list-style-type: decimal;
-        color: #374151;
-    }
-
-    strong{
-        font-weight: 500;
-        color: #252525;
-    }
-
-    .description div{
-       color: #374151;
-    }
-</style>
 
 <div class="px-5 my-12">
     <div class="p-5 mx-auto bg-white sm:p-10 rounded-xl max-w-7xl ">
@@ -128,13 +118,18 @@ class extends Component {
                     </button>
                 </div>
 
-                <button class="flex items-center gap-2 px-3 py-2 border border-gray-300 rounded-md text-dark hover:bg-neutral-100 group">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+                <button 
+                    class="flex items-center gap-2 px-3 py-2 border border-gray-300 rounded-md text-dark hover:bg-neutral-100 group {{ in_array($course->id, $user_cart) ? 'bg-gradient-to-r from-red-500 to-red-500/80' : '' }}"
+                    wire:click="toggleItem({{ $course->id }})"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="{{ in_array($course->id, $user_cart) ? 'currentColor' : 'none' }}" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 {{ in_array($course->id, $user_cart) ? 'text-white' : '' }}">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
                     </svg>
                 </button>
             
-                <button class="flex items-center gap-2 px-3 py-2 text-white rounded-md bg-slate-600 hover:bg-slate-700">
+                <button class="flex items-center gap-2 px-3 py-2 text-white rounded-md bg-slate-600 hover:bg-slate-700"
+                    wire:click="addItem({{ $course->id }})"
+                >
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
                     </svg>
@@ -317,7 +312,7 @@ class extends Component {
     </div>
 </div>
 
-@script
+{{-- @script
 <script>
     (function () {
       function textareaAutoHeight(el, offsetTop = 0) {
@@ -347,4 +342,4 @@ class extends Component {
       })();
     })()
   </script>
-@endscript
+@endscript --}}

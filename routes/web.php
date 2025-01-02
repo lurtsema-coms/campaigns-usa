@@ -18,9 +18,6 @@ Volt::route('/', 'frontend-new.home')->name('home_new');
 Volt::route('/courses1', 'frontend-new.courses')->name('courses_new');
 Volt::route('/contact', 'frontend-new.contact')->name('contact_new');
 Volt::route('/about', 'frontend-new.about')->name('about_new');
-Volt::route('/cart', 'frontend-new.cart')->name('cart');
-
-
 
 // Volt::route('/', 'frontend.index.home')->name('home');
 // Volt::route('about', 'frontend.index.about')->name('about');
@@ -44,6 +41,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::group(['middleware' => ['role:student']], function () {
         Volt::route('student/dashboard', 'backend.student.dashboard')->name('student-dashboard');
         Volt::route('student/my-courses', 'backend.student.my-courses')->name('student-my-courses');
+        Volt::route('/cart', 'frontend-new.cart')->name('cart');
     });
 });
 

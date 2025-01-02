@@ -13,6 +13,33 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.0.2/glide.js"></script>
 
         @vite('resources/css/app.css')
+
+        <style>
+            .description ul,
+            .description ol {
+                padding-left: 1.5rem; /* Adds left padding for indentation */
+                margin-bottom: 1rem; /* Adds spacing between lists */
+            }
+        
+            .description ul li {
+                list-style-type: disc;
+                color: #374151;
+            }
+        
+            .description ol li {
+                list-style-type: decimal;
+                color: #374151;
+            }
+        
+            strong{
+                font-weight: 500;
+                color: #252525;
+            }
+        
+            .description div{
+               color: #374151;
+            }
+        </style>
     </head>
     <body class="antialiased bg-gray-100">
         <!-- Spinner -->

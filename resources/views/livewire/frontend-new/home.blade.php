@@ -13,8 +13,7 @@ class extends Component {
     public function with() : array
     {
         return [
-            'courses' => collect([])
-            // 'courses' => $this->loadCourses()
+            'courses' => $this->loadCourses()
         ];
     }
 

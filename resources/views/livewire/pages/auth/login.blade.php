@@ -75,6 +75,14 @@ new #[Layout('layouts.guest')] class extends Component
             </x-primary-button>
         </div>
 
+        <div class="mt-4">
+            @session('cart_message')
+                <div class="text-sm text-red-600">
+                    {{ session('cart_message') }}
+                </div>
+            @endsession
+        </div>
+
         <div class="mt-4">            
             <a wire:navigate href="{{ route('home_new') }}">
                 <div class="flex items-center gap-2 font-medium text-gray-700">

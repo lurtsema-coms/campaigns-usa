@@ -29,32 +29,28 @@
                 background: linear-gradient(to right, #111330, #100E2E);
             }
 
-            .translate-left-14 {
-                transform: translateX(-3.57rem); /* or translateX(-56px) */
+            /* .translate-left-14 {
+                transform: translateX(-3.57rem);
                 top: 40%;
             }
             .translate-right-14 {
-                transform: translateX(4.88rem); /* or translateX(-56px) */
+                transform: translateX(4.88rem);
                 top:5%;
-            }
+            } */
 
 
         </style>
     </head>
-    <body class="text-gray-900 antialiased flex m-auto min-h-screen max-w-[100vw] sm:p-6 bg-purple-50 u-bg-fixed p-4">
+    <body class="flex min-h-screen p-10 m-auto antialiased text-gray-900 bg-slate-800">
         @if (Request::is('register'))
             <!-- Register Layout -->
-            <div class="flex w-full px-2 py-10 m-auto overflow-x-hidden">
-                <div class="w-full max-w-[30rem] sm:auto relative flex flex-row justify-center items-center m-auto u-bg-grey shadow-none sm:shadow-md  h-[45rem] rounded-3xl ">
+            <div class="flex w-full px-2 py-10 m-auto ">
+                <div class="relative flex flex-row items-center justify-center w-full max-w-4xl pt-20 pb-10 m-auto shadow-none sm:auto u-bg-grey sm:shadow-md rounded-3xl">
                     <div class="absolute top-0 flex flex-col items-center justify-center w-full -translate-y-12">
                         <img class="w-64 p-4 u-bg-linear rounded-3xl" src="{{ asset('frontend/Logo SVG.png') }}" alt="">
                     </div>
-                    <div class="absolute left-0 translate-left-14">
-                        <img class="" src="{{ asset('frontend/flag-left.png') }}" alt="flag">
-                    </div>
-                    <div class="absolute right-0 translate-right-14">
-                        <img src="{{ asset('frontend/flag-right.png') }}" alt="flag">
-                    </div>
+                    <img class="absolute -left-[3.57rem] bottom-0" src="{{ asset('frontend/flag-left.png') }}" alt="flag">
+                    <img class="absolute -right-[4.85rem] top-0" src="{{ asset('frontend/flag-right.png') }}" alt="flag">
                     <div class="w-full py-4 m-auto px-14">
                         {{ $slot }}
                     </div>
@@ -67,10 +63,10 @@
                     <div class="absolute top-0 flex flex-col items-center justify-center w-full -translate-y-12">
                         <img class="w-64 p-4 u-bg-linear rounded-3xl" src="{{ asset('frontend/Logo SVG.png') }}" alt="">
                     </div>
-                    <div class="absolute left-0 translate-left-14">
+                    <div class="absolute -left-[3.57rem] bottom-0">
                         <img class="" src="{{ asset('frontend/flag-left.png') }}" alt="flag">
                     </div>
-                    <div class="absolute right-0 translate-right-14">
+                    <div class="absolute -right-[4.85rem] top-0">
                         <img src="{{ asset('frontend/flag-right.png') }}" alt="flag">
                     </div>
                     <div class="w-full py-4 m-auto px-14">

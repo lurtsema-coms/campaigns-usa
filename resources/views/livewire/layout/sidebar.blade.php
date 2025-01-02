@@ -68,7 +68,7 @@ new class extends Component {
                 <div class="flex flex-col items-center gap-4 py-5 mx-auto rounded-md max-w-56 bg-slate-800/50">
                     <img class="w-28" src="{{ asset('envato/004-news politics.png') }}" alt="">
                     <span class="px-5 text-sm text-center text-gray-50">100+ Courses Available</span>
-                    <a href="{{ route('courses') }}" wire:navigate>
+                    <a href="{{ route('courses_new') }}" wire:navigate>
                         <button class="px-4 py-1 text-sm border rounded-md text-slate-200 border-slate-400 hover:bg-slate-800/70">Explore More</button>
                     </a>
                 </div>

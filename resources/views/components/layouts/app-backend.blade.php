@@ -10,7 +10,7 @@
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
         @livewireStyles
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @vite('resources/css/app.css')
     </head>
     <body class="h-full bg-gray-100">
         <livewire:layout.sidebar/>
@@ -21,6 +21,5 @@
             {{ $slot }}
         </div>
 
-        @livewireScriptConfig
     </body>
 </html>
