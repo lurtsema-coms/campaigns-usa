@@ -43,7 +43,7 @@ class extends Component {
                 <div class="grid gap-8">
                     @if ($cart->isEmpty())
                         <div class="p-10 font-medium text-center text-gray-800">
-                            Your cart is empty
+                            Your cart is empty 😔 <a wire:navigate href="{{ route('courses_new') }}" class="text-blue-500 hover:text-blue-400">Browse our courses here</a>.
                         </div>
                         @else
                         @foreach ($cart as $course)
@@ -83,12 +83,41 @@ class extends Component {
                                 </div>
                             </div>
                         @endforeach
+                        <div class="flex justify-center">
+                            <a wire:navigate href="{{ route('courses_new') }}" class="text-blue-500 hover:text-blue-400">
+                                Click here to add more
+                            </a>
+                        </div>
                     @endif
                 </div>
 
             </div>
-            <div class="p-10 shadow rounded-xl">
-
+            <div class="">
+                <div class="sticky p-10 bg-white shadow top-24 rounded-xl">
+                    <div class="pb-4 font-medium border-b">Summary</div>
+                    <div class="mt-4">
+                        <span class="font-medium">Course Title</span>
+                        <div class="flex flex-col gap-2 pb-4 mt-4 border-b">
+                            @foreach ($cart as $course)
+                                <div class="flex gap-4">
+                                    <div class="flex-1 text-gray-700">{{ $course->title }}</div>
+                                    <div class="text-slate-800">${{ $course->price }}</div>
+                                </div>
+                            @endforeach
+                        </div>
+                        <div class="flex mt-4">
+                            <div class="flex-1 font-medium">Total</div>
+                            <div class="font-medium text-blue-600">🏷️ ${{ $cart->sum('price') }}</div>
+                        </div>
+                    </div>
+                    <div class="flex justify-end mt-8">
+                        <button>
+                            <a class="block w-full px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600" {{ $cart->isEmpty() ? 'disabled' : '' }}>
+                                Proceed to Checkout
+                            </a>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
