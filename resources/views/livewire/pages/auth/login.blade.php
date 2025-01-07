@@ -36,7 +36,7 @@ new #[Layout('layouts.guest')] class extends Component
     <form wire:submit="login">
 
         <div class="mb-6">
-            <span class="font-bold text-md ">Doesn't have an account yet? <a wire:navigate href="/register" class="font-bold text-indigo-800 underline">Sign Up</a></span>
+            <span class="font-bold text-md ">Doesn't have an account yet? <a wire:navigate href="/register" class="font-bold text-indigo-900 underline">Sign Up</a></span>
         </div>
 
         <!-- Email Address -->
