@@ -47,7 +47,7 @@
             <div class="flex w-full px-2 py-10 m-auto ">
                 <div class="relative flex flex-row items-center justify-center w-full max-w-4xl pt-20 pb-10 m-auto shadow-none sm:auto u-bg-grey sm:shadow-md rounded-3xl">
                     <div class="absolute top-0 flex flex-col items-center justify-center w-full -translate-y-12">
-                        <img class="w-64 p-4 u-bg-linear rounded-3xl" src="{{ asset('frontend/Logo SVG.png') }}" alt="">
+                        <img class="w-64 p-4 bg-gray-800 rounded-3xl" src="{{ asset('frontend/Logo SVG.png') }}" alt="">
                     </div>
                     <img class="absolute -left-[3.57rem] bottom-0" src="{{ asset('frontend/flag-left.png') }}" alt="flag">
                     <img class="absolute -right-[4.85rem] top-0" src="{{ asset('frontend/flag-right.png') }}" alt="flag">
