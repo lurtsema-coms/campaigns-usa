@@ -39,7 +39,7 @@ new class extends Component {
 <div class="space-y-8">
     <x-text-back-link href="{{ route('instructor-courses') }}" />
     <form wire:submit="addCourse">
-        <div class="grid max-w-3xl grid-cols-2 mx-auto gap-x-8 gap-y-4">
+        <div class="grid max-w-4xl grid-cols-2 p-5 mx-auto bg-white border border-gray-300 shadow gap-x-8 gap-y-4 rounded-xl">
             <div class="col-span-2">
                 <x-input-label :value="__('Add Course')" />
             </div>
@@ -76,9 +76,12 @@ new class extends Component {
                 <x-text-input wire:model="introduction_video" id="introduction_video" name="introduction_video" type="file" class="block w-full p-2 mt-1 border" autofocus autocomplete="introduction_video" />
                 <x-input-error class="mt-2" :messages="$errors->get('thumbnail')" />
             </div>
-        </div>
-        <div class="max-w-3xl mx-auto mt-8">
-            <x-primary-button type="submit">{{ __('Save') }}</x-primary-button>
+
+            <div>
+                <div class="max-w-3xl mx-auto mt-8">
+                    <x-primary-button type="submit">{{ __('Save') }}</x-primary-button>
+                </div>
+            </div>
         </div>
     </form>
 </div>

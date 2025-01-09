@@ -72,7 +72,9 @@ new class extends Component {
                         </td>
                         <td class="px-6 py-3 text-sm text-gray-500 whitespace-nowrap">
                             <div class="flex items-center gap-2">
-                                123
+                                <button class="px-4 py-2 text-white bg-yellow-400 rounded-md">
+                                    Add Announcement
+                                </button>
                             </div>
                         </td>
                     </tr>
