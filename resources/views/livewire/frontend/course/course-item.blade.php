@@ -196,38 +196,25 @@ class extends Component {
                         x-show="activeSection == 'comments'"
                         class="w-full h-auto p-6 space-y-4 border rounded-md"
                     >
-                        <div>
-                            <div class="flex w-full space-x-4 mb-8">
-                                <img src="{{ asset('frontend/campaign1-modal.png') }}" alt="Author" class="object-cover w-16 h-16 rounded-full">
-                                <div class="w-full">
-                                    <textarea
-                                    class="w-full p-2 border border-slate-600 rounded-lg text-md focus:outline-none focus:ring-2 focus:ring-slate-600 resize-none"
-                                    rows="4"
-                                    placeholder="Write your comment here..."></textarea>
-                                    <button
-                                        class="mt-2 w-full px-3 py-2 text-white rounded-md bg-slate-600 hover:bg-slate-700">
-                                        Submit
-                                    </button>
-                                </div>
-                            </div>                                    
-                            {{-- <div class="flex items-center space-x-4 mb-4">
-                                <img src="{{ asset('frontend/campaign1-modal.png') }}" alt="Author" class="object-cover w-16 h-16 rounded-full">
-                                <div>
-                                    <p class="text-lg font-semibold">Test User</p>
-                                    <p class="text-sm text-gray-500">Student</p>
-                                </div>
-                            </div>                                    
-                            <div class=" flex-row">
-                                <textarea
-                                class="w-full p-2 border border-slate-600 rounded-lg text-md focus:outline-none focus:ring-2 focus:ring-slate-600 resize-none"
-                                rows="4"
-                                placeholder="Write your comment here..."></textarea>
-                                <button
-                                    class="mt-2 w-full px-3 py-2 text-white rounded-md bg-slate-600 hover:bg-slate-700">
-                                    Submit
-                                </button>
-                            </div> --}}
-                        </div>
+                    @auth
+                        @if(auth()->user()->hasRole('student') || auth()->user()->hasRole('instructor'))
+                            <div>
+                                <div class="flex w-full space-x-4 mb-8">
+                                    <img src="{{ asset('frontend/campaign1-modal.png') }}" alt="Author" class="object-cover w-16 h-16 rounded-full">
+                                    <div class="w-full">
+                                        <textarea
+                                        class="w-full p-2 border border-slate-600 rounded-lg text-md focus:outline-none focus:ring-2 focus:ring-slate-600 resize-none"
+                                        rows="4"
+                                        placeholder="Write your comment here..."></textarea>
+                                        <button
+                                            class="mt-2 w-full px-3 py-2 text-white rounded-md bg-slate-600 hover:bg-slate-700">
+                                            Submit
+                                        </button>
+                                    </div>
+                                </div>                                    
+                            </div>
+                        @endif
+                    @endauth
                         <p class="font-medium text-dark">Comments</p>
                         <div class="flex-row">
                             <div class="flex items-center space-x-4">
