@@ -4,6 +4,7 @@ use Livewire\Attributes\Title;
 use App\Traits\CartActions;
 use App\Models\User;
 use App\Models\Courses;
+use App\Models\Comment;
 use Livewire\Attributes\Layout;
 use Illuminate\View\View;
 use Livewire\Volt\Component;
@@ -19,6 +20,8 @@ class extends Component {
     public $course;
     public $title;
     public $cart_items;
+    public $comment; 
+
     
     public function mount(Courses $course, int $id)
     {
@@ -53,6 +56,26 @@ class extends Component {
         } else {
             session()->flash('cart_message', 'Please login before enrolling');
             $this->redirect('/login', navigate: true);
+        }
+    }
+
+    public function submitComment(){
+
+        if (auth()->check()) {
+            $this->validate([
+                'comment' => 'required|string|max:500',
+            ]);
+
+            Comment::create([
+                'courses_id' => $this->course->id,
+                'comment' => $this->comment,
+                'created_by' => auth()->id(),
+            ]);
+
+            $this->comment = ''; // Clear the comment field
+            session()->flash('success', 'Your comment has been posted.');
+        } else {
+            session()->flash('error', 'Please log in to post a comment.');
         }
     }
 }; ?>
@@ -202,16 +225,22 @@ class extends Component {
                                 <div class="flex w-full space-x-4 mb-8">
                                     <img src="{{ asset('frontend/campaign1-modal.png') }}" alt="Author" class="object-cover w-16 h-16 rounded-full">
                                     <div class="w-full">
-                                        <textarea
-                                        class="w-full p-2 border border-slate-600 rounded-lg text-md focus:outline-none focus:ring-2 focus:ring-slate-600 resize-none"
-                                        rows="4"
-                                        placeholder="Write your comment here..."></textarea>
-                                        <button
-                                            class="mt-2 w-full px-3 py-2 text-white rounded-md bg-slate-600 hover:bg-slate-700">
-                                            Submit
-                                        </button>
+                                        <form wire:submit.prevent="submitComment">
+                                            <textarea
+                                                wire:model="comment"
+                                                class="w-full p-2 border border-slate-600 rounded-lg text-md focus:outline-none focus:ring-2 focus:ring-slate-600 resize-none"
+                                                rows="4"
+                                                placeholder="Write your comment here..."
+                                            ></textarea>
+                                            <button
+                                                type="submit"
+                                                class="mt-2 w-full px-3 py-2 text-white rounded-md bg-slate-600 hover:bg-slate-700"
+                                            >
+                                                Submit
+                                            </button>
+                                        </form>
                                     </div>
-                                </div>                                    
+                                </div>
                             </div>
                         @endif
                     @endauth
