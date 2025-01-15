@@ -72,7 +72,7 @@ class extends Component {
                 'created_by' => auth()->id(),
             ]);
 
-            $this->comment = ''; // Clear the comment field
+            $this->comment = ''; 
             session()->flash('success', 'Your comment has been posted.');
         } else {
             session()->flash('error', 'Please log in to post a comment.');
@@ -241,6 +241,16 @@ class extends Component {
                                         </form>
                                     </div>
                                 </div>
+                                @if(session()->has('success'))
+                                    <div class="text-green-500">
+                                        {{ session('success') }}
+                                    </div>
+                                @endif
+                                @if(session()->has('error'))
+                                    <div class="text-red-500">
+                                        {{ session('error') }}
+                                    </div>
+                                @endif
                             </div>
                         @endif
                     @endauth
