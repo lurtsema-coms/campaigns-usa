@@ -22,12 +22,29 @@ new class extends Component {
 
 <div class="space-y-8">
     <div class="flex flex-col justify-between gap-4 md:flex-row">
-        <x-button-link href="{{ route('instructor-courses-add') }}">
+        <x-button-link class="bg-slate-500" href="{{ route('instructor-courses-add') }}">
             Add Course
         </x-button-link>
         <x-form.text-input type="search" placeholder="Search..."></x-form.text-input>
     </div>
-    
+    @if(session('success'))
+        <div
+            x-data="{
+                shown: false,
+                timeout: null
+            }"
+            x-init="() => { 
+                clearTimeout(timeout); 
+                shown = true; 
+                timeout = setTimeout(() => { shown = false }, 2000); 
+            }"
+            x-show.transition.opacity.duration.1500ms="shown"
+            x-transition:leave.opacity.duration.1500ms
+            class="font-medium text-green-500"
+        >
+            {{ session('success') }}
+        </div>
+    @endif
     <div class="overflow-x-auto">
         <table class="min-w-full text-sm divide-y divide-gray-200">
             <thead class="bg-gray-50">
@@ -72,9 +89,9 @@ new class extends Component {
                         </td>
                         <td class="px-6 py-3 text-sm text-gray-500 whitespace-nowrap">
                             <div class="flex items-center gap-2">
-                                <button class="px-4 py-2 text-white bg-yellow-400 rounded-md">
+                                <x-button-link class="bg-yellow-500" href="{{ route('instructor-courses-add-announcement', $course->id) }}">
                                     Add Announcement
-                                </button>
+                                </x-button-link>
                             </div>
                         </td>
                     </tr>
@@ -82,5 +99,4 @@ new class extends Component {
             </tbody>
         </table>
     </div>
-
 </div>

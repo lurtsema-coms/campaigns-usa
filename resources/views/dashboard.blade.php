@@ -7,7 +7,7 @@
 
     <div class="py-12">
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-            <div class="overflow-hidden bg-white ">
+            <div class="overflow-hidden bg-white rounded-lg">
                 <div class="p-6 text-gray-900">
                     <div class="mb-6">
                         <h1 class="text-2xl font-bold text-gray-800">
@@ -38,7 +38,7 @@
                             </div>
                             <div class="px-5 py-3 bg-gray-50">
                               <div class="text-sm">
-                                <a href="#" class="font-medium text-cyan-700 hover:text-cyan-900">View all</a>
+                                <a wire:navigate href="{{ route('instructor-courses') }}" class="font-medium text-cyan-700 hover:text-cyan-900">View all</a>
                               </div>
                             </div>
                         </div>

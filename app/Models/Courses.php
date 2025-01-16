@@ -15,4 +15,9 @@ class Courses extends Model
     {
         return $this->belongsTo(User::class, 'created_by');
     }
+
+    public function announcements()
+    {
+        return $this->hasMany(Announcement::class);
+    }
 }

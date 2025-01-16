@@ -17,7 +17,7 @@
         <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
         @vite(['resources/css/app.css'])
     </head>
-    <body class="font-sans antialiased">
+    <body class="font-sans antialiased bg-gray-100">
         <div class="min-h-screen">
             <livewire:layout.navigation />
 

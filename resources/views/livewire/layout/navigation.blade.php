@@ -23,7 +23,7 @@ new class extends Component
             <div class="flex">
                 <!-- Logo -->
                 <div class="flex items-center shrink-0">
-                    <a href="{{ route('courses') }}" wire:navigate>
+                    <a href="{{ route('home_new') }}" wire:navigate>
                         <img class="block w-auto fill-current h-9" src="{{ asset('frontend/Logo SVG.png') }}" alt="">
                     </a>
                 </div>
@@ -39,7 +39,7 @@ new class extends Component
                         </x-nav-link>
                     @endrole
                     @role('instructor')
-                        <x-nav-link :href="route('instructor-courses')" :active="request()->routeIs('instructor-courses') || request()->routeIs('instructor-courses-add')" wire:navigate>
+                        <x-nav-link :href="route('instructor-courses')" :active="request()->routeIs('instructor-courses') || request()->routeIs('instructor-courses-add') || request()->routeIs('instructor-courses-add-announcement')" wire:navigate>
                             {{ __('Courses') }}
                         </x-nav-link>
                     @endrole
@@ -94,6 +94,9 @@ new class extends Component
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" wire:navigate>
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('instructor-courses')" :active="request()->routeIs('instructor-courses') || request()->routeIs('instructor-courses-add') || request()->routeIs('instructor-courses-add-announcement')" wire:navigate>
+                {{ __('Courses') }}
+            </x-responsive-nav-link>
         </div>
 
         <!-- Responsive Settings Options -->
@@ -103,20 +106,10 @@ new class extends Component
                 <div class="text-sm font-medium text-gray-200">{{ auth()->user()->email }}</div>
             </div>
 
-            <div class="mt-3 space-y-1">
-                <x-responsive-nav-link :href="route('dashboard')" wire:navigate>
-                    {{ __('Dashboard') }}
-                </x-responsive-nav-link>
-                @role('student')
-                    <x-responsive-nav-link :href="route('subscribe-courses')" wire:navigate>
-                        {{ __('Courses') }}
-                    </x-responsive-nav-link>
-                @endrole
-                
+            <div class="mt-3 space-y-1">              
                 <x-responsive-nav-link :href="route('profile')" wire:navigate>
                     {{ __('Profile') }}
                 </x-responsive-nav-link>
-
                 <!-- Authentication -->
                 <button wire:click="logout" class="w-full text-start">
                     <x-responsive-nav-link>

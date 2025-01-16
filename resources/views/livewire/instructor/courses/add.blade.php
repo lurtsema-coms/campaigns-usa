@@ -39,7 +39,7 @@ new class extends Component {
 <div class="space-y-8">
     <x-text-back-link href="{{ route('instructor-courses') }}" />
     <form wire:submit="addCourse">
-        <div class="grid max-w-4xl grid-cols-2 p-5 mx-auto bg-white border border-gray-300 shadow gap-x-8 gap-y-4 rounded-xl">
+        <div class="grid max-w-4xl grid-cols-2 p-5 mx-auto gap-x-8 gap-y-4 rounded-xl">
             <div class="col-span-2">
                 <x-input-label :value="__('Add Course')" />
             </div>
