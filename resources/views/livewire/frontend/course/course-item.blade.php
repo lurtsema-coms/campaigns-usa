@@ -4,6 +4,7 @@ use Livewire\Attributes\Title;
 use App\Traits\CartActions;
 use App\Models\User;
 use App\Models\Courses;
+use App\Models\Comment;
 use Livewire\Attributes\Layout;
 use Illuminate\View\View;
 use Livewire\Volt\Component;
@@ -19,11 +20,15 @@ class extends Component {
     public $course;
     public $title;
     public $cart_items;
+    public $comment; 
+    public $comments;
+
     
     public function mount(Courses $course, int $id)
     {
         $this->user_cart = auth()->user() ? explode(",", auth()->user()->cart) : [];
         $this->course = $course->find($id);
+        $this->comments =Comment::where('courses_id', $id)->latest()->get();
     }
 
     public function rendering(View $view): void
@@ -55,6 +60,28 @@ class extends Component {
             $this->redirect('/login', navigate: true);
         }
     }
+
+    public function submitComment(){
+
+        if (auth()->check()) {
+            $this->validate([
+                'comment' => 'required|string|max:500',
+            ]);
+
+            $newComment = Comment::create([
+                'courses_id' => $this->course->id,
+                'comment' => $this->comment,
+                'created_by' => auth()->id(),
+            ]);
+
+            $this->comments->prepend($newComment); // Add the new comment to the top of the list
+            session()->flash('success', 'Your comment has been posted');
+
+            $this->comment = ''; 
+        } else {
+            session()->flash('error', 'Please log in to post a comment.');
+        }
+    }
 }; ?>
 
 
@@ -66,7 +93,7 @@ class extends Component {
                     <div class="flex items-center justify-center w-10 bg-white border rounded-md h-9 hover:bg-gray-50">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
-                          </svg>
+                        </svg>
                     </div>
                 </a>
                 <div class="">
@@ -138,7 +165,7 @@ class extends Component {
             </div>
         </div>
 
-       <div class="flex flex-col gap-8 mt-8 lg:flex-row">
+        <div class="flex flex-col gap-8 mt-8 lg:flex-row">
             <div 
                 x-data="{activeSection: 'overview'}"
                 class="flex-1 max-w-4xl"
@@ -172,8 +199,9 @@ class extends Component {
                     </div>
                     <div 
                         x-show="activeSection == 'author'"
-                        class="w-full h-auto p-6 space-y-4 border border-gray-300 rounded-md"
+                        class="w-full h-auto p-6 space-y-4 border rounded-md"
                     >
+                        <p class="font-medium text-dark">About the Author</p>
                         <div class="flex items-center space-x-4">
                             <img src="{{ asset('frontend/campaign1-modal.png') }}" alt="Author" class="object-cover w-16 h-16 rounded-full">
                             <div>
@@ -187,100 +215,88 @@ class extends Component {
                     </div>
                     <div 
                         x-show="activeSection == 'announcements'"
-                        class="w-full h-auto p-6 space-y-4 border border-gray-300 rounded-md"
+                        class="w-full h-auto p-6 space-y-4 border rounded-md"
                     >
+                        <p class="font-medium text-dark">Announcements</p>
                     </div>
                     <div 
                         x-show="activeSection == 'comments'"
-                        class="w-full h-auto p-6 space-y-4 border border-gray-300 rounded-md"
+                        class="w-full h-auto p-6 space-y-4 border rounded-md"
                     >
-                        <div class="flex-row">
-                            <div class="flex items-center space-x-4">
-                                <img src="{{ asset('frontend/campaign1-modal.png') }}" alt="Author" class="object-cover w-16 h-16 rounded-full">
-                                <div>
-                                    <p class="text-lg font-semibold">Test User</p>
-                                    <p class="text-sm text-gray-500">3 Weeks Ago</p>
+                    @auth
+                    <p class="font-medium text-dark">Compose Comment</p>
+                        @if(auth()->user()->hasRole('student') || auth()->user()->hasRole('instructor'))
+                            <div>
+                                <div class="flex w-full space-x-4 mb-8">
+                                    <img src="{{ asset('frontend/campaign1-modal.png') }}" alt="Author" class="object-cover w-16 h-16 rounded-full">
+                                    <div class="w-full">
+                                        <form wire:submit.prevent="submitComment">
+                                            <textarea
+                                                wire:model="comment"
+                                                class="w-full p-2 border border-slate-600 rounded-lg text-md focus:outline-none focus:ring-2 focus:ring-slate-600 resize-none"
+                                                rows="4"
+                                                placeholder="Write your comment here..."
+                                            ></textarea>
+                                            <button
+                                                type="submit"
+                                                class="mt-2 w-full px-3 py-2 text-white rounded-md bg-slate-600 hover:bg-slate-700"
+                                            >
+                                                Submit
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="flex justify-center">
+                                    @if(session()->has('success'))
+                                    <div class="text-green-500">
+                                        {{ session('success') }}
+                                    </div>
+                                @endif
+                                @if(session()->has('error'))
+                                    <div class="text-red-500">
+                                        {{ session('error') }}
+                                    </div>
+                                @endif
                                 </div>
                             </div>
-                            <div class="pl-20">
-                                <p class="text-sm text-gray-700">
-                                    John has over 10 years of experience in web development and has worked with top companies like Google and Facebook. He specializes in full-stack development and has a passion for teaching.
-                                </p>
-                            </div>
-                            <div class="flex pl-20 mt-2 space-x-3 ">
-                                <div class="flex space-x-1 text-amber-400">
-                                    <svg xmlns="http://www.w3.org/2000/svg"  fill="currentColor" class="h-5 bi bi-hand-thumbs-up-fill" viewBox="0 0 16 16">
-                                        <path d="M6.956 1.745C7.021.81 7.908.087 8.864.325l.261.066c.463.116.874.456 1.012.965.22.816.533 2.511.062 4.51a10 10 0 0 1 .443-.051c.713-.065 1.669-.072 2.516.21.518.173.994.681 1.2 1.273.184.532.16 1.162-.234 1.733q.086.18.138.363c.077.27.113.567.113.856s-.036.586-.113.856c-.039.135-.09.273-.16.404.169.387.107.819-.003 1.148a3.2 3.2 0 0 1-.488.901c.054.152.076.312.076.465 0 .305-.089.625-.253.912C13.1 15.522 12.437 16 11.5 16H8c-.605 0-1.07-.081-1.466-.218a4.8 4.8 0 0 1-.97-.484l-.048-.03c-.504-.307-.999-.609-2.068-.722C2.682 14.464 2 13.846 2 13V9c0-.85.685-1.432 1.357-1.615.849-.232 1.574-.787 2.132-1.41.56-.627.914-1.28 1.039-1.639.199-.575.356-1.539.428-2.59z"/>
-                                    </svg>
-                                    <span>4</span>
+                        @endif
+                    @endauth
+                        <p class="font-medium text-dark">Comment Section:</p>
+                        <div class="max-h-96 overflow-y-auto scrollbar-thin scrollbar-thumb-gray scrollbar-thumb-rounded">
+                            @foreach ($comments as $comment)
+                            <div class="flex-row mb-4">
+                                <div class="flex items-center space-x-4">
+                                    <img src="{{ asset('frontend/campaign1-modal.png') }}" alt="Author" class="object-cover w-16 h-16 rounded-full">
+                                    <div>
+                                        <p class="text-lg font-semibold">Test User</p>
+                                        <p class="text-sm text-gray-500">3 Weeks Ago</p>
+                                    </div>
                                 </div>
-                                <div class="flex space-x-1 text-gray-500">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="h-5 bi bi-hand-thumbs-down-fill" viewBox="0 0 16 16">
-                                        <path d="M6.956 14.534c.065.936.952 1.659 1.908 1.42l.261-.065a1.38 1.38 0 0 0 1.012-.965c.22-.816.533-2.512.062-4.51q.205.03.443.051c.713.065 1.669.071 2.516-.211.518-.173.994-.68 1.2-1.272a1.9 1.9 0 0 0-.234-1.734c.058-.118.103-.242.138-.362.077-.27.113-.568.113-.856 0-.29-.036-.586-.113-.857a2 2 0 0 0-.16-.403c.169-.387.107-.82-.003-1.149a3.2 3.2 0 0 0-.488-.9c.054-.153.076-.313.076-.465a1.86 1.86 0 0 0-.253-.912C13.1.757 12.437.28 11.5.28H8c-.605 0-1.07.08-1.466.217a4.8 4.8 0 0 0-.97.485l-.048.029c-.504.308-.999.61-2.068.723C2.682 1.815 2 2.434 2 3.279v4c0 .851.685 1.433 1.357 1.616.849.232 1.574.787 2.132 1.41.56.626.914 1.28 1.039 1.638.199.575.356 1.54.428 2.591"/>
-                                    </svg>
-                                    <span>2</span>
+                                <div class="pl-20">
+                                    <p class="text-sm text-black">
+                                        {{$comment->comment}}
+                                    </p>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="flex-row">
-                            <div class="flex items-center space-x-4">
-                                <img src="{{ asset('frontend/campaign1-modal.png') }}" alt="Author" class="object-cover w-16 h-16 rounded-full">
-                                <div>
-                                    <p class="text-lg font-semibold">Test User</p>
-                                    <p class="text-sm text-gray-500">3 Weeks Ago</p>
-                                </div>
-                            </div>
-                            <div class="pl-20">
-                                <p class="text-sm text-gray-700">
-                                    John has over 10 years of experience in web development and has worked with top companies like Google and Facebook. He specializes in full-stack development and has a passion for teaching.
-                                </p>
-                            </div>
-                            <div class="flex pl-20 mt-2 space-x-3 ">
-                                <div class="flex text-amber-400 space-x-1">
-                                    <svg xmlns="http://www.w3.org/2000/svg"  fill="currentColor" class="bi bi-hand-thumbs-up-fill h-5" viewBox="0 0 16 16">
-                                        <path d="M6.956 1.745C7.021.81 7.908.087 8.864.325l.261.066c.463.116.874.456 1.012.965.22.816.533 2.511.062 4.51a10 10 0 0 1 .443-.051c.713-.065 1.669-.072 2.516.21.518.173.994.681 1.2 1.273.184.532.16 1.162-.234 1.733q.086.18.138.363c.077.27.113.567.113.856s-.036.586-.113.856c-.039.135-.09.273-.16.404.169.387.107.819-.003 1.148a3.2 3.2 0 0 1-.488.901c.054.152.076.312.076.465 0 .305-.089.625-.253.912C13.1 15.522 12.437 16 11.5 16H8c-.605 0-1.07-.081-1.466-.218a4.8 4.8 0 0 1-.97-.484l-.048-.03c-.504-.307-.999-.609-2.068-.722C2.682 14.464 2 13.846 2 13V9c0-.85.685-1.432 1.357-1.615.849-.232 1.574-.787 2.132-1.41.56-.627.914-1.28 1.039-1.639.199-.575.356-1.539.428-2.59z"/>
-                                    </svg>
-                                    <span>4</span>
-                                </div>
-                                <div class="flex text-gray-500 space-x-1">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-hand-thumbs-down-fill h-5" viewBox="0 0 16 16">
-                                        <path d="M6.956 14.534c.065.936.952 1.659 1.908 1.42l.261-.065a1.38 1.38 0 0 0 1.012-.965c.22-.816.533-2.512.062-4.51q.205.03.443.051c.713.065 1.669.071 2.516-.211.518-.173.994-.68 1.2-1.272a1.9 1.9 0 0 0-.234-1.734c.058-.118.103-.242.138-.362.077-.27.113-.568.113-.856 0-.29-.036-.586-.113-.857a2 2 0 0 0-.16-.403c.169-.387.107-.82-.003-1.149a3.2 3.2 0 0 0-.488-.9c.054-.153.076-.313.076-.465a1.86 1.86 0 0 0-.253-.912C13.1.757 12.437.28 11.5.28H8c-.605 0-1.07.08-1.466.217a4.8 4.8 0 0 0-.97.485l-.048.029c-.504.308-.999.61-2.068.723C2.682 1.815 2 2.434 2 3.279v4c0 .851.685 1.433 1.357 1.616.849.232 1.574.787 2.132 1.41.56.626.914 1.28 1.039 1.638.199.575.356 1.54.428 2.591"/>
-                                    </svg>
-                                    <span>2</span>
+                                <div class="flex pl-20 mt-2 space-x-3 ">
+                                    <div class="flex text-amber-400 space-x-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg"  fill="currentColor" class="bi bi-hand-thumbs-up-fill h-5" viewBox="0 0 16 16">
+                                            <path d="M6.956 1.745C7.021.81 7.908.087 8.864.325l.261.066c.463.116.874.456 1.012.965.22.816.533 2.511.062 4.51a10 10 0 0 1 .443-.051c.713-.065 1.669-.072 2.516.21.518.173.994.681 1.2 1.273.184.532.16 1.162-.234 1.733q.086.18.138.363c.077.27.113.567.113.856s-.036.586-.113.856c-.039.135-.09.273-.16.404.169.387.107.819-.003 1.148a3.2 3.2 0 0 1-.488.901c.054.152.076.312.076.465 0 .305-.089.625-.253.912C13.1 15.522 12.437 16 11.5 16H8c-.605 0-1.07-.081-1.466-.218a4.8 4.8 0 0 1-.97-.484l-.048-.03c-.504-.307-.999-.609-2.068-.722C2.682 14.464 2 13.846 2 13V9c0-.85.685-1.432 1.357-1.615.849-.232 1.574-.787 2.132-1.41.56-.627.914-1.28 1.039-1.639.199-.575.356-1.539.428-2.59z"/>
+                                        </svg>
+                                        <span>4</span>
+                                    </div>
+                                    <div class="text-gray-500">
+                                        <button class="hover:text-gray-900 hover:underline">Edit</button>
+                                    </div>
+                                    <div class="text-gray-500">
+                                        <button class="hover:text-gray-900 hover:underline">Delete</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="flex-row">
-                            <div class="flex items-center space-x-4">
-                                <img src="{{ asset('frontend/campaign1-modal.png') }}" alt="Author" class="object-cover w-16 h-16 rounded-full">
-                                <div>
-                                    <p class="text-lg font-semibold">Test User</p>
-                                    <p class="text-sm text-gray-500">3 Weeks Ago</p>
-                                </div>
-                            </div>
-                            <div class="pl-20">
-                                <p class="text-sm text-gray-700">
-                                    John has over 10 years of experience in web development and has worked with top companies like Google and Facebook. He specializes in full-stack development and has a passion for teaching.
-                                </p>
-                            </div>
-                            <div class="flex pl-20 mt-2 space-x-3 ">
-                                <div class="flex text-amber-400 space-x-1">
-                                    <svg xmlns="http://www.w3.org/2000/svg"  fill="currentColor" class="bi bi-hand-thumbs-up-fill h-5" viewBox="0 0 16 16">
-                                        <path d="M6.956 1.745C7.021.81 7.908.087 8.864.325l.261.066c.463.116.874.456 1.012.965.22.816.533 2.511.062 4.51a10 10 0 0 1 .443-.051c.713-.065 1.669-.072 2.516.21.518.173.994.681 1.2 1.273.184.532.16 1.162-.234 1.733q.086.18.138.363c.077.27.113.567.113.856s-.036.586-.113.856c-.039.135-.09.273-.16.404.169.387.107.819-.003 1.148a3.2 3.2 0 0 1-.488.901c.054.152.076.312.076.465 0 .305-.089.625-.253.912C13.1 15.522 12.437 16 11.5 16H8c-.605 0-1.07-.081-1.466-.218a4.8 4.8 0 0 1-.97-.484l-.048-.03c-.504-.307-.999-.609-2.068-.722C2.682 14.464 2 13.846 2 13V9c0-.85.685-1.432 1.357-1.615.849-.232 1.574-.787 2.132-1.41.56-.627.914-1.28 1.039-1.639.199-.575.356-1.539.428-2.59z"/>
-                                    </svg>
-                                    <span>4</span>
-                                </div>
-                                <div class="flex text-gray-500 space-x-1">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-hand-thumbs-down-fill h-5" viewBox="0 0 16 16">
-                                        <path d="M6.956 14.534c.065.936.952 1.659 1.908 1.42l.261-.065a1.38 1.38 0 0 0 1.012-.965c.22-.816.533-2.512.062-4.51q.205.03.443.051c.713.065 1.669.071 2.516-.211.518-.173.994-.68 1.2-1.272a1.9 1.9 0 0 0-.234-1.734c.058-.118.103-.242.138-.362.077-.27.113-.568.113-.856 0-.29-.036-.586-.113-.857a2 2 0 0 0-.16-.403c.169-.387.107-.82-.003-1.149a3.2 3.2 0 0 0-.488-.9c.054-.153.076-.313.076-.465a1.86 1.86 0 0 0-.253-.912C13.1.757 12.437.28 11.5.28H8c-.605 0-1.07.08-1.466.217a4.8 4.8 0 0 0-.97.485l-.048.029c-.504.308-.999.61-2.068.723C2.682 1.815 2 2.434 2 3.279v4c0 .851.685 1.433 1.357 1.616.849.232 1.574.787 2.132 1.41.56.626.914 1.28 1.039 1.638.199.575.356 1.54.428 2.591"/>
-                                    </svg>
-                                    <span>2</span>
-                                </div>
-                            </div>
+                            @endforeach
+
                         </div>
                         <div>
                             @role('user')
-
                             <!-- Textarea -->
                             <div class="relative">
                                     <textarea id="hs-textarea-ex-1" class="block w-full p-4 pb-12 text-sm border-gray-200 rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" placeholder="Add a comment..."></textarea>
@@ -321,7 +337,7 @@ class extends Component {
                 </div>
                 <div>
                     <!-- Component: Detailed Basic -->
-                    <div class="flex flex-col items-center gap-2 px-6 py-4 mt-8 border border-gray-300 rounded-xl">
+                    <div class="flex flex-col items-center gap-2 mt-8">
                         <!-- Title -->
                         <h4 class="font-medium text-dark">Customer reviews</h4>
                         <!-- Rating -->
@@ -389,7 +405,7 @@ class extends Component {
                     <!-- End Detailed Basic -->
                 </div>
             </div>
-       </div>
+        </div>
     </div>
 </div>
 
