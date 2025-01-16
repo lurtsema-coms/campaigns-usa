@@ -75,6 +75,8 @@ class extends Component {
             ]);
 
             $this->comments->prepend($newComment); // Add the new comment to the top of the list
+            session()->flash('success', 'Your comment has been posted');
+
             $this->comment = ''; 
         } else {
             session()->flash('error', 'Please log in to post a comment.');
@@ -222,6 +224,7 @@ class extends Component {
                         class="w-full h-auto p-6 space-y-4 border rounded-md"
                     >
                     @auth
+                    <p class="font-medium text-dark">Compose Comment</p>
                         @if(auth()->user()->hasRole('student') || auth()->user()->hasRole('instructor'))
                             <div>
                                 <div class="flex w-full space-x-4 mb-8">
@@ -243,7 +246,8 @@ class extends Component {
                                         </form>
                                     </div>
                                 </div>
-                                {{-- @if(session()->has('success'))
+                                <div class="flex justify-center">
+                                    @if(session()->has('success'))
                                     <div class="text-green-500">
                                         {{ session('success') }}
                                     </div>
@@ -252,11 +256,12 @@ class extends Component {
                                     <div class="text-red-500">
                                         {{ session('error') }}
                                     </div>
-                                @endif --}}
+                                @endif
+                                </div>
                             </div>
                         @endif
                     @endauth
-                        <p class="font-medium text-dark">Comments</p>
+                        <p class="font-medium text-dark">Comment Section:</p>
                         <div class="max-h-96 overflow-y-auto scrollbar-thin scrollbar-thumb-gray scrollbar-thumb-rounded">
                             @foreach ($comments as $comment)
                             <div class="flex-row mb-4">
