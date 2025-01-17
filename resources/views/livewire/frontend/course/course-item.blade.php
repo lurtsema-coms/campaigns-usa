@@ -35,6 +35,7 @@ class extends Component {
     {
         return Comment::where('courses_id', $this->course->id)
             ->latest()
+            ->whereNull('deleted_at')
             ->take($this->perPage)
             ->get();
     }
