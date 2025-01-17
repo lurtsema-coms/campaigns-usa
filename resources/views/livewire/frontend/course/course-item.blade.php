@@ -21,14 +21,27 @@ class extends Component {
     public $title;
     public $cart_items;
     public $comment; 
-    public $comments;
+    public $perPage = 10;
 
     
     public function mount(Courses $course, int $id)
     {
         $this->user_cart = auth()->user() ? explode(",", auth()->user()->cart) : [];
         $this->course = $course->find($id);
-        $this->comments =Comment::where('courses_id', $id)->latest()->get();
+        // $this->comments =Comment::where('courses_id', $id)->latest()->get();
+    }
+
+    public function getCommentsProperty()
+    {
+        return Comment::where('courses_id', $this->course->id)
+            ->latest()
+            ->take($this->perPage)
+            ->get();
+    }
+
+    public function loadMore()
+    {
+        $this->perPage += 10; 
     }
 
     public function rendering(View $view): void
@@ -67,16 +80,13 @@ class extends Component {
             $this->validate([
                 'comment' => 'required|string|max:500',
             ]);
-
             $newComment = Comment::create([
                 'courses_id' => $this->course->id,
                 'comment' => $this->comment,
                 'created_by' => auth()->id(),
             ]);
-
-            $this->comments->prepend($newComment); // Add the new comment to the top of the list
+            $this->dispatch('cart-updated');
             session()->flash('success', 'Your comment has been posted');
-
             $this->comment = ''; 
         } else {
             session()->flash('error', 'Please log in to post a comment.');
@@ -224,7 +234,7 @@ class extends Component {
                         class="w-full h-auto p-6 space-y-4 border rounded-md"
                     >
                     @auth
-                    <p class="font-medium text-dark">Compose Comment</p>
+                        <p class="font-medium text-dark">Compose Comment</p>
                         @if(auth()->user()->hasRole('student') || auth()->user()->hasRole('instructor'))
                             <div>
                                 <div class="flex w-full space-x-4 mb-8">
@@ -263,37 +273,46 @@ class extends Component {
                     @endauth
                         <p class="font-medium text-dark">Comment Section:</p>
                         <div class="max-h-96 overflow-y-auto scrollbar-thin scrollbar-thumb-gray scrollbar-thumb-rounded">
-                            @foreach ($comments as $comment)
-                            <div class="flex-row mb-4">
-                                <div class="flex items-center space-x-4">
-                                    <img src="{{ asset('frontend/campaign1-modal.png') }}" alt="Author" class="object-cover w-16 h-16 rounded-full">
-                                    <div>
-                                        <p class="text-lg font-semibold">Test User</p>
-                                        <p class="text-sm text-gray-500">3 Weeks Ago</p>
+                            @foreach ($this->comments as $comment)
+                                <div class="flex-row mb-4">
+                                    <div class="flex items-center space-x-4">
+                                        <img src="{{ asset('frontend/campaign1-modal.png') }}" alt="Author" class="object-cover w-16 h-16 rounded-full">
+                                        <div>
+                                            <p class="text-lg font-semibold">Test User</p>
+                                            <p class="text-sm text-gray-500">3 Weeks Ago</p>
+                                        </div>
+                                    </div>
+                                    <div class="pl-20">
+                                        <p class="text-sm text-black">
+                                            {{ $comment->comment }}
+                                        </p>
+                                    </div>
+                                    <div class="flex pl-20 mt-2 space-x-3 ">
+                                        <div class="flex text-amber-400 space-x-1">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-hand-thumbs-up-fill h-5" viewBox="0 0 16 16">
+                                                <path d="M6.956 1.745C7.021.81 7.908.087 8.864.325l.261.066c.463.116.874.456 1.012.965.22.816.533 2.511.062 4.51a10 10 0 0 1 .443-.051c.713-.065 1.669-.072 2.516.21.518.173.994.681 1.2 1.273.184.532.16 1.162-.234 1.733q.086.18.138.363c.077.27.113.567.113.856s-.036.586-.113.856c-.039.135-.09.273-.16.404.169.387.107.819-.003 1.148a3.2 3.2 0 0 1-.488.901c.054.152.076.312.076.465 0 .305-.089.625-.253.912C13.1 15.522 12.437 16 11.5 16H8c-.605 0-1.07-.081-1.466-.218a4.8 4.8 0 0 1-.97-.484l-.048-.03c-.504-.307-.999-.609-2.068-.722C2.682 14.464 2 13.846 2 13V9c0-.85.685-1.432 1.357-1.615.849-.232 1.574-.787 2.132-1.41.56-.627.914-1.28 1.039-1.639.199-.575.356-1.539.428-2.59z"/>
+                                            </svg>
+                                            <span>4</span>
+                                        </div>
+                                        <div class="text-gray-500">
+                                            <button class="hover:text-gray-900 hover:underline">Edit</button>
+                                        </div>
+                                        <div class="text-gray-500">
+                                            <button class="hover:text-gray-900 hover:underline">Delete</button>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="pl-20">
-                                    <p class="text-sm text-black">
-                                        {{$comment->comment}}
-                                    </p>
-                                </div>
-                                <div class="flex pl-20 mt-2 space-x-3 ">
-                                    <div class="flex text-amber-400 space-x-1">
-                                        <svg xmlns="http://www.w3.org/2000/svg"  fill="currentColor" class="bi bi-hand-thumbs-up-fill h-5" viewBox="0 0 16 16">
-                                            <path d="M6.956 1.745C7.021.81 7.908.087 8.864.325l.261.066c.463.116.874.456 1.012.965.22.816.533 2.511.062 4.51a10 10 0 0 1 .443-.051c.713-.065 1.669-.072 2.516.21.518.173.994.681 1.2 1.273.184.532.16 1.162-.234 1.733q.086.18.138.363c.077.27.113.567.113.856s-.036.586-.113.856c-.039.135-.09.273-.16.404.169.387.107.819-.003 1.148a3.2 3.2 0 0 1-.488.901c.054.152.076.312.076.465 0 .305-.089.625-.253.912C13.1 15.522 12.437 16 11.5 16H8c-.605 0-1.07-.081-1.466-.218a4.8 4.8 0 0 1-.97-.484l-.048-.03c-.504-.307-.999-.609-2.068-.722C2.682 14.464 2 13.846 2 13V9c0-.85.685-1.432 1.357-1.615.849-.232 1.574-.787 2.132-1.41.56-.627.914-1.28 1.039-1.639.199-.575.356-1.539.428-2.59z"/>
-                                        </svg>
-                                        <span>4</span>
-                                    </div>
-                                    <div class="text-gray-500">
-                                        <button class="hover:text-gray-900 hover:underline">Edit</button>
-                                    </div>
-                                    <div class="text-gray-500">
-                                        <button class="hover:text-gray-900 hover:underline">Delete</button>
-                                    </div>
-                                </div>
-                            </div>
                             @endforeach
-
+                        </div>
+                        <div class="mt-4">
+                            @if ($this->comments->count() >= $perPage)
+                                <button
+                                    wire:click="loadMore"
+                                    class="px-4 py-2 text-white bg-slate-600 hover:bg-slate-700 rounded-md"
+                                >
+                                    More Comments
+                                </button>
+                            @endif
                         </div>
                         <div>
                             @role('user')
