@@ -36,6 +36,7 @@ class extends Component {
         return Comment::where('courses_id', $this->course->id)
             ->latest()
             ->whereNull('deleted_at')
+            ->with('creator') // Eager load the user relationship
             ->take($this->perPage)
             ->get();
     }
@@ -75,8 +76,8 @@ class extends Component {
         }
     }
 
-    public function submitComment(){
-
+    public function submitComment()
+    {
         if (auth()->check()) {
             $this->validate([
                 'comment' => 'required|string|max:500',
@@ -93,6 +94,19 @@ class extends Component {
             session()->flash('error', 'Please log in to post a comment.');
         }
     }
+
+    public function deleteComment($commentId)
+    {
+        $comment = Comment::findOrFail($commentId);
+        if ($comment->created_by === auth()->id()) {
+            $comment->delete();
+            session()->flash('success', 'Comment deleted successfully.');
+        } else {
+            session()->flash('error', 'You are not authorized to delete this comment.');
+        }
+
+    }
+
 }; ?>
 
 
@@ -275,11 +289,11 @@ class extends Component {
                         <p class="font-medium text-dark">Comment Section:</p>
                         <div class="max-h-96 overflow-y-auto scrollbar-thin scrollbar-thumb-gray scrollbar-thumb-rounded">
                             @foreach ($this->comments as $comment)
-                                <div class="flex-row mb-4">
+                                <div class="flex-row mb-4" wire:key='{{$comment->id}}'>
                                     <div class="flex items-center space-x-4">
                                         <img src="{{ asset('frontend/campaign1-modal.png') }}" alt="Author" class="object-cover w-16 h-16 rounded-full">
                                         <div>
-                                            <p class="text-lg font-semibold">Test User</p>
+                                            <p class="text-lg font-semibold">{{ $comment->creator ? $comment->creator->first_name . ' ' . $comment->creator->last_name : 'Unknown User' }}</p>
                                             <p class="text-sm text-gray-500">3 Weeks Ago</p>
                                         </div>
                                     </div>
@@ -295,12 +309,19 @@ class extends Component {
                                             </svg>
                                             <span>4</span>
                                         </div>
-                                        <div class="text-gray-500">
-                                            <button class="hover:text-gray-900 hover:underline">Edit</button>
-                                        </div>
-                                        <div class="text-gray-500">
-                                            <button class="hover:text-gray-900 hover:underline">Delete</button>
-                                        </div>
+                                        @if ($comment->created_by === auth()->id())
+                                            <div class="text-gray-500">
+                                                <button class="hover:text-gray-900 hover:underline">Edit</button>
+                                            </div>
+                                            <div class="text-gray-500">
+                                                <button
+                                                    wire:click="deleteComment({{ $comment->id }})"
+                                                    class="hover:text-gray-900 hover:underline"
+                                                >
+                                                    Delete
+                                                </button>                                        
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
                             @endforeach
