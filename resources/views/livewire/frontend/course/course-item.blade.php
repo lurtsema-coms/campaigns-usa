@@ -294,7 +294,7 @@ class extends Component {
                                         <img src="{{ asset('frontend/campaign1-modal.png') }}" alt="Author" class="object-cover w-16 h-16 rounded-full">
                                         <div>
                                             <p class="text-lg font-semibold">{{ $comment->creator ? $comment->creator->first_name . ' ' . $comment->creator->last_name : 'Unknown User' }}</p>
-                                            <p class="text-sm text-gray-500">3 Weeks Ago</p>
+                                            <p class="timeago text-sm text-gray-500" datetime="{{ $comment->created_at }} {{ config('app.timezone') }}"></p>
                                         </div>
                                     </div>
                                     <div class="pl-20">
@@ -449,6 +449,16 @@ class extends Component {
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const timeagoNodes = document.querySelectorAll('.timeago');
+        if (timeagoNodes.length) {
+            timeago.render(timeagoNodes);
+        }
+    });
+</script>
+
 
 {{-- @script
 <script>
