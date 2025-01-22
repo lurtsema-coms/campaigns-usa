@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('courses_id')->unsigned()->nullable();
             $table->text('comment')->nullable();
-            $table->integer('likes')->unsigned()->nullable();
+            $table->integer('num_likes')->unsigned()->nullable();
             $table->integer('created_by')->length(10)->unsigned()->nullable();
             $table->integer('updated_by')->length(10)->unsigned()->nullable();
             $table->timestamps();
