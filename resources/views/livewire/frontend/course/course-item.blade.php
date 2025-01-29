@@ -22,7 +22,7 @@ class extends Component {
     public $title;
     public $cart_items;
     public $comment; 
-    public $comments;
+    public $perPage = 10;
     public $announcements;
 
     
@@ -30,7 +30,22 @@ class extends Component {
     {
         $this->user_cart = auth()->user() ? explode(",", auth()->user()->cart) : [];
         $this->course = $course->find($id);
-        $this->comments =Comment::where('courses_id', $id)->latest()->get();
+        // $this->comments =Comment::where('courses_id', $id)->latest()->get();
+    }
+
+    public function getCommentsProperty()
+    {
+        return Comment::where('courses_id', $this->course->id)
+            ->latest()
+            ->whereNull('deleted_at')
+            ->with('creator') // Eager load the user relationship
+            ->take($this->perPage)
+            ->get();
+    }
+
+    public function loadMore()
+    {
+        $this->perPage += 10; 
         $this->announcements = $this->course->announcements;
     }
 
@@ -64,27 +79,37 @@ class extends Component {
         }
     }
 
-    public function submitComment(){
-
+    public function submitComment()
+    {
         if (auth()->check()) {
             $this->validate([
                 'comment' => 'required|string|max:500',
             ]);
-
             $newComment = Comment::create([
                 'courses_id' => $this->course->id,
                 'comment' => $this->comment,
                 'created_by' => auth()->id(),
             ]);
-
-            $this->comments->prepend($newComment); // Add the new comment to the top of the list
+            $this->dispatch('cart-updated');
             session()->flash('success', 'Your comment has been posted');
-
             $this->comment = ''; 
         } else {
             session()->flash('error', 'Please log in to post a comment.');
         }
     }
+
+    public function deleteComment($commentId)
+    {
+        $comment = Comment::findOrFail($commentId);
+        if ($comment->created_by === auth()->id()) {
+            $comment->delete();
+            session()->flash('success', 'Comment deleted successfully.');
+        } else {
+            session()->flash('error', 'You are not authorized to delete this comment.');
+        }
+
+    }
+
 }; ?>
 
 
@@ -236,7 +261,7 @@ class extends Component {
                         class="w-full h-auto p-6 space-y-4 border rounded-md"
                     >
                     @auth
-                    <p class="font-medium text-dark">Compose Comment</p>
+                        <p class="font-medium text-dark">Compose Comment</p>
                         @if(auth()->user()->hasRole('student') || auth()->user()->hasRole('instructor'))
                             <div>
                                 <div class="flex w-full mb-8 space-x-4">
@@ -305,7 +330,16 @@ class extends Component {
                                 </div>
                             </div>
                             @endforeach
-
+                        </div>
+                        <div class="mt-4">
+                            @if ($this->comments->count() >= $perPage)
+                                <button
+                                    wire:click="loadMore"
+                                    class="px-4 py-2 text-white rounded-md bg-slate-600 hover:bg-slate-700"
+                                >
+                                    More Comments
+                                </button>
+                            @endif
                         </div>
                         <div>
                             @role('user')
@@ -420,6 +454,16 @@ class extends Component {
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const timeagoNodes = document.querySelectorAll('.timeago');
+        if (timeagoNodes.length) {
+            timeago.render(timeagoNodes);
+        }
+    });
+</script>
+
 
 {{-- @script
 <script>
