@@ -25,7 +25,7 @@ class extends Component {
     public $perPage = 10;
     public $announcements;
     public $instructor_announcements;
-    public $comments;
+    // public $comments;
 
     
     public function mount(Courses $course, int $id)
@@ -33,7 +33,7 @@ class extends Component {
         $this->user_cart = auth()->user() ? explode(",", auth()->user()->cart) : [];
         $this->course = $course->find($id);
         $this->instructor_announcements = Announcement::where('courses_id', $id)->get();
-        $this->comments =Comment::where('courses_id', $id)->latest()->get();
+        // $this->comments =Comment::where('courses_id', $id)->latest()->get();
     }
 
     public function getCommentsProperty()
@@ -306,14 +306,15 @@ class extends Component {
                     @endauth
                         <p class="font-semibold text-dark">Comment Section:</p>
                         <div class="overflow-y-auto max-h-96 scrollbar-thin scrollbar-thumb-gray scrollbar-thumb-rounded">
-                            @foreach ($comments as $comment)
+                            @foreach ($this->comments as $comment)
                                 <div class="flex-row mb-4">
                                     <div class="flex items-center space-x-4">
                                         <img src="{{ asset('frontend/campaign1-modal.png') }}" alt="Author" class="object-cover w-16 h-16 rounded-full">
                                         <div>
-                                            <p class="text-lg font-semibold">Test User</p>
-                                            <p class="text-sm text-gray-500">3 Weeks Ago</p>
-                                        </div>
+                                            <p class="text-lg font-semibold">
+                                                {{ $comment->creator ? $comment->creator->first_name . ' ' . $comment->creator->last_name : 'Unknown User' }}
+                                            </p>
+                                            <p class="timeago text-sm text-gray-500" datetime="{{ $comment->created_at }} {{ config('app.timezone') }}"></p>                                        </div>
                                     </div>
                                     <div class="pl-20">
                                         <p class="text-sm text-black">
