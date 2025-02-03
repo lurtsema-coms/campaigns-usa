@@ -332,7 +332,9 @@ class extends Component {
                                             <button class="hover:text-gray-900 hover:underline">Edit</button>
                                         </div>
                                         <div class="text-gray-500">
-                                            <button class="hover:text-gray-900 hover:underline">Delete</button>
+                                            <button wire:click="deleteComment({{ $comment->id }})" class="hover:text-gray-900 hover:underline">
+                                                Delete
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
