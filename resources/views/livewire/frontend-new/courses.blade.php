@@ -10,6 +10,8 @@ new
 #[Title('Campaigns USA | Courses')] 
 class extends Component {
 
+    public $search;
+
     public function with() : array
     {
         return [
@@ -19,7 +21,7 @@ class extends Component {
 
     public function loadCourses()
     {  
-        return Courses::paginate(10);
+        return Courses::where('title', 'LIKE', '%' . $this->search . '%')->paginate(10);
     }
 }; ?>
 
@@ -33,32 +35,36 @@ class extends Component {
     </div> --}}
     <div class="px-5 pt-16 mx-auto">
         <div class="absolute top-0 left-0 -z-10">
-            <img class="h-48 opacity-10 lg:opacity-80" src="{{ asset('frontend/us-flag-left.png') }}" alt="" data-aos="flip-right">
+            <img class="h-48 opacity-10 lg:opacity-80" src="{{ asset('frontend/us-flag-left.png') }}" wire:ignore alt="" data-aos="flip-right">
         </div>
         <div class="absolute top-0 right-0 -z-10">
-            <img class="h-48 opacity-10 lg:opacity-80" src="{{ asset('frontend/us-flag-right.png') }}" alt="" data-aos="flip-left">
+            <img class="h-48 opacity-10 lg:opacity-80" src="{{ asset('frontend/us-flag-right.png') }}" wire:ignore alt="" data-aos="flip-left">
         </div>
         <div class="mx-auto max-w-8xl">
-            <p class="text-2xl font-medium text-center text-gray-800 sm:text-4xl" data-aos="flip-right">Courses List</p>
-            <div class="flex justify-end">
-                <div class="w-full max-w-full pt-10 pb-6 sm:max-w-80">
-                    <input type="text" placeholder="Search courses..." class="block w-full rounded-md bg-white px-3.5 py-2.5 text-base text-gray-900 placeholder:text-gray-400 focus:ring-0 border border-gray-300">
+            <p class="text-2xl font-semibold text-center text-gray-800 sm:text-4xl" data-aos="flip-right" wire:ignore>Available Courses</p>
+            <div class="flex justify-center">
+                <div class="w-full max-w-full pt-10 pb-6 sm:max-w-2xl">
+                    <input 
+                        wire:model.live.debounce.250ms="search"
+                        type="text" 
+                        placeholder="Search Courses..." 
+                        class="block w-full text-center rounded-md bg-white px-3.5 py-2.5 text-base text-gray-900 placeholder:text-gray-400 focus:ring-0 border border-gray-300">
                 </div>
             </div>
         </div>
     </div>
     <div class="bg-white">
-        <div class="px-5 py-16 mx-auto max-w-8xl">
+        <div class="px-5 pt-4 pb-16 mx-auto max-w-8xl">
             <div
                 {{-- x-data="{ dragging: false }"
                 @pointerdown="dragging = true; $el.setPointerCapture($event.pointerId); $el.style.userSelect = 'none'; $el.classList.add('cursor-default')"
                 @pointerup="dragging = false; $el.releasePointerCapture($event.pointerId); $el.style.userSelect = ''; $el.classList.remove('cursor-default')"
                 @pointermove="dragging && ($el.scrollLeft -= $event.movementX)"
                 @pointerleave="dragging = false; $el.releasePointerCapture($event.pointerId); $el.style.userSelect = ''; $el.classList.remove('cursor-default')" --}}
-                class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+                class="flex flex-wrap justify-center gap-6"
             >
                 @foreach ($courses as $course)
-                <a wire:navigate href="{{ route('course-item', $course->id) }}" class="overflow-hidden border shadow-sm hover:shadow-lg bg-zinc-50 rounded-xl" wire:key="{{ $course->id }}">
+                <a wire:navigate href="{{ route('course-item', $course->id) }}" class="w-full overflow-hidden border shadow-sm max-w-80 hover:shadow-lg bg-zinc-50 rounded-xl" wire:key="{{ $course->id }}">
                     <div class="flex flex-col">
                         <div class="h-44">
                             <img class="object-cover w-full h-full" src="{{ $course->thumbnail_url }}" alt="" loading="lazy">

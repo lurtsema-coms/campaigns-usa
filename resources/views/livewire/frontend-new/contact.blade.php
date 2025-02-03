@@ -80,7 +80,7 @@ class extends Component {
                     <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z" />
                     </svg>
                 </div>
-                <h3 class="text-xl font-medium text-gray-900">Lorem.</h3>
+                <h3 class="text-xl font-semibold text-gray-900">Lorem.</h3>
                 <p class="mt-4 text-base text-gray-500">Varius facilisi mauris sed sit. Non sed et duis dui leo, vulputate id malesuada non. Cras aliquet purus dui laoreet diam sed lacus, fames.</p>
                 </div>
             </div>
@@ -91,7 +91,7 @@ class extends Component {
                     <path stroke-linecap="round" stroke-linejoin="round" d="M16.712 4.33a9.027 9.027 0 0 1 1.652 1.306c.51.51.944 1.064 1.306 1.652M16.712 4.33l-3.448 4.138m3.448-4.138a9.014 9.014 0 0 0-9.424 0M19.67 7.288l-4.138 3.448m4.138-3.448a9.014 9.014 0 0 1 0 9.424m-4.138-5.976a3.736 3.736 0 0 0-.88-1.388 3.737 3.737 0 0 0-1.388-.88m2.268 2.268a3.765 3.765 0 0 1 0 2.528m-2.268-4.796a3.765 3.765 0 0 0-2.528 0m4.796 4.796c-.181.506-.475.982-.88 1.388a3.736 3.736 0 0 1-1.388.88m2.268-2.268 4.138 3.448m0 0a9.027 9.027 0 0 1-1.306 1.652c-.51.51-1.064.944-1.652 1.306m0 0-3.448-4.138m3.448 4.138a9.014 9.014 0 0 1-9.424 0m5.976-4.138a3.765 3.765 0 0 1-2.528 0m0 0a3.736 3.736 0 0 1-1.388-.88 3.737 3.737 0 0 1-.88-1.388m2.268 2.268L7.288 19.67m0 0a9.024 9.024 0 0 1-1.652-1.306 9.027 9.027 0 0 1-1.306-1.652m0 0 4.138-3.448M4.33 16.712a9.014 9.014 0 0 1 0-9.424m4.138 5.976a3.765 3.765 0 0 1 0-2.528m0 0c.181-.506.475-.982.88-1.388a3.736 3.736 0 0 1 1.388-.88m-2.268 2.268L4.33 7.288m6.406 1.18L7.288 4.33m0 0a9.024 9.024 0 0 0-1.652 1.306A9.025 9.025 0 0 0 4.33 7.288" />
                     </svg>
                 </div>
-                <h3 class="text-xl font-medium text-gray-900">Lorem, ipsum.</h3>
+                <h3 class="text-xl font-semibold text-gray-900">Lorem, ipsum.</h3>
                 <p class="mt-4 text-base text-gray-500">Varius facilisi mauris sed sit. Non sed et duis dui leo, vulputate id malesuada non. Cras aliquet purus dui laoreet diam sed lacus, fames.</p>
                 </div>
             </div>
@@ -102,7 +102,7 @@ class extends Component {
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 0 1-2.25 2.25M16.5 7.5V18a2.25 2.25 0 0 0 2.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 0 0 2.25 2.25h13.5M6 7.5h3v3H6v-3Z" />
                     </svg>
                 </div>
-                <h3 class="text-xl font-medium text-gray-900">Lorem, ipsum dolor.</h3>
+                <h3 class="text-xl font-semibold text-gray-900">Lorem, ipsum dolor.</h3>
                 <p class="mt-4 text-base text-gray-500">Varius facilisi mauris sed sit. Non sed et duis dui leo, vulputate id malesuada non. Cras aliquet purus dui laoreet diam sed lacus, fames.</p>
                 </div>
             </div>
@@ -149,32 +149,32 @@ class extends Component {
 				<div class="max-w-xl pt-16 mx-auto lg:pt-0 lg:mr-0 lg:max-w-lg">
 					<div class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
 						<div>
-							<label for="first-name" class="block font-semibold text-gray-900 text-sm/6">First name</label>
+							<label for="first-name" class="block font-semibold text-gray-900">First name</label>
 							<div class="mt-2.5">
 								<input type="text" wire:model="first_name" id="first-name" autocomplete="given-name" class="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 placeholder:text-gray-400 focus:ring-0 border border-gray-300">
 							</div>
-							@error('first_name')<div class="mt-2.5 text-sm/6 text-red-400">{{ $message }}</div>@enderror
+							@error('first_name')<div class="mt-2.5 text-red-400">{{ $message }}</div>@enderror
 						</div>
 						<div>
-							<label for="last-name" class="block font-semibold text-gray-900 text-sm/6">Last name</label>
+							<label for="last-name" class="block font-semibold text-gray-900">Last name</label>
 							<div class="mt-2.5">
 								<input type="text" wire:model="last_name" id="last-name" autocomplete="family-name" class="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 placeholder:text-gray-400 focus:ring-0 border border-gray-300">
 							</div>
-							@error('last_name')<div class="mt-2.5 text-sm/6 text-red-400">{{ $message }}</div>@enderror
+							@error('last_name')<div class="mt-2.5 text-red-400">{{ $message }}</div>@enderror
 						</div>
 						<div class="sm:col-span-2">
-							<label for="email" class="block font-semibold text-gray-900 text-sm/6">Email</label>
+							<label for="email" class="block font-semibold text-gray-900">Email</label>
 							<div class="mt-2.5">
 								<input type="email" wire:model="email" id="email" autocomplete="email" class="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 placeholder:text-gray-400 focus:ring-0 border border-gray-300">
 							</div>
-							@error('email')<div class="mt-2.5 text-sm/6 text-red-400">{{ $message }}</div>@enderror
+							@error('email')<div class="mt-2.5 text-red-400">{{ $message }}</div>@enderror
 						</div>
 						<div class="sm:col-span-2">
-							<label for="message" class="block font-semibold text-gray-900 text-sm/6">Message</label>
+							<label for="message" class="block font-semibold text-gray-900">Message</label>
 							<div class="mt-2.5">
 								<textarea wire:model="message" id="message" rows="4" class="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 placeholder:text-gray-400 focus:ring-0 border border-gray-300"></textarea>
 							</div>
-							@error('message')<div class="mt-2.5 text-sm/6 text-red-400">{{ $message }}</div>@enderror
+							@error('message')<div class="mt-2.5 text-red-400">{{ $message }}</div>@enderror
 						</div>
 					</div>
 					<div class="flex justify-end mt-8">

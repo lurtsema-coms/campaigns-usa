@@ -73,7 +73,7 @@ new class extends Component {
                 @foreach ($courses as $course)
                     <tr class="hover:bg-gray-100">
                         <td class="px-6 py-3 text-sm text-gray-500 whitespace-nowrap">
-                            <img class="object-contain w-full h-28" src="{{ $course->thumbnail_url }}" alt="">
+                            <img class="object-cover w-full h-28" src="{{ $course->thumbnail_url }}" alt="">
                         </td>
                         <td class="px-6 py-3 text-sm text-gray-500 whitespace-nowrap">
                             {{ Illuminate\Support\Str::limit($course->title, 50) }}

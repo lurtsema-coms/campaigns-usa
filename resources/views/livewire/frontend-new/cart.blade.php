@@ -50,7 +50,7 @@ class extends Component {
                             <div class="flex flex-col gap-8 p-10 border rounded-lg shadow-sm md:flex-row lg:flex-col xl:flex-row border-slate-200" wire:key="course-{{ $course->id }}">
                                 <img src="{{ $course->thumbnail_url }}" class="object-cover w-full min-w-64 max-w-64 h-36" alt="">
                                 <div class="flex flex-col gap-2">
-                                    <p class="font-medium text-gray-800">{{ $course->title }}</p>
+                                    <p class="font-semibold text-gray-800">{{ $course->title }}</p>
                                     <p class="text-gray-600 line-clamp-3">
                                         {{ strip_tags(str_replace(["\r\n", "\n", "\r", "<p>", "</p>", "<br>", "<br/>", "&nbsp;", "&lt;", "&gt;", "&amp;", "&quot;", "&apos;", ""], ' ', $course->description)) }}
                                     </p>
@@ -94,7 +94,7 @@ class extends Component {
             </div>
             <div class="w-full max-w-md shrink-0">
                 <div class="sticky p-10 bg-white shadow top-24 rounded-xl">
-                    <div class="pb-4 font-medium border-b">Summary</div>
+                    <div class="pb-4 font-semibold border-b">Summary</div>
                     <div class="mt-4">
                         <span class="font-medium">Course Title</span>
                         <div class="flex flex-col gap-2 pb-4 mt-4 border-b">

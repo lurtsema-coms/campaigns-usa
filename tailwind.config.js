@@ -17,7 +17,7 @@ export default {
             fontFamily: {
                 sans: ["Figtree", ...defaultTheme.fontFamily.sans],
                 inter: ['Inter', 'sans-serif'],
-                sourceserif: ['Source Serif 4', 'serif'],
+                playfair: ['Playfair', 'sans-serif'],
             },
             colors: {
                 "color-blue": "rgb(15, 34, 57)",

@@ -24,13 +24,16 @@ class extends Component {
     public $comment; 
     public $perPage = 10;
     public $announcements;
+    public $instructor_announcements;
+    public $comments;
 
     
     public function mount(Courses $course, int $id)
     {
         $this->user_cart = auth()->user() ? explode(",", auth()->user()->cart) : [];
         $this->course = $course->find($id);
-        // $this->comments =Comment::where('courses_id', $id)->latest()->get();
+        $this->instructor_announcements = Announcement::where('courses_id', $id)->get();
+        $this->comments =Comment::where('courses_id', $id)->latest()->get();
     }
 
     public function getCommentsProperty()
@@ -113,7 +116,7 @@ class extends Component {
 }; ?>
 
 
-<div class="px-5 my-12">
+<div class="px-5">
     <div class="p-5 mx-auto bg-white sm:p-10 rounded-xl max-w-7xl ">
         <div class="flex flex-wrap items-center justify-between gap-4">
             <div class="flex flex-col gap-4 lg:flex-row">
@@ -126,7 +129,7 @@ class extends Component {
                 </a>
                 <div class="">
                     <div class="flex flex-col gap-2">
-                        <p class="max-w-lg text-lg font-medium">{{ $course->title }}</p>
+                        <p class="max-w-lg text-lg font-semibold sm:text-xl">{{ $course->title }}</p>
                         <div class="flex gap-4">
                             <div class="flex items-center gap-1.5 text-sm">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="text-sky-600 size-5">
@@ -167,13 +170,13 @@ class extends Component {
                     }" 
                     class="relative z-0 flex items-center"
                 >
-                    <button x-clipboard="{{ Request::url() }}" @click="copyToClipboard();" class="flex items-center gap-2 px-3 py-2 border border-gray-300 rounded-md text-dark hover:bg-neutral-100 group">
+                    {{-- <button x-clipboard="{{ Request::url() }}" @click="copyToClipboard();" class="flex items-center gap-2 px-3 py-2 border border-gray-300 rounded-md text-dark hover:bg-neutral-100 group">
                         <svg x-show="!copyNotification" class="stroke-current size-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z" /></svg>                  
                         <svg x-show="copyNotification" class="text-green-500 stroke-current size-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" x-cloak><path stroke-linecap="round" stroke-linejoin="round" d="M11.35 3.836c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m8.9-4.414c.376.023.75.05 1.124.08 1.131.094 1.976 1.057 1.976 2.192V16.5A2.25 2.25 0 0118 18.75h-2.25m-7.5-10.5H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V18.75m-7.5-10.5h6.375c.621 0 1.125.504 1.125 1.125v9.375m-8.25-3l1.5 1.5 3-3.75" /></svg>
-                    </button>
+                    </button> --}}
                 </div>
 
-                @if (auth()->user()->role == 'student')
+                @if (auth()->check() && auth()->user()->role == 'student')
                     <button 
                     class="flex items-center gap-2 px-3 py-2 border border-gray-300 rounded-md text-dark hover:bg-neutral-100 group {{ in_array($course->id, $user_cart) ? 'bg-gradient-to-r from-red-500 to-red-500/80' : '' }}"
                     wire:click="toggleItem({{ $course->id }})"
@@ -204,16 +207,16 @@ class extends Component {
                     <img class="object-cover w-full h-full" src="{{ $course->thumbnail_url }}" alt="">
                 </div>
                 <div class="flex flex-wrap gap-4 mb-4">
-                    <button :class="`${activeSection == 'overview' ? 'bg-slate-100 text-slate-800 font-bold rounded-xl' : 'text-gray-400'} px-4 py-2 hover:text-gray-800`" @click="activeSection = 'overview'">
+                    <button :class="`${activeSection == 'overview' ? 'bg-slate-100 text-slate-800 font-bold rounded-xl' : 'text-gray-600'} px-4 py-2 hover:text-gray-800`" @click="activeSection = 'overview'">
                         Overview
                     </button>
-                    <button :class="`${activeSection == 'author' ? 'bg-slate-100 text-slate-800 font-bold rounded-xl' : 'text-gray-400'} px-4 py-2 hover:text-gray-800`" @click="activeSection = 'author'">
+                    <button :class="`${activeSection == 'author' ? 'bg-slate-100 text-slate-800 font-bold rounded-xl' : 'text-gray-600'} px-4 py-2 hover:text-gray-800`" @click="activeSection = 'author'">
                         Author
                     </button>
-                    <button :class="`${activeSection == 'announcements' ? 'bg-slate-100 text-slate-800 font-bold rounded-xl' : 'text-gray-400'} px-4 py-2 hover:text-gray-800`" @click="activeSection = 'announcements'">
+                    <button :class="`${activeSection == 'announcements' ? 'bg-slate-100 text-slate-800 font-bold rounded-xl' : 'text-gray-600'} px-4 py-2 hover:text-gray-800`" @click="activeSection = 'announcements'">
                         Announcements
                     </button>
-                    <button :class="`${activeSection == 'comments' ? 'bg-slate-100 text-slate-800 font-bold rounded-xl' : 'text-gray-400'} px-4 py-2 hover:text-gray-800`" @click="activeSection = 'comments'">
+                    <button :class="`${activeSection == 'comments' ? 'bg-slate-100 text-slate-800 font-bold rounded-xl' : 'text-gray-600'} px-4 py-2 hover:text-gray-800`" @click="activeSection = 'comments'">
                         Comments
                     </button>
                 </div>
@@ -231,7 +234,7 @@ class extends Component {
                         x-show="activeSection == 'author'"
                         class="w-full h-auto p-6 space-y-4 border rounded-md"
                     >
-                        <p class="font-medium text-dark">About the Author</p>
+                        <p class="font-semibold text-dark">About the Author</p>
                         <div class="flex items-center space-x-4">
                             <img src="{{ asset('frontend/campaign1-modal.png') }}" alt="Author" class="object-cover w-16 h-16 rounded-full">
                             <div>
@@ -239,7 +242,7 @@ class extends Component {
                                 <p class="text-sm text-gray-600">Senior Software Engineer at XYZ Inc.</p>
                             </div>
                         </div>
-                        <p class="text-sm text-gray-700">
+                        <p class="text-gray-700 ">
                             John has over 10 years of experience in web development and has worked with top companies like Google and Facebook. He specializes in full-stack development and has a passion for teaching.
                         </p>
                     </div>
@@ -247,14 +250,17 @@ class extends Component {
                         x-show="activeSection == 'announcements'"
                         class="w-full h-auto p-6 space-y-4 border rounded-md"
                     >
-                        <p class="font-medium text-dark">Announcements 📢</p>
-                        @foreach ($announcements as $announcement)
-                            <div class="relative p-4 border border-gray-300 rounded-md">
-                                <p class="text-gray-700 " wire:key="announcement-{{ $announcement->id }}">
-                                    {!! nl2br(e($announcement->description)) !!}
-                                </p>
-                            </div>
-                        @endforeach
+                        <p class="font-semibold text-dark">Announcements 📢</p>
+                        @if (!$instructor_announcements->isEmpty())
+                            @foreach ($instructor_announcements as $announcement)
+                                <div class="relative p-4 border border-gray-300 rounded-md announcements">
+                                    <p class="text-gray-700 " wire:key="announcement-{{ $announcement->id }}">
+                                        {!! nl2br(e($announcement->description)) !!}
+                                    </p>
+                                </div>
+                            @endforeach
+                        @endif
+
                     </div>
                     <div 
                         x-show="activeSection == 'comments'"
@@ -298,37 +304,37 @@ class extends Component {
                             </div>
                         @endif
                     @endauth
-                        <p class="font-medium text-dark">Comment Section:</p>
+                        <p class="font-semibold text-dark">Comment Section:</p>
                         <div class="overflow-y-auto max-h-96 scrollbar-thin scrollbar-thumb-gray scrollbar-thumb-rounded">
                             @foreach ($comments as $comment)
-                            <div class="flex-row mb-4">
-                                <div class="flex items-center space-x-4">
-                                    <img src="{{ asset('frontend/campaign1-modal.png') }}" alt="Author" class="object-cover w-16 h-16 rounded-full">
-                                    <div>
-                                        <p class="text-lg font-semibold">Test User</p>
-                                        <p class="text-sm text-gray-500">3 Weeks Ago</p>
+                                <div class="flex-row mb-4">
+                                    <div class="flex items-center space-x-4">
+                                        <img src="{{ asset('frontend/campaign1-modal.png') }}" alt="Author" class="object-cover w-16 h-16 rounded-full">
+                                        <div>
+                                            <p class="text-lg font-semibold">Test User</p>
+                                            <p class="text-sm text-gray-500">3 Weeks Ago</p>
+                                        </div>
+                                    </div>
+                                    <div class="pl-20">
+                                        <p class="text-sm text-black">
+                                            {{$comment->comment}}
+                                        </p>
+                                    </div>
+                                    <div class="flex pl-20 mt-2 space-x-3 ">
+                                        <div class="flex space-x-1 text-amber-400">
+                                            <svg xmlns="http://www.w3.org/2000/svg"  fill="currentColor" class="h-5 bi bi-hand-thumbs-up-fill" viewBox="0 0 16 16">
+                                                <path d="M6.956 1.745C7.021.81 7.908.087 8.864.325l.261.066c.463.116.874.456 1.012.965.22.816.533 2.511.062 4.51a10 10 0 0 1 .443-.051c.713-.065 1.669-.072 2.516.21.518.173.994.681 1.2 1.273.184.532.16 1.162-.234 1.733q.086.18.138.363c.077.27.113.567.113.856s-.036.586-.113.856c-.039.135-.09.273-.16.404.169.387.107.819-.003 1.148a3.2 3.2 0 0 1-.488.901c.054.152.076.312.076.465 0 .305-.089.625-.253.912C13.1 15.522 12.437 16 11.5 16H8c-.605 0-1.07-.081-1.466-.218a4.8 4.8 0 0 1-.97-.484l-.048-.03c-.504-.307-.999-.609-2.068-.722C2.682 14.464 2 13.846 2 13V9c0-.85.685-1.432 1.357-1.615.849-.232 1.574-.787 2.132-1.41.56-.627.914-1.28 1.039-1.639.199-.575.356-1.539.428-2.59z"/>
+                                            </svg>
+                                            <span>4</span>
+                                        </div>
+                                        <div class="text-gray-500">
+                                            <button class="hover:text-gray-900 hover:underline">Edit</button>
+                                        </div>
+                                        <div class="text-gray-500">
+                                            <button class="hover:text-gray-900 hover:underline">Delete</button>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="pl-20">
-                                    <p class="text-sm text-black">
-                                        {{$comment->comment}}
-                                    </p>
-                                </div>
-                                <div class="flex pl-20 mt-2 space-x-3 ">
-                                    <div class="flex space-x-1 text-amber-400">
-                                        <svg xmlns="http://www.w3.org/2000/svg"  fill="currentColor" class="h-5 bi bi-hand-thumbs-up-fill" viewBox="0 0 16 16">
-                                            <path d="M6.956 1.745C7.021.81 7.908.087 8.864.325l.261.066c.463.116.874.456 1.012.965.22.816.533 2.511.062 4.51a10 10 0 0 1 .443-.051c.713-.065 1.669-.072 2.516.21.518.173.994.681 1.2 1.273.184.532.16 1.162-.234 1.733q.086.18.138.363c.077.27.113.567.113.856s-.036.586-.113.856c-.039.135-.09.273-.16.404.169.387.107.819-.003 1.148a3.2 3.2 0 0 1-.488.901c.054.152.076.312.076.465 0 .305-.089.625-.253.912C13.1 15.522 12.437 16 11.5 16H8c-.605 0-1.07-.081-1.466-.218a4.8 4.8 0 0 1-.97-.484l-.048-.03c-.504-.307-.999-.609-2.068-.722C2.682 14.464 2 13.846 2 13V9c0-.85.685-1.432 1.357-1.615.849-.232 1.574-.787 2.132-1.41.56-.627.914-1.28 1.039-1.639.199-.575.356-1.539.428-2.59z"/>
-                                        </svg>
-                                        <span>4</span>
-                                    </div>
-                                    <div class="text-gray-500">
-                                        <button class="hover:text-gray-900 hover:underline">Edit</button>
-                                    </div>
-                                    <div class="text-gray-500">
-                                        <button class="hover:text-gray-900 hover:underline">Delete</button>
-                                    </div>
-                                </div>
-                            </div>
                             @endforeach
                         </div>
                         <div class="mt-4">
@@ -375,7 +381,7 @@ class extends Component {
             <div class="w-full max-w-sm">
                 <div class="w-full border border-gray-300 shrink-0 h-96 rounded-xl">
                     <div class="px-6 py-4">
-                        <p class="font-medium text-dark">Course Content</p>
+                        <p class="font-semibold text-dark">Course Content</p>
                     </div>
                     <div class="px-6 py-4 border-t border-b">
                         <p class=" text-dark">01: Intro</p>
@@ -383,9 +389,9 @@ class extends Component {
                 </div>
                 <div>
                     <!-- Component: Detailed Basic -->
-                    <div class="flex flex-col items-center gap-2 mt-8">
+                    <div class="flex flex-col items-center gap-2 p-6 mt-8 border border-gray-300 rounded-xl">
                         <!-- Title -->
-                        <h4 class="font-medium text-dark">Customer reviews</h4>
+                        <h4 class="font-semibold text-dark">Customer Reviews</h4>
                         <!-- Rating -->
                         <span class="flex items-center gap-4 text-sm rounded text-slate-500">
                         <span class="flex gap-1 text-amber-400" role="img" aria-label="Rating: 4 out of 5 stars">

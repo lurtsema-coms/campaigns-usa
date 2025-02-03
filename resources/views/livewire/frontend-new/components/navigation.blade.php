@@ -21,7 +21,7 @@ new class extends Component {
     }
 }; ?>
 
-<div class="sticky top-0 z-10 shadow-sm bg-slate-800">
+<div class="sticky top-0 z-10 text-lg tracking-wider shadow-sm bg-slate-800">
     <div class="relative flex items-center justify-between w-full h-20 px-5 mx-auto text-gray-400 max-w-8xl">
         <!-- Left section: CAMPAIGNS USA -->
         <div class="flex items-center gap-10 md:gap-32">
