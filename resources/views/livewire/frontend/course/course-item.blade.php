@@ -49,6 +49,8 @@ class extends Component {
     {
         $this->perPage += 10; 
         $this->announcements = $this->course->announcements;
+        $this->dispatch('cart-updated');
+
     }
 
     public function rendering(View $view): void
@@ -306,7 +308,7 @@ class extends Component {
                         <p class="font-semibold text-dark">Comment Section:</p>
                         <div class="overflow-y-auto max-h-96 scrollbar-thin scrollbar-thumb-gray scrollbar-thumb-rounded">
                             @foreach ($this->comments as $comment)
-                                <div class="flex-row mb-4">
+                                <div class="flex-row mb-4" wire:ignore wire:key="{{$comment->id}}">
                                     <div class="flex items-center space-x-4">
                                         <img src="{{ asset('frontend/campaign1-modal.png') }}" alt="Author" class="object-cover w-16 h-16 rounded-full">
                                         <div>
@@ -463,20 +465,21 @@ class extends Component {
     </div>
 </div>
 @script
-<script>
-    const timeagoNodes = document.querySelectorAll('.timeago');
-    if (timeagoNodes.length) {
-        timeago.render(timeagoNodes);
-    }
-    
-    Livewire.on('cart-updated' ,function(){
-        console.log('gumana');
-        timeago.cancel();
+<script data-navigate-once>
         const timeagoNodes = document.querySelectorAll('.timeago');
+        if (timeagoNodes.length) {
+            timeago.render(timeagoNodes);
+        }
+ 
+   
+    Livewire.on('cart-updated', function(){
+        setTimeout(() => {
+            const timeagoNodes = document.querySelectorAll('.timeago');
             if (timeagoNodes.length) {
                 timeago.render(timeagoNodes);
             }
-    } )
+        }, 100);
+    });
 </script>
 @endscript
 
