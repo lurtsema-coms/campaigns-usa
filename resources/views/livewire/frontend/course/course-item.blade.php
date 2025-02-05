@@ -33,7 +33,6 @@ class extends Component {
         $this->user_cart = auth()->user() ? explode(",", auth()->user()->cart) : [];
         $this->course = $course->find($id);
         $this->instructor_announcements = Announcement::where('courses_id', $id)->get();
-        // $this->comments =Comment::where('courses_id', $id)->latest()->get();
     }
 
     public function getCommentsProperty()
@@ -463,17 +462,27 @@ class extends Component {
         </div>
     </div>
 </div>
-
+@script
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    const timeagoNodes = document.querySelectorAll('.timeago');
+    if (timeagoNodes.length) {
+        timeago.render(timeagoNodes);
+    }
+    
+    Livewire.on('cart-updated' ,function(){
+        console.log('gumana');
+        timeago.cancel();
         const timeagoNodes = document.querySelectorAll('.timeago');
-        if (timeagoNodes.length) {
-            timeago.render(timeagoNodes);
-        }
-    });
+            if (timeagoNodes.length) {
+                timeago.render(timeagoNodes);
+            }
+    } )
 </script>
+@endscript
 
+<script> 
 
+</script>
 {{-- @script
 <script>
     (function () {
