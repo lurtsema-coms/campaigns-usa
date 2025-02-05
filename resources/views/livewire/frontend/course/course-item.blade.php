@@ -329,14 +329,16 @@ class extends Component {
                                             </svg>
                                             <span>4</span>
                                         </div>
-                                        <div class="text-gray-500">
-                                            <button class="hover:text-gray-900 hover:underline">Edit</button>
-                                        </div>
-                                        <div class="text-gray-500">
-                                            <button wire:click="deleteComment({{ $comment->id }})" class="hover:text-gray-900 hover:underline">
-                                                Delete
-                                            </button>
-                                        </div>
+                                        @if(auth()->check() && auth()->user()->id == $comment->created_by )
+                                            <div class="text-gray-500">
+                                                <button class="hover:text-gray-900 hover:underline">Edit</button>
+                                            </div>
+                                            <div class="text-gray-500">
+                                                <button wire:click="deleteComment({{ $comment->id }})" class="hover:text-gray-900 hover:underline">
+                                                    Delete
+                                                </button>
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
                             @endforeach
@@ -466,12 +468,11 @@ class extends Component {
 </div>
 @script
 <script data-navigate-once>
-        const timeagoNodes = document.querySelectorAll('.timeago');
-        if (timeagoNodes.length) {
-            timeago.render(timeagoNodes);
-        }
- 
-   
+    const timeagoNodes = document.querySelectorAll('.timeago');
+    if (timeagoNodes.length) {
+        timeago.render(timeagoNodes);
+    }
+
     Livewire.on('cart-updated', function(){
         setTimeout(() => {
             const timeagoNodes = document.querySelectorAll('.timeago');
