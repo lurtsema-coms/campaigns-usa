@@ -22,6 +22,11 @@ class Comment extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function like()
+    {
+        return $this->hasMany(Like::class);
+    }
+
     public function course()
     {
         return $this->belongsTo(Courses::class);
@@ -31,4 +36,5 @@ class Comment extends Model
     {
         return $this->belongsTo(User::class, 'created_by');
     }
+
 }
