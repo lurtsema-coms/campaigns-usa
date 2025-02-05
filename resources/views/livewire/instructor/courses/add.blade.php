@@ -1,11 +1,16 @@
 <?php
 
+use Livewire\Attributes\Layout;
+use Livewire\Attributes\Title;
 use App\Models\Courses;
 use Livewire\Attributes\Validate;
 use Livewire\WithFileUploads;
 use Livewire\Volt\Component;
 
-new class extends Component {
+new
+#[Layout('layouts.app')]
+#[Title('Campaigns USA | Add Course')]
+class extends Component {
     
     use WithFileUploads;
 

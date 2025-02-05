@@ -1,9 +1,14 @@
 <?php
 
+use Livewire\Attributes\Layout;
+use Livewire\Attributes\Title;
 use App\Models\Courses;
 use Livewire\Volt\Component;
 
-new class extends Component {
+new
+#[Layout('layouts.app')]
+#[Title('Campaigns USA | Instructor Courses')]
+class extends Component {
     
     public $search = '';
     
@@ -16,7 +21,7 @@ new class extends Component {
 
     public function loadCourses()
     {  
-        return Courses::paginate(10);
+        return Courses::where('title', 'like', '%'.$this->search.'%')->paginate(10);
     }
 }; ?>
 
@@ -25,7 +30,7 @@ new class extends Component {
         <x-button-link class="bg-slate-500" href="{{ route('instructor-courses-add') }}">
             Add Course
         </x-button-link>
-        <x-form.text-input type="search" placeholder="Search..."></x-form.text-input>
+        <x-form.text-input type="search" placeholder="Search..." wire:model.live.debounce.250ms="search"></x-form.text-input>
     </div>
     @if(session('success'))
         <div
@@ -73,7 +78,7 @@ new class extends Component {
                 @foreach ($courses as $course)
                     <tr class="hover:bg-gray-100">
                         <td class="px-6 py-3 text-sm text-gray-500 whitespace-nowrap">
-                            <img class="object-cover w-full h-28" src="{{ $course->thumbnail_url }}" alt="">
+                            <img class="object-cover w-full h-32" src="{{ $course->thumbnail_url }}" alt="">
                         </td>
                         <td class="px-6 py-3 text-sm text-gray-500 whitespace-nowrap">
                             {{ Illuminate\Support\Str::limit($course->title, 50) }}
@@ -82,15 +87,15 @@ new class extends Component {
                             {{ $course->price }}
                         </td>
                         <td class="px-6 py-3 text-sm text-gray-500 whitespace-nowrap">
-                            {{ $course->created_at }}
+                            {{ date('D, F j, Y', strtotime($course->created_at)) }}
                         </td>
                         <td class="px-6 py-3 text-sm text-gray-500 whitespace-nowrap">
-                            {{ $course->updated_at }}
+                            {{ date('D, F j, Y', strtotime($course->updated_at)) }}
                         </td>
                         <td class="px-6 py-3 text-sm text-gray-500 whitespace-nowrap">
                             <div class="flex items-center gap-2">
-                                <x-button-link class="bg-yellow-500" href="{{ route('instructor-courses-add-announcement', $course->id) }}">
-                                    Add Announcement
+                                <x-button-link class="border shadow" href="{{ route('instructor-courses-add-announcement', $course->id) }}">
+                                    📢
                                 </x-button-link>
                             </div>
                         </td>

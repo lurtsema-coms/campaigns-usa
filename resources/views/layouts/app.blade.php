@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>{{ $title ?? 'Page Title' }}</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -20,19 +20,15 @@
     <body class="font-sans antialiased bg-gray-100">
         <div class="min-h-screen">
             <livewire:layout.navigation />
-
-            <!-- Page Heading -->
-            {{-- @if (isset($header))
-                <header class="bg-white shadow">
-                    <div class="px-4 py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endif --}}
-
             <!-- Page Content -->
             <main>
-                {{ $slot }}
+                <div class="py-12">
+                    <div class="px-6 mx-auto max-w-8xl lg:px-8">
+                        <div class="p-8 bg-white rounded-lg">
+                            {{ $slot }}
+                        </div>
+                    </div>
+                </div>
             </main>
         </div>
     </body>

@@ -61,8 +61,7 @@ new class extends Component {
     <form wire:submit='addAnnouncement'>
         <div class="grid max-w-4xl grid-cols-2 p-5 mx-auto gap-x-8 gap-y-4 rounded-xl">
             <div class="col-span-2">
-                <label class="text-lg font-medium text-gray-700">
-                    <span class="text-gray-500">Course:</span>
+                <label class="text-2xl font-semibold text-gray-700">
                     {{$course_title}}
                 </label>
             </div>
