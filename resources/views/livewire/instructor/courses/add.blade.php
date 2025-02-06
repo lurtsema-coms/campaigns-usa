@@ -29,7 +29,7 @@ class extends Component {
         $img_path = url('images/courses/thumbnail/' . $file_name);
         $thumbnail->storePubliclyAs('images/courses/thumbnail', $file_name, 'public');
         
-        Courses::create([
+        $id = Courses::insertGetId([
             'title' => $this->title,
             'price' => $this->price,
             'description' => $this->description,
@@ -37,16 +37,16 @@ class extends Component {
             'created_by' => auth()->user()->id,
         ]);
 
-        $this->redirect(route('instructor-courses'), navigate: true);
+        $this->redirect(route('instructor-courses-edit', $id), navigate: true);
     }
 }; ?>
 
-<div class="space-y-8">
+<div class="p-8 space-y-4">
     <x-text-back-link href="{{ route('instructor-courses') }}" />
     <form wire:submit="addCourse">
         <div class="grid max-w-4xl grid-cols-2 p-5 mx-auto gap-x-8 gap-y-4 rounded-xl">
             <div class="col-span-2">
-                <x-input-label :value="__('Add Course')" />
+                <x-input-label class="font-semibold" :value="__('Add Course')" />
             </div>
             <div>
                 <x-input-label for="first_name" :value="__('Title')" />
@@ -62,8 +62,8 @@ class extends Component {
                 <x-input-label for="trix" :value="__('Overview')" />
                 <div class="mt-1">                    
                     <trix-editor
-                        class="mt-2 border border-gray-300 rounded-lg shadow-sm focus:border-blue-400 trix"
-                        x-data
+                    class="py-5 mt-2 border border-gray-300 rounded-lg shadow-sm px-7 focus:border-blue-400 trix"
+                    x-data
                         x-on:trix-change="$dispatch('input', event.target.value)"
                         x-ref="trix"
                         wire:model.debounce.60s="description"

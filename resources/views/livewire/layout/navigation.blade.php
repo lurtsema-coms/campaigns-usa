@@ -18,7 +18,7 @@ new class extends Component
 
 <nav x-data="{ open: false }" class="border-b border-gray-100 bg-color-blue">
     <!-- Primary Navigation Menu -->
-    <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+    <div class="px-4 mx-auto max-w-8xl sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <div class="flex">
                 <!-- Logo -->
@@ -39,7 +39,7 @@ new class extends Component
                         </x-nav-link>
                     @endrole
                     @role('instructor')
-                        <x-nav-link :href="route('instructor-courses')" :active="request()->routeIs('instructor-courses') || request()->routeIs('instructor-courses-add') || request()->routeIs('instructor-courses-add-announcement')" wire:navigate>
+                        <x-nav-link :href="route('instructor-courses')" :active="request()->routeIs('instructor-courses') || request()->routeIs('instructor-courses-add') || request()->routeIs('instructor-courses-add-announcement') || request()->routeIs('instructor-courses-edit')" wire:navigate>
                             {{ __('Courses') }}
                         </x-nav-link>
                     @endrole
@@ -94,7 +94,7 @@ new class extends Component
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" wire:navigate>
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('instructor-courses')" :active="request()->routeIs('instructor-courses') || request()->routeIs('instructor-courses-add') || request()->routeIs('instructor-courses-add-announcement')" wire:navigate>
+            <x-nav-link :href="route('instructor-courses')" :active="request()->routeIs('instructor-courses') || request()->routeIs('instructor-courses-add') || request()->routeIs('instructor-courses-add-announcement') || request()->routeIs('instructor-courses-edit')" wire:navigate>
                 {{ __('Courses') }}
             </x-responsive-nav-link>
         </div>

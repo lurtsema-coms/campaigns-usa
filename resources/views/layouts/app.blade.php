@@ -24,7 +24,7 @@
             <main>
                 <div class="py-12">
                     <div class="px-6 mx-auto max-w-8xl lg:px-8">
-                        <div class="p-8 bg-white rounded-lg">
+                        <div class="overflow-hidden bg-white rounded-lg">
                             {{ $slot }}
                         </div>
                     </div>

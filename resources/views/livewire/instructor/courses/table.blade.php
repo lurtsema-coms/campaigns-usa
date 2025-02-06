@@ -25,7 +25,7 @@ class extends Component {
     }
 }; ?>
 
-<div class="space-y-8">
+<div class="p-8 space-y-8">
     <div class="flex flex-col justify-between gap-4 md:flex-row">
         <x-button-link class="bg-slate-500" href="{{ route('instructor-courses-add') }}">
             Add Course
@@ -94,8 +94,11 @@ class extends Component {
                         </td>
                         <td class="px-6 py-3 text-sm text-gray-500 whitespace-nowrap">
                             <div class="flex items-center gap-2">
-                                <x-button-link class="border shadow" href="{{ route('instructor-courses-add-announcement', $course->id) }}">
+                                <x-button-link class="border" href="{{ route('instructor-courses-add-announcement', $course->id) }}">
                                     📢
+                                </x-button-link>
+                                <x-button-link class="border" href="{{ route('instructor-courses-edit', $course->id) }}">
+                                    ✏️
                                 </x-button-link>
                             </div>
                         </td>
