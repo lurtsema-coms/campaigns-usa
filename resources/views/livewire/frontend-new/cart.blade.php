@@ -37,9 +37,9 @@ class extends Component {
 
 <div>
     <div class="px-5 py-16 mx-auto max-w-8xl">
-        <p class="text-2xl font-medium text-gray-800 sm:text-4xl" data-aos="flip-right" wire:ignore>Your Cart 🛒</p>
+        <p class="text-2xl font-semibold text-gray-800 sm:text-4xl" data-aos="flip-right" wire:ignore>Your Cart 🛒</p>
         <div class="flex flex-col gap-10 py-10 lg:flex-row ">
-            <div class="flex-1 w-full max-w-4xl p-10 bg-white shadow md:col-span-2 rounded-xl">
+            <div class="flex-1 w-full max-w-4xl p-10 bg-white border shadow md:col-span-2">
                 <div class="grid gap-8">
                     @if ($cart->isEmpty())
                         <div class="p-10 font-medium text-center text-gray-800">
@@ -50,7 +50,7 @@ class extends Component {
                             <div class="flex flex-col gap-8 p-10 border rounded-lg shadow-sm md:flex-row lg:flex-col xl:flex-row border-slate-200" wire:key="course-{{ $course->id }}">
                                 <img src="{{ $course->thumbnail_url }}" class="object-cover w-full min-w-64 max-w-64 h-36" alt="">
                                 <div class="flex flex-col gap-2">
-                                    <p class="font-semibold text-gray-800">{{ $course->title }}</p>
+                                    <p class="text-lg font-semibold text-gray-800 sm:text-xl">{{ $course->title }}</p>
                                     <p class="text-gray-600 line-clamp-3">
                                         {{ strip_tags(str_replace(["\r\n", "\n", "\r", "<p>", "</p>", "<br>", "<br/>", "&nbsp;", "&lt;", "&gt;", "&amp;", "&quot;", "&apos;", ""], ' ', $course->description)) }}
                                     </p>
@@ -93,20 +93,20 @@ class extends Component {
 
             </div>
             <div class="w-full max-w-md shrink-0">
-                <div class="sticky p-10 bg-white shadow top-24 rounded-xl">
-                    <div class="pb-4 font-semibold border-b">Summary</div>
+                <div class="sticky p-10 bg-white border shadow top-24 rounded-xl">
+                    <div class="pb-4 text-lg font-semibold border-b">Summary</div>
                     <div class="mt-4">
-                        <span class="font-medium">Course Title</span>
+                        <span class="font-semibold">Course Title</span>
                         <div class="flex flex-col gap-2 pb-4 mt-4 border-b">
                             @foreach ($cart as $course)
                                 <div class="flex gap-4">
-                                    <div class="flex-1 text-gray-700">{{ $course->title }}</div>
+                                    <div class="flex-1 text-slate-600">{{ $course->title }}</div>
                                     <div class="text-slate-800">${{ $course->price }}</div>
                                 </div>
                             @endforeach
                         </div>
                         <div class="flex mt-4">
-                            <div class="flex-1 font-medium">Total</div>
+                            <div class="flex-1 font-semibold">Total</div>
                             <div class="font-medium text-blue-600">🏷️ ${{ $cart->sum('price') }}</div>
                         </div>
                     </div>

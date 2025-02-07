@@ -5,8 +5,8 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
-        <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+    <div class="">
+        <div class="mx-auto max-w-7xl">
             <div class="overflow-hidden bg-white rounded-lg">
                 <div class="p-6 text-gray-900">
                     <div class="mb-6">
@@ -28,7 +28,7 @@
                                 </div>
                                 <div class="flex-1 w-0 ml-5">
                                   <dl>
-                                    <dt class="font-medium text-gray-500 truncate text-md">Courses you’ve created</dt>
+                                    <dt class="font-semibold text-gray-600 truncate text-md">Courses you’ve created</dt>
                                     <dd>
                                       <div class="text-3xl font-medium text-gray-900">7</div>
                                     </dd>
@@ -52,7 +52,7 @@
                                 </div>
                                 <div class="flex-1 w-0 ml-5">
                                   <dl>
-                                    <dt class="font-medium text-gray-500 truncate text-md">No. of students</dt>
+                                    <dt class="font-semibold text-gray-600 truncate text-md">No. of students</dt>
                                     <dd>
                                       <div class="text-3xl font-medium text-gray-900">80</div>
                                     </dd>
@@ -62,7 +62,7 @@
                             </div>
                             <div class="px-5 py-3 bg-gray-50">
                               <div class="text-sm">
-                                <a href="#" class="font-medium text-cyan-700 hover:text-cyan-900">View all</a>
+                                <a href="#" class="font-medium text-cyan-700 hover:text-cyan-900" disabled>View all</a>
                               </div>
                             </div>
                         </div>

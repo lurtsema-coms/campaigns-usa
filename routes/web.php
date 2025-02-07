@@ -34,8 +34,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::view('dashboard', 'dashboard')->name('dashboard');
         Route::view('subscribe-courses', 'subscribe-courses')->name('subscribe-courses');
     
-        Route::view('instructor-courses', 'backend.instructor.courses.index-courses-section')->name('instructor-courses');
-        Route::view('instructor-courses/add', 'backend.instructor.courses.add-courses-section')->name('instructor-courses-add');
+        Volt::route('instructor-courses', 'instructor.courses.table')->name('instructor-courses');
+        Volt::route('instructor-courses/add', 'instructor.courses.add')->name('instructor-courses-add');
+        Volt::route('instructor-courses/edit/{id}', 'instructor.courses.edit')->name('instructor-courses-edit');
         Route::view('instructor-courses/{id}/announcement', 'backend.instructor.courses.add-announcement')->name('instructor-courses-add-announcement');
     });
 
