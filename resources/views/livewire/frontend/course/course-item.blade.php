@@ -26,8 +26,7 @@ class extends Component {
     public $announcements;
     public $instructor_announcements;
     public $editingCommentId = null;
-
-    // public $comments;
+    public $edit_comment = '';
 
     
     public function mount(Courses $course, int $id)
@@ -116,13 +115,40 @@ class extends Component {
     public function editComment($commentId)
     {
         $this->editingCommentId = $commentId;
-        // dd($commentId, $this->editingCommentId);
+
+        $comment = Comment::findOrFail($commentId);
+
+        if ($comment) {
+            $this->edit_comment = $comment->comment;
+        }
     }
 
     public function cancelEdit()
     {
         $this->editingCommentId = null;
     }
+
+    public function updateComment()
+    {
+        if (auth()->check()) {
+            $this->validate([
+                'edit_comment' => 'required|string|max:1000'
+            ]);
+        
+        $comment = Comment::find($this->editingCommentId);
+        $comment->comment = $this->edit_comment;
+        $comment->save();
+
+        $this->dispatch('cart-updated');
+        session()->flash('success', 'Your comment has been edited');
+        $this->editingCommentId = null;
+        $this->edit_comment = '';
+        } else {
+            session()->flash('error', 'Please log in to post a comment.');
+        }
+    }
+
+
 
 }; ?>
 
@@ -319,7 +345,8 @@ class extends Component {
                         <p class="font-semibold text-dark">Comment Section:</p>
                         <div class="overflow-y-auto max-h-96 scrollbar-thin scrollbar-thumb-gray scrollbar-thumb-rounded">
                             @foreach ($this->comments as $comment)
-                                <div class="flex-row mb-4" wire:ignore wire:key="comment-{{ $comment->id }}">
+                                {{-- <div class="flex-row mb-4" wire:ignore wire:key="comment-{{ $comment->id }}"> --}}
+                                <div class="flex-row mb-4" wire:key="comment-{{ $comment->id }}">
                                     <div class="flex items-center space-x-4">
                                         <img src="{{ asset('frontend/campaign1-modal.png') }}" alt="Author" class="object-cover w-16 h-16 rounded-full">
                                         <div>
@@ -332,10 +359,10 @@ class extends Component {
                                         <p class="text-sm text-black" x-show="$wire.editingCommentId !== {{$comment->id}}">
                                             {{$comment->comment}}
                                         </p>
-                                        <form x-show="$wire.editingCommentId == {{$comment->id}}">
+                                        <form x-show="$wire.editingCommentId == {{$comment->id}}" wire:submit.prevent="updateComment">
                                             <div class="pr-5">
                                                 <textarea
-                                                    wire:model="comment"
+                                                    wire:model="edit_comment"
                                                     class="w-full p-2 border rounded-lg resize-none border-slate-600 text-md focus:outline-none focus:ring-2 focus:ring-slate-600"
                                                     rows="4"
                                                     placeholder="Edit your comment..."
