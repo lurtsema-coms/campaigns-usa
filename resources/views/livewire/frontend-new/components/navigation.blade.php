@@ -21,18 +21,19 @@ new class extends Component {
     }
 }; ?>
 
-<div class="sticky top-0 z-10 text-lg tracking-wider shadow-sm bg-color-blue">
+<div class="sticky top-0 z-20 tracking-wider shadow-sm md:text-lg bg-color-blue">
     <div class="relative flex items-center justify-between w-full h-20 px-5 mx-auto text-gray-400 max-w-8xl">
         <!-- Left section: CAMPAIGNS USA -->
-        <div class="flex items-center gap-10 md:gap-32">
+        <div class="flex items-center gap-10 md:gap-16">
             <a wire:navigate href="{{ route('home_new') }}" class="shrink-0">
-                <img class="h-12" src="{{ asset('frontend/Logo SVG.png') }}" alt="">
+                <img class="h-12 sm:h-8 md:h-12" src="{{ asset('frontend/Logo SVG.png') }}" alt="">
             </a>
             <div class="hidden gap-8 sm:flex">
                 <a wire:navigate href="{{ route('home_new') }}" class="{{ Route::is('home_new') ? 'font-medium text-gray-100' : '' }} hover:font-medium hover:text-gray-100">Home</a>
                 <a wire:navigate href="{{ route('courses_new') }}" class="{{ Route::is('courses_new') || Route::is('course-item')  ? 'font-medium text-gray-100' : '' }} hover:font-medium hover:text-gray-100">Courses</a>
                 <a wire:navigate href="{{ route('about_new') }}" class="{{ Route::is('about_new') ? 'font-medium text-gray-100' : '' }} hover:font-medium hover:text-gray-100">About</a>
                 <a wire:navigate href="{{ route('contact_new') }}" class="{{ Route::is('contact_new') ? 'font-medium text-gray-100' : '' }} hover:font-medium hover:text-gray-100">Contact</a>
+                <a wire:navigate href="{{ route('pricing') }}" class="{{ Route::is('pricing') ? 'font-medium text-gray-100' : '' }} hover:font-medium hover:text-gray-100">Pricing</a>
             </div>
         </div>
         <!-- Centered navigation links -->
@@ -104,6 +105,7 @@ new class extends Component {
                             <a wire:navigate href="{{ route('courses_new') }}" class="{{ Route::is('courses_new') || Route::is('course-item') ? 'font-medium text-gray-100' : '' }} hover:font-medium hover:text-gray-100">Courses</a>
                             <a wire:navigate href="{{ route('about_new') }}" class="{{ Route::is('about_new') ? 'font-medium text-gray-100' : '' }} hover:font-medium hover:text-gray-100">About</a>
                             <a wire:navigate href="{{ route('contact_new') }}" class="{{ Route::is('contact_new') ? 'font-medium text-gray-100' : '' }} hover:font-medium hover:text-gray-100">Contact</a>
+                            <a wire:navigate href="{{ route('pricing') }}" class="{{ Route::is('pricing') ? 'font-medium text-gray-100' : '' }} hover:font-medium hover:text-gray-100">Pricing</a>
                         </div>
                     </div>
                 </div>

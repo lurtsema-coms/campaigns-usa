@@ -1,11 +1,16 @@
 <?php
 
+use Livewire\Attributes\Layout;
+use Livewire\Attributes\Title;
 use Livewire\Attributes\Validate;
 use Livewire\Volt\Component;
 use App\Models\Announcement;
 use App\Models\Courses;
 
-new class extends Component {
+new
+#[Layout('layouts.app')]
+#[Title('Campaigns USA | Add Course')]
+class extends Component {
 
     public $course;
     public $course_id;

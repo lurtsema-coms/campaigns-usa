@@ -26,6 +26,7 @@ class extends Component {
         $this->title = $course->title;
         $this->price = $course->price;
         $this->description = $course->description;
+        $this->thumbnail = $course->thumbnail_url;
     }
     
 
@@ -53,7 +54,7 @@ class extends Component {
 
 <div>
     <div class="flex gap-8">
-        <div class="w-full max-w-sm p-8 bg-[#22333B]">
+        <div class="w-full max-w-sm p-8 bg-[#0e2b3f]">
             <livewire:instructor.components.setting />
         </div>
         <div class="py-8 pr-8 mx-auto">
@@ -86,6 +87,7 @@ class extends Component {
                         <x-input-label for="thumbnail" :value="__('Thumbnail')" />
                         <x-text-input wire:model="thumbnail" id="thumbnail" name="thumbnail" type="file" class="block w-full p-2 mt-2 border" required autofocus autocomplete="thumbnail" />
                         <x-input-error class="mt-2" :messages="$errors->get('thumbnail')" />
+                        <img src="{{ $thumbnail }}" alt="{{ $thumbnail }}" class="object-contain mt-4 rounded-md">
                     </div>
                     <div>
                         <x-input-label for="introduction_video" :value="__('Introduction Video')" />

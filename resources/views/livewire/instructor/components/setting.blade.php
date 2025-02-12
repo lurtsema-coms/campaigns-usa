@@ -17,14 +17,16 @@ new class extends Component {
 
 <div class="grid gap-4 text-lg tracking-wider text-gray-100">
     <p class="font-bold text-blue-3 00">{{ $this->title }}</p>
-    <div class="{{ request()->routeIs('instructor-courses-edit') ? 'pb-2 border-b-4 border-blue-400 font-semibold' : '' }}">
+    <div class="{{ request()->routeIs('instructor-courses-edit') ? 'pb-2 border-b-4 border-blue-400 font-semibold' : '' }} hover:font-semibold hover:border-blue-400">
         <a href="{{ route('instructor-courses-edit', $id) }}" wire:navigate>
             Introduction
         </a>
     </div>
-    <a href="">
-        Announcements
-    </a>
+    <div class="{{ request()->routeIs('') ? 'pb-2 border-b-4 border-blue-400 font-semibold' : '' }} hover:font-semibold hover:border-blue-400">
+        <a href="">
+            Announcements
+        </a>
+    </div>
     <a href="">
         Manage Sections
     </a>
