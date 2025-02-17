@@ -252,7 +252,7 @@ class extends Component {
             </div>
         </div>
 
-        <div class="flex flex-col gap-8 mt-8 lg:flex-row">
+        <div class="flex flex-col gap-8 mt-8 lg:justify-center lg:flex-row">
             <div 
                 x-data="{activeSection: 'overview'}"
                 class="flex-1 max-w-4xl"
