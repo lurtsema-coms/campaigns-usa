@@ -20,4 +20,9 @@ class Courses extends Model
     {
         return $this->hasMany(Announcement::class);
     }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'courses_id');
+    }
 }

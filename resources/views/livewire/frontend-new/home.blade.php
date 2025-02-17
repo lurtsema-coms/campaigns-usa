@@ -19,7 +19,7 @@ class extends Component {
 
     public function loadCourses()
     {  
-        return Courses::paginate(10);
+        return Courses::paginate(4);
     }
 }; ?>
 

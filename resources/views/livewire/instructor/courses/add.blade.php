@@ -31,10 +31,10 @@ class extends Component {
         
         $id = Courses::insertGetId([
             'title' => $this->title,
-            'price' => $this->price,
             'description' => $this->description,
             'thumbnail_url' => $img_path,
             'created_by' => auth()->user()->id,
+            'created_at' => date('Y-m-d'),
         ]);
 
         $this->redirect(route('instructor-courses-edit', $id), navigate: true);
@@ -48,15 +48,10 @@ class extends Component {
             <div class="col-span-2">
                 <x-input-label class="font-semibold" :value="__('Add Course')" />
             </div>
-            <div>
+            <div class="col-span-2">
                 <x-input-label for="first_name" :value="__('Title')" />
                 <x-text-input wire:model="title" id="title" name="title" type="text" class="block w-full mt-1" required autofocus autocomplete="title" />
                 <x-input-error class="mt-2" :messages="$errors->get('title')" />
-            </div>
-            <div>
-                <x-input-label for="price" :value="__('Price')" />
-                <x-text-input wire:model="price" id="price" name="price" type="text" class="block w-full mt-1" required autofocus autocomplete="price" />
-                <x-input-error class="mt-2" :messages="$errors->get('price')" />
             </div>
             <div class="col-span-2" wire:ignore>
                 <x-input-label for="trix" :value="__('Overview')" />

@@ -16,27 +16,26 @@ new class extends Component {
 }; ?>
 
 <div class="grid gap-4 text-lg tracking-wider text-gray-100">
-    <p class="font-bold text-blue-3 00">{{ $this->title }}</p>
+    <p class="font-bold text-blue-300">{{ $this->title }}</p>
     <div class="{{ request()->routeIs('instructor-courses-edit') ? 'pb-2 border-b-4 border-blue-400 font-semibold' : '' }} hover:font-semibold hover:border-blue-400">
         <a href="{{ route('instructor-courses-edit', $id) }}" wire:navigate>
             Introduction
         </a>
     </div>
-    <div class="{{ request()->routeIs('') ? 'pb-2 border-b-4 border-blue-400 font-semibold' : '' }} hover:font-semibold hover:border-blue-400">
-        <a href="">
+    <div class="{{ request()->routeIs('instructor-courses-add-announcement') ? 'pb-2 border-b-4 border-blue-400 font-semibold' : '' }} hover:font-semibold hover:border-blue-400">
+        <a href="{{ route('instructor-courses-add-announcement' , $id) }}" wire:navigate>
             Announcements
         </a>
     </div>
-    <a href="">
-        Manage Sections
-    </a>
+    <div class="{{ request()->routeIs('instructor-courses-manage-section') ? 'pb-2 border-b-4 border-blue-400 font-semibold' : '' }} hover:font-semibold hover:border-blue-400">
+        <a href="{{ route('instructor-courses-manage-section' , $id) }}" wire:navigate>
+            Manage Sections
+        </a>
+    </div>
     <a href="">
         Build Quiz
     </a>
     <a href="">
         Analytics
-    </a>
-    <a href="">
-        Visibility
     </a>
 </div>

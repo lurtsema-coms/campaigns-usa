@@ -11,11 +11,7 @@ class Comment extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = [
-        'courses_id',
-        'comment',
-        'created_by'
-    ];
+    protected $guarded = [];
 
     public function user()
     {
@@ -37,4 +33,8 @@ class Comment extends Model
         return $this->belongsTo(User::class, 'created_by');
     }
 
+    public function isLikedByUser($userId)
+    {
+        return $this->like()->where('user_id', $userId)->exists();
+    }
 }

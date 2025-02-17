@@ -15,7 +15,6 @@ class extends Component {
     use WithFileUploads;
 
     public $title ='';
-    public $price ='';
     public $description = '';
     public $thumbnail;
     public $introduction_video;
@@ -24,7 +23,6 @@ class extends Component {
     {
         $course = Courses::find(request()->route('id'));
         $this->title = $course->title;
-        $this->price = $course->price;
         $this->description = $course->description;
         $this->thumbnail = $course->thumbnail_url;
     }
@@ -41,7 +39,6 @@ class extends Component {
         
         Courses::create([
             'title' => $this->title,
-            'price' => $this->price,
             'description' => $this->description,
             'thumbnail_url' => $img_path,
             'created_by' => auth()->user()->id,
@@ -60,15 +57,10 @@ class extends Component {
         <div class="py-8 pr-8 mx-auto">
             <form wire:submit="addCourse">
                 <div class="grid max-w-4xl grid-cols-2 p-5 mx-auto gap-x-8 gap-y-4 rounded-xl">
-                    <div>
+                    <div class="col-span-2">
                         <x-input-label for="first_name" :value="__('Title')" />
                         <x-text-input wire:model="title" id="title" name="title" type="text" class="block w-full mt-2" required autofocus autocomplete="title" />
                         <x-input-error class="mt-2" :messages="$errors->get('title')" />
-                    </div>
-                    <div>
-                        <x-input-label for="price" :value="__('Price')" />
-                        <x-text-input wire:model="price" id="price" name="price" type="text" class="block w-full mt-2" required autofocus autocomplete="price" />
-                        <x-input-error class="mt-2" :messages="$errors->get('price')" />
                     </div>
                     <div class="col-span-2" wire:ignore>
                         <x-input-label for="trix" :value="__('Overview')" />

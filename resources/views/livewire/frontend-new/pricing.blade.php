@@ -12,11 +12,14 @@ class extends Component {
     //
 }; ?>
 
-<div class="my-28">
-    <div class="flex flex-col items-center px-5">
-        <p class="text-2xl font-semibold text-center text-gray-800 sm:text-4xl">🚀 Master Politics. Win Elections.</p>
-        <p class="max-w-3xl mt-4 font-semibold text-center text-gray-600 sm:text-lg">If you're serious about running a successful campaign, we’ve got the roadmap. Join now and take your political strategy to the next level!</p>
-        <div class="flex flex-col items-center justify-center w-full lg:flex-row">
+<div class="relative">
+    <div class="relative" data-aos="zoom-in-up">
+        <img src="{{ asset('frontend/bg-img.jpg') }}" class="absolute object-cover w-full h-full -z-10" alt="">
+        <div class="flex flex-col justify-center pt-28">
+            <p class="text-2xl font-semibold text-center text-gray-800 sm:text-4xl">🚀 Master Politics. Win Elections.</p>
+            <p class="max-w-3xl mx-auto mt-4 font-semibold text-center text-gray-600 sm:text-lg">If you're serious about running a successful campaign, we’ve got the roadmap. Join now and take your political strategy to the next level!</p>
+        </div>
+        <div class="flex flex-col items-center justify-center w-full lg:flex-row pb-28">
             {{-- Free Plan --}}
             <div class="relative w-full max-w-sm mt-8 md:-right-2">
                 <div class="p-2 mt-8 bg-gray-100 border rounded-lg">
@@ -55,7 +58,7 @@ class extends Component {
                 </div>
             </div>
             {{-- Monthly Plan --}}
-            <div class="z-10 w-full max-w-sm p-2 mt-16 bg-gray-100 border-2 border-gray-800 rounded-lg">
+            <div class="z-10 w-full max-w-sm p-2 mt-16 bg-gray-100 border-2 rounded-lg border-sky-600">
                 <div class="h-full p-4 py-16 bg-white rounded-md md:px-8 ">
                     <div>
                         <p class="font-semibold text-gray-400">Best For</p>

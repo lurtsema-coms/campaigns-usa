@@ -26,13 +26,6 @@ class extends Component {
 }; ?>
 
 <div class="relative">
-
-    {{-- <div class="absolute inset-0 -z-10">
-        <img 
-            class="object-cover object-bottom w-full h-full opacity-100" 
-            src="{{ asset('frontend/us-cta-bg.png') }}" 
-            alt="">
-    </div> --}}
     <div class="px-5 pt-16 mx-auto">
         <div class="absolute top-0 left-0 -z-10">
             <img class="h-48 opacity-10 lg:opacity-80" src="{{ asset('frontend/us-flag-left.png') }}" wire:ignore alt="" data-aos="flip-right">

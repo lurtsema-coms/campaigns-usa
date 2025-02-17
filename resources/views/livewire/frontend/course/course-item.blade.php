@@ -3,12 +3,14 @@
 use Livewire\Attributes\Title;
 use App\Traits\CartActions;
 use App\Models\User;
+use App\Models\Like;
 use App\Models\Courses;
 use App\Models\Comment;
 use App\Models\Announcement;
 use Livewire\Attributes\Layout;
 use Illuminate\View\View;
 use Livewire\Volt\Component;
+
 
 
 new
@@ -41,7 +43,7 @@ class extends Component {
         return Comment::where('courses_id', $this->course->id)
             ->latest()
             ->whereNull('deleted_at')
-            ->with('creator') // Eager load the user relationship
+            ->with('creator')
             ->take($this->perPage)
             ->get();
     }
@@ -50,6 +52,7 @@ class extends Component {
     {
         $this->perPage += 10; 
         $this->announcements = $this->course->announcements;
+        $this->dispatch('cart-updated');
     }
 
     public function rendering(View $view): void
@@ -93,9 +96,10 @@ class extends Component {
                 'comment' => $this->comment,
                 'created_by' => auth()->id(),
             ]);
+
             $this->dispatch('cart-updated');
             session()->flash('success', 'Your comment has been posted');
-            $this->comment = ''; 
+            $this->reset('comment'); 
         } else {
             session()->flash('error', 'Please log in to post a comment.');
         }
@@ -148,7 +152,19 @@ class extends Component {
         }
     }
 
+    public function toggleLike($commentId)
+    {
+        $comment = Comment::find($commentId);
+        $userId = Auth::id();
 
+        if ($comment->isLikedByUser($userId)) {
+            // If already liked, unlike
+            $comment->like()->where('user_id', $userId)->delete();
+        } else {
+            // If not liked, like
+            $comment->like()->create(['user_id' => $userId]);
+        }
+    }
 
 }; ?>
 
@@ -241,8 +257,39 @@ class extends Component {
                 x-data="{activeSection: 'overview'}"
                 class="flex-1 max-w-4xl"
             >
-                <div class="relative w-full mb-8 overflow-hidden h-96 rounded-xl">
-                    <img class="object-cover w-full h-full" src="{{ $course->thumbnail_url }}" alt="">
+                <div x-data="{ open: false }">
+                    <!-- Thumbnail with Play Button -->
+                    <div class="relative w-full mb-8 overflow-hidden h-96 rounded-xl">
+                        <img class="object-cover w-full h-full -z-10 brightness-75" src="{{ $course->thumbnail_url }}" alt="">
+                
+                        <div class="absolute transform -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2">
+                            <button @click="open = true"
+                                class="z-20 flex flex-row items-center justify-center w-16 h-16 gap-2 rounded-full shadow-lg bg-gray-400/80 hover:cursor-pointer hover:drop-shadow-xl hover:bg-green-600 hover:scale-105">
+                                <svg class="text-slate-200 hover:scale-125" height="2rem" width="2rem" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" fill="currentColor">
+                                    <path d="M96 64l256 192L96 448V64z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                
+                    <!-- Video Popup Modal -->
+                    <div x-show="open" class="fixed inset-0 z-50 flex w-full h-full bg-black/40">
+                        <!-- Close Button -->
+                        <button @click="open = false" class="absolute right-0 text-gray-600 -top-5 hover:text-gray-900">
+                            &times;
+                        </button>
+                
+                        <!-- Video without animation on modal, only animation on video -->
+                        <div class="flex items-center justify-center h-full p-4 m-auto">
+                            <video x-show="open" x-transition:enter="transition ease-out duration-500" x-transition:enter-start="opacity-0 scale-75"
+                                x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-300"
+                                x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-75"
+                                controls autoplay width="900" class="h-auto m-auto rounded-lg" x-on:click.outside="open = false;">
+                                <source src="{{ $course->video_url }}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    </div>
                 </div>
                 <div class="flex flex-wrap gap-4 mb-4">
                     <button :class="`${activeSection == 'overview' ? 'bg-slate-100 text-slate-800 font-bold rounded-xl' : 'text-gray-600'} px-4 py-2 hover:text-gray-800`" @click="activeSection = 'overview'">
@@ -305,13 +352,13 @@ class extends Component {
                         class="w-full h-auto p-6 space-y-4 border rounded-md"
                     >
                     @auth
-                        <p class="font-medium text-dark">Compose Comment</p>
+                        <p class="font-semibold text-dark">Compose Comment</p>
                         @if(auth()->user()->hasRole('student') || auth()->user()->hasRole('instructor'))
                             <div>
                                 <div class="flex w-full mb-8 space-x-4">
                                     <img src="{{ asset('frontend/campaign1-modal.png') }}" alt="Author" class="object-cover w-16 h-16 rounded-full">
                                     <div class="w-full">
-                                        <form wire:submit.prevent="submitComment">
+                                        <form wire:submit="submitComment">
                                             <textarea
                                                 wire:model="comment"
                                                 class="w-full p-2 border rounded-lg resize-none border-slate-600 text-md focus:outline-none focus:ring-2 focus:ring-slate-600"
@@ -343,17 +390,17 @@ class extends Component {
                         @endif
                     @endauth
                         <p class="font-semibold text-dark">Comment Section:</p>
-                        <div class="overflow-y-auto max-h-96 scrollbar-thin scrollbar-thumb-gray scrollbar-thumb-rounded">
+                        <div class="overflow-y-auto max-h-auto scrollbar-thin scrollbar-thumb-gray scrollbar-thumb-rounded">
                             @foreach ($this->comments as $comment)
-                                {{-- <div class="flex-row mb-4" wire:ignore wire:key="comment-{{ $comment->id }}"> --}}
                                 <div class="flex-row mb-4" wire:key="comment-{{ $comment->id }}">
-                                    <div class="flex items-center space-x-4">
+                                    <div class="flex items-center space-x-4" wire:ignore>
                                         <img src="{{ asset('frontend/campaign1-modal.png') }}" alt="Author" class="object-cover w-16 h-16 rounded-full">
                                         <div>
                                             <p class="text-lg font-semibold">
                                                 {{ $comment->creator ? $comment->creator->first_name . ' ' . $comment->creator->last_name : 'Unknown User' }}
                                             </p>
-                                            <p class="text-sm text-gray-500 timeago" datetime="{{ $comment->created_at }} {{ config('app.timezone') }}"></p>                                        </div>
+                                            <p class="text-sm text-gray-500 timeago" datetime="{{ $comment->created_at }} {{ config('app.timezone') }}"></p>
+                                        </div>
                                     </div>
                                     <div class="pl-20">
                                         <p class="text-sm text-black" x-show="$wire.editingCommentId !== {{$comment->id}}">
@@ -386,12 +433,20 @@ class extends Component {
                                         </form>
                                     </div>
                                     <div class="flex pl-20 mt-2 space-x-3" x-show="$wire.editingCommentId !== {{$comment->id}}"                                        >
-                                        <div class="flex space-x-1 text-amber-400">
-                                            <svg xmlns="http://www.w3.org/2000/svg"  fill="currentColor" class="h-5 bi bi-hand-thumbs-up-fill" viewBox="0 0 16 16">
-                                                <path d="M6.956 1.745C7.021.81 7.908.087 8.864.325l.261.066c.463.116.874.456 1.012.965.22.816.533 2.511.062 4.51a10 10 0 0 1 .443-.051c.713-.065 1.669-.072 2.516.21.518.173.994.681 1.2 1.273.184.532.16 1.162-.234 1.733q.086.18.138.363c.077.27.113.567.113.856s-.036.586-.113.856c-.039.135-.09.273-.16.404.169.387.107.819-.003 1.148a3.2 3.2 0 0 1-.488.901c.054.152.076.312.076.465 0 .305-.089.625-.253.912C13.1 15.522 12.437 16 11.5 16H8c-.605 0-1.07-.081-1.466-.218a4.8 4.8 0 0 1-.97-.484l-.048-.03c-.504-.307-.999-.609-2.068-.722C2.682 14.464 2 13.846 2 13V9c0-.85.685-1.432 1.357-1.615.849-.232 1.574-.787 2.132-1.41.56-.627.914-1.28 1.039-1.639.199-.575.356-1.539.428-2.59z"/>
+                                    {{-- Like Section --}}
+                                    <div class="flex space-x-1 text-red-500">
+                                        <button wire:click="toggleLike({{ $comment->id }})" @guest disabled @endguest>
+                                            <svg xmlns="http://www.w3.org/2000/svg" 
+                                                fill="{{ auth()->check() ? ($comment->isLikedByUser(auth()->id()) ? 'currentColor' : 'none') : 'currentColor' }}" 
+                                                viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" 
+                                                    d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
                                             </svg>
-                                            <span>4</span>
-                                        </div>
+                                        </button>
+                                        <span>{{ $comment->like->count() }}</span>
+                                    </div>
+
+
                                         @if(auth()->check() && auth()->user()->id == $comment->created_by )
                                             <div class="text-gray-500">
                                                 <button wire:click="editComment({{$comment->id}})" class="hover:text-gray-900 hover:underline">
@@ -450,14 +505,60 @@ class extends Component {
                 </div>
             </div>
             <div class="w-full max-w-sm">
-                <div class="w-full bg-white border border-gray-300 shrink-0 h-96 rounded-xl">
+                {{-- Course Content --}}
+                <div class="w-full bg-white border border-gray-300 shrink-0 rounded-xl">
                     <div class="px-6 py-4">
                         <p class="font-semibold text-dark">Course Content</p>
                     </div>
-                    <div class="px-6 py-4 border-t border-b">
-                        <p class=" text-dark">01: Intro</p>
+                
+                    <!-- Lesson 1 -->
+                    <div x-data="{ open: false }" class="border-t">
+                        <button @click="open = !open" class="flex items-center justify-between w-full px-6 py-4 text-left">
+                            <span class="font-semibold text-dark">Lesson 1: Introduction</span>
+                            <svg class="w-5 h-5 text-gray-600 transition-transform transform" 
+                                :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                
+                        <!-- Animated Lesson Content -->
+                        <div x-show="open" x-transition:enter="transition ease-out duration-300 transform" 
+                            x-transition:enter-start="opacity-0 -translate-y-2" x-transition:enter-end="opacity-100 translate-y-0"
+                            x-transition:leave="transition ease-in duration-200 transform"
+                            x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-2"
+                            class="px-6 pb-4 text-gray-700">
+                            <ul class="space-y-2">
+                                <li>- Part 1: Getting Started</li>
+                                <li>- Part 2: Basics</li>
+                            </ul>
+                        </div>
+                    </div>
+                
+                    <!-- Lesson 2 -->
+                    <div x-data="{ open: false }" class="border-t">
+                        <button @click="open = !open" class="flex items-center justify-between w-full px-6 py-4 text-left">
+                            <span class="font-semibold text-dark">Lesson 2: Advanced Topics</span>
+                            <svg class="w-5 h-5 text-gray-600 transition-transform transform" 
+                                :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                
+                        <!-- Animated Lesson Content -->
+                        <div x-show="open" x-transition:enter="transition ease-out duration-300 transform" 
+                            x-transition:enter-start="opacity-0 -translate-y-2" x-transition:enter-end="opacity-100 translate-y-0"
+                            x-transition:leave="transition ease-in duration-200 transform"
+                            x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-2"
+                            class="px-6 pb-4 text-gray-700">
+                            <ul class="space-y-2">
+                                <li>- Part 1: Deep Dive</li>
+                                <li>- Part 2: Case Studies</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
+                
+                
                 <div>
                     <!-- Component: Detailed Basic -->
                     <div class="flex flex-col items-center gap-2 p-6 mt-8 border border-gray-300 rounded-xl">
@@ -532,26 +633,23 @@ class extends Component {
     </div>
 </div>
 @script
-<script>
-    const timeagoNodes = document.querySelectorAll('.timeago');
-    if (timeagoNodes.length) {
-        timeago.render(timeagoNodes);
-    }
-    
-    Livewire.on('cart-updated' ,function(){
-        console.log('gumana');
-        timeago.cancel();
+    <script>
         const timeagoNodes = document.querySelectorAll('.timeago');
-            if (timeagoNodes.length) {
-                timeago.render(timeagoNodes);
-            }
-    } )
-</script>
+        if (timeagoNodes.length) {
+            timeago.render(timeagoNodes);
+        }
+        
+        Livewire.on('cart-updated' ,function(){
+            console.log('updated')
+            setTimeout(() => {
+                const timeagoNodes = document.querySelectorAll('.timeago');
+                if (timeagoNodes.length) {
+                    timeago.render(timeagoNodes);
+                }
+            }, 100);
+        } )
+    </script>
 @endscript
-
-<script> 
-
-</script>
 {{-- @script
 <script>
     (function () {

@@ -30,7 +30,7 @@
                                   <dl>
                                     <dt class="font-semibold text-gray-600 truncate text-md">Courses you’ve created</dt>
                                     <dd>
-                                      <div class="text-3xl font-medium text-gray-900">7</div>
+                                      <div class="text-3xl font-medium text-gray-900">{{ App\Models\Courses::get()->count() }}</div>
                                     </dd>
                                   </dl>
                                 </div>
@@ -54,7 +54,7 @@
                                   <dl>
                                     <dt class="font-semibold text-gray-600 truncate text-md">No. of students</dt>
                                     <dd>
-                                      <div class="text-3xl font-medium text-gray-900">80</div>
+                                      <div class="text-3xl font-medium text-gray-900">0</div>
                                     </dd>
                                   </dl>
                                 </div>

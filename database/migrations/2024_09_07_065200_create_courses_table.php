@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->text('title');
             $table->text('description');
-            $table->decimal('price', 18, 2);
             $table->text('thumbnail_url');
             $table->text('introduction_video')->nullable();
             $table->unsignedBigInteger('created_by')->nullable();

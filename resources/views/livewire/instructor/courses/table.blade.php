@@ -61,9 +61,6 @@ class extends Component {
                         Title
                     </th>
                     <th scope="col" class="px-6 py-3 text-sm tracking-wider text-left text-gray-500 uppercase whitespace-nowrap">
-                        Price
-                    </th>
-                    <th scope="col" class="px-6 py-3 text-sm tracking-wider text-left text-gray-500 uppercase whitespace-nowrap">
                         Created At
                     </th>
                     <th scope="col" class="px-6 py-3 text-sm tracking-wider text-left text-gray-500 uppercase whitespace-nowrap">
@@ -84,19 +81,13 @@ class extends Component {
                             {{ Illuminate\Support\Str::limit($course->title, 50) }}
                         </td>
                         <td class="px-6 py-3 text-sm text-gray-500 whitespace-nowrap">
-                            {{ $course->price }}
+                            {{ $course->created_at ? date('D, F j, Y', strtotime($course->created_at)) : '' }}
                         </td>
                         <td class="px-6 py-3 text-sm text-gray-500 whitespace-nowrap">
-                            {{ date('D, F j, Y', strtotime($course->created_at)) }}
-                        </td>
-                        <td class="px-6 py-3 text-sm text-gray-500 whitespace-nowrap">
-                            {{ date('D, F j, Y', strtotime($course->updated_at)) }}
+                            {{ $course->updated_at ? date('D, F j, Y', strtotime($course->updated_at)) : '' }}
                         </td>
                         <td class="px-6 py-3 text-sm text-gray-500 whitespace-nowrap">
                             <div class="flex items-center gap-2">
-                                <x-button-link class="border" href="{{ route('instructor-courses-add-announcement', $course->id) }}">
-                                    📢
-                                </x-button-link>
                                 <x-button-link class="border" href="{{ route('instructor-courses-edit', $course->id) }}">
                                     ✏️
                                 </x-button-link>
