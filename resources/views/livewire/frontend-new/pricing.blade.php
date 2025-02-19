@@ -15,7 +15,7 @@ class extends Component {
 <div class="relative">
     <div class="relative" data-aos="zoom-in-up">
         <img src="{{ asset('frontend/bg-img.jpg') }}" class="absolute object-cover w-full h-full -z-10" alt="">
-        <div class="flex flex-col justify-center pt-28">
+        <div class="flex flex-col justify-center px-5 pt-28">
             <p class="text-2xl font-semibold text-center text-gray-800 sm:text-4xl">🚀 Master Politics. Win Elections.</p>
             <p class="max-w-3xl mx-auto mt-4 font-semibold text-center text-gray-600 sm:text-lg">If you're serious about running a successful campaign, we’ve got the roadmap. Join now and take your political strategy to the next level!</p>
         </div>

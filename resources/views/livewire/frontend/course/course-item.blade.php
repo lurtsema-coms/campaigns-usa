@@ -510,58 +510,41 @@ class extends Component {
                     <div class="px-6 py-4">
                         <p class="font-semibold text-dark">Course Content</p>
                     </div>
-                
-                    <!-- Lesson 1 -->
-                    <div x-data="{ open: false }" class="border-t">
-                        <button @click="open = !open" class="flex items-center justify-between w-full px-6 py-4 text-left">
-                            <span class="font-semibold text-dark">Lesson 1: Introduction</span>
-                            <svg class="w-5 h-5 text-gray-600 transition-transform transform" 
-                                :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                            </svg>
-                        </button>
-                
-                        <!-- Animated Lesson Content -->
-                        <div x-show="open" x-transition:enter="transition ease-out duration-300 transform" 
-                            x-transition:enter-start="opacity-0 -translate-y-2" x-transition:enter-end="opacity-100 translate-y-0"
-                            x-transition:leave="transition ease-in duration-200 transform"
-                            x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-2"
-                            class="px-6 pb-4 text-gray-700">
-                            <ul class="space-y-2">
-                                <li>- Part 1: Getting Started</li>
-                                <li>- Part 2: Basics</li>
-                            </ul>
+                    
+                    @foreach ($course->sections as $course_section)
+                        <div x-data="{ open: false }" class="border-t">
+                            <button @click="open = !open" class="flex items-center justify-between w-full px-6 py-4 text-left">
+                                <span class="font-semibold text-dark">{{ $course_section->title }}</span>
+                                <svg class="w-5 h-5 text-gray-600 transition-transform transform" 
+                                    :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+
+                            <div x-show="open" x-transition:enter="transition ease-out duration-300 transform" 
+                                x-transition:enter-start="opacity-0 -translate-y-2" x-transition:enter-end="opacity-100 translate-y-0"
+                                x-transition:leave="transition ease-in duration-200 transform"
+                                x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-2"
+                                class="px-6 pb-4 text-gray-700"
+                            >
+                                <ul class="space-y-2">
+                                    @if ($course_section->lessons->isEmpty())
+                                        <li class="text-red-500 text center">In progress Lessons</li>
+                                    @else
+                                        @foreach ($course_section->lessons as $section_lesson)
+                                            <li class="text-blue-500">- {{ $section_lesson->title }}</li>
+                                        @endforeach
+                                    @endif
+                                </ul>
+                            </div>
                         </div>
-                    </div>
-                
-                    <!-- Lesson 2 -->
-                    <div x-data="{ open: false }" class="border-t">
-                        <button @click="open = !open" class="flex items-center justify-between w-full px-6 py-4 text-left">
-                            <span class="font-semibold text-dark">Lesson 2: Advanced Topics</span>
-                            <svg class="w-5 h-5 text-gray-600 transition-transform transform" 
-                                :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                            </svg>
-                        </button>
-                
-                        <!-- Animated Lesson Content -->
-                        <div x-show="open" x-transition:enter="transition ease-out duration-300 transform" 
-                            x-transition:enter-start="opacity-0 -translate-y-2" x-transition:enter-end="opacity-100 translate-y-0"
-                            x-transition:leave="transition ease-in duration-200 transform"
-                            x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-2"
-                            class="px-6 pb-4 text-gray-700">
-                            <ul class="space-y-2">
-                                <li>- Part 1: Deep Dive</li>
-                                <li>- Part 2: Case Studies</li>
-                            </ul>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
                 
                 
                 <div>
                     <!-- Component: Detailed Basic -->
-                    <div class="flex flex-col items-center gap-2 p-6 mt-8 border border-gray-300 rounded-xl">
+                    <div class="flex flex-col items-center gap-2 p-6 mt-8 bg-white border border-gray-300 rounded-xl">
                         <!-- Title -->
                         <h4 class="font-semibold text-dark">Customer Reviews</h4>
                         <!-- Rating -->

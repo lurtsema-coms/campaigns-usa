@@ -37,12 +37,11 @@ class extends Component {
             </div>
             <div class="flex flex-col justify-center gap-8 px-5 mx-auto" data-aos="flip-left">
                 <div>
-                    <h2 class="text-4xl font-bold tracking-wide text-gray-800 sm:text-6xl" style="text-shadow: 4px 3px rgba(206, 206, 206, 0.6);">Learn from</h2>
-                    <h2 class="text-4xl font-bold tracking-wide text-blue-800 sm:text-6xl" style="text-shadow: 4px 3px rgba(206, 206, 206, 0.6);">an Expert Mentor</h2>
-                    <p class="mt-4 text-xl font-bold tracking-wide text-gray-600">Joseph Lurtsema, Your Guide to Mastering the Course</p>
+                    <h2 class="text-4xl font-bold tracking-wide text-gray-800 sm:text-6xl" style="text-shadow: 4px 3px rgba(206, 206, 206, 0.6);">Campaign USA</h2>
+                    <h2 class="text-4xl font-bold tracking-wide text-blue-800 sm:text-6xl" style="text-shadow: 4px 3px rgba(206, 206, 206, 0.6);">Empowering Political Success</h2>
                 </div>
                 <p class="max-w-2xl tracking-wide text-gray-600 font-inter sm:text-xl">
-                    Discover the essential principles of political science, governance, and leadership. This course provides in-depth knowledge to empower critical thinking, decision-making, and a deeper understanding of political systems worldwide.
+                    Welcome to Campaign USA, your premier learning platform designed to equip you with the skills and knowledge to thrive in the fast-paced world of political campaigning. Whether you're running for office, managing a campaign, or looking to work behind the scenes, our expert-led courses provide the foundation and insights you need to succeed in this high-stakes field. 
                 </p>
                 <div class="flex gap-8">
                     <a wire:navigate href="{{ route('courses_new') }}">
@@ -193,14 +192,14 @@ class extends Component {
             </div>
         </div>
     </div>
-    <div class="px-5 py-16 mx-auto max-w-8xl">
+    <div class="px-5 py-20 mx-auto max-w-8xl">
         <p class="mx-auto text-3xl font-medium text-center text-gray-800 sm:text-5xl font-sourceserif">Latest Classes</p>
         <p class="mx-auto mt-4 text-xl text-center text-gray-800 font-sourceserif">Learn the Ins & Outs from Joseph Lurtsema!</p>
         @if ($courses->isEmpty())
-            <div class="flex justify-center mt-16">
-                <p class="font-medium text-center text-gray-800 sm:text-xl">We're still creating courses, but you can learn more about Joseph Lurtsema in the meantime.</p>
+            <div class="flex justify-center mt-8">
+                <p class="font-medium text-center text-blue-600 sm:text-xl">📚 We're still creating courses, but feel free to browse in the meantime.</p>
             </div>
-            <div class="flex justify-center">
+            {{-- <div class="flex justify-center">
                 <a wire:navigate href="{{ route('about_new') }}">
                     <button class="flex items-center gap-2 px-6 py-4 mt-8 bg-white rounded-md shadow group hover:opacity-70">
                         <span>Meet Joseph Lurtsema</span>
@@ -209,7 +208,7 @@ class extends Component {
                         </svg>
                     </button>
                 </a>
-            </div>
+            </div> --}}
             @else
             <div
                 {{-- x-data="{ dragging: false }"
@@ -337,11 +336,10 @@ class extends Component {
                         alt="">
                 </div>
                 <!-- Text Content -->
-                <h2 class="text-4xl font-semibold tracking-tight text-white text-balance sm:text-5xl">Lorem ipsum dolor sit amet.</h2>
-                <p class="max-w-xl mx-auto mt-6 text-gray-300 text-pretty text-lg/8">Incididunt sint fugiat pariatur cupidatat consectetur sit cillum anim id veniam aliqua proident excepteur commodo do ea.</p>
+                <h2 class="text-4xl font-semibold tracking-tight text-white text-balance sm:text-5xl">Start Your Political Journey Today</h2>
+                <p class="max-w-4xl mx-auto mt-6 text-gray-300 text-pretty text-lg/8">Whether you're looking to sharpen your campaign strategy, build a career in the political field, or improve your resilience during challenging times, Campaign USA offers the courses, tools, and insights you need. Begin your learning journey today and become a powerful force in the political world.</p>
                 <div class="flex items-center justify-center mt-10 gap-x-6">
-                    <a href="#" class="px-6 py-4 font-semibold text-gray-900 bg-white rounded-md shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">Get started</a>
-                    <a href="#" class="font-semibold text-white">Learn more <span aria-hidden="true">→</span></a>
+                    <a href="#" class="px-6 py-4 font-semibold text-gray-900 bg-white rounded-md shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">Start learning now</a>
                 </div>
                 <!-- Background SVG -->
                 <svg viewBox="0 0 1024 1024" class="absolute left-1/2 top-1/2 -z-10 size-[64rem] -translate-x-1/2 [mask-image:radial-gradient(closest-side,white,transparent)]" aria-hidden="true">

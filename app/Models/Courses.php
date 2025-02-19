@@ -25,4 +25,9 @@ class Courses extends Model
     {
         return $this->hasMany(Comment::class, 'courses_id');
     }
+
+    public function sections()
+    {
+        return $this->hasMany(Section::class);
+    }
 }

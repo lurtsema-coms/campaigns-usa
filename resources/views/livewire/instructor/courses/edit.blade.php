@@ -14,6 +14,7 @@ class extends Component {
 
     use WithFileUploads;
 
+    public $course;
     public $title ='';
     public $description = '';
     public $thumbnail;
@@ -21,30 +22,42 @@ class extends Component {
 
     public function mount()
     {
-        $course = Courses::find(request()->route('id'));
-        $this->title = $course->title;
-        $this->description = $course->description;
-        $this->thumbnail = $course->thumbnail_url;
+        $this->course = Courses::find(request()->route('id'));
+        $this->title = $this->course->title;
+        $this->description = $this->course->description;
+        $this->thumbnail = $this->course->thumbnail_url;
     }
     
 
     public function editCourse()
     {
         $thumbnail = $this->thumbnail;
+        // $this->validate();
         
-        $uuid = substr(Str::uuid()->toString(), 0, 8);
-        $file_name = $uuid . '.' . $thumbnail->getClientOriginalExtension();
-        $img_path = url('images/courses/thumbnail/' . $file_name);
-        $thumbnail->storePubliclyAs('images/courses/thumbnail', $file_name, 'public');
-        
-        Courses::create([
+        // Check if thumbnail is a new uploaded file
+        if ($thumbnail instanceof \Livewire\Features\SupportFileUploads\TemporaryUploadedFile) {
+
+            $this->validate([
+                'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048'
+            ]);
+
+            $uuid = substr(Str::uuid()->toString(), 0, 8);
+            $file_name = $uuid . '.' . $thumbnail->getClientOriginalExtension();
+            $img_path = url('images/courses/thumbnail/' . $file_name);
+            $thumbnail->storePubliclyAs('images/courses/thumbnail', $file_name, 'public');
+
+            $this->course->update([
+                'thumbnail_url' => $img_path,
+            ]);
+        }
+
+        $this->course->update([
             'title' => $this->title,
             'description' => $this->description,
-            'thumbnail_url' => $img_path,
             'created_by' => auth()->user()->id,
         ]);
 
-        $this->redirect(route('instructor-courses'), navigate: true);
+        $this->dispatch('success', message: 'Saved Successfully');
     }
 
 }; ?>
@@ -55,7 +68,7 @@ class extends Component {
             <livewire:instructor.components.setting />
         </div>
         <div class="py-8 pr-8 mx-auto">
-            <form wire:submit="addCourse">
+            <form wire:submit="editCourse">
                 <div class="grid max-w-4xl grid-cols-2 p-5 mx-auto gap-x-8 gap-y-4 rounded-xl">
                     <div class="col-span-2">
                         <x-input-label for="first_name" :value="__('Title')" />
@@ -64,7 +77,7 @@ class extends Component {
                     </div>
                     <div class="col-span-2" wire:ignore>
                         <x-input-label for="trix" :value="__('Overview')" />
-                        <div class="mt-2">                    
+                        <div class="mt-2">
                             <trix-editor
                                 class="py-5 mt-2 border border-gray-300 rounded-lg shadow-sm px-7 focus:border-blue-400 trix"
                                 x-data
@@ -77,7 +90,7 @@ class extends Component {
                     </div>
                     <div>
                         <x-input-label for="thumbnail" :value="__('Thumbnail')" />
-                        <x-text-input wire:model="thumbnail" id="thumbnail" name="thumbnail" type="file" class="block w-full p-2 mt-2 border" required autofocus autocomplete="thumbnail" />
+                        <x-text-input wire:model="thumbnail" id="thumbnail" type="file" class="block w-full p-2 mt-2 border" autofocus autocomplete="thumbnail" />
                         <x-input-error class="mt-2" :messages="$errors->get('thumbnail')" />
                         <img src="{{ $thumbnail }}" alt="{{ $thumbnail }}" class="object-contain mt-4 rounded-md">
                     </div>
@@ -90,6 +103,25 @@ class extends Component {
                     <div>
                         <div class="max-w-3xl mx-auto mt-8">
                             <x-primary-button type="submit">{{ __('Save') }}</x-primary-button>
+                        </div>
+                    </div>
+
+                    <div class="col-span-2">
+                        <div 
+                            x-data="{showSuccess: false, message: ''}"
+                            x-show="showSuccess"
+                            class="text-green-500" 
+                            x-cloak
+                        >
+                            <span 
+                                x-on:success.window="
+                                    showSuccess = true;
+                                    setTimeout(() => showSuccess = false, 3500);
+                                    message = $event.detail.message;
+                                "
+                                x-text="message"
+                            >
+                            </span>
                         </div>
                     </div>
                 </div>

@@ -31,7 +31,7 @@ new class extends Component {
             <div class="hidden gap-8 sm:flex">
                 <a wire:navigate href="{{ route('home_new') }}" class="{{ Route::is('home_new') ? 'font-medium text-gray-100' : '' }} hover:font-medium hover:text-gray-100">Home</a>
                 <a wire:navigate href="{{ route('courses_new') }}" class="{{ Route::is('courses_new') || Route::is('course-item')  ? 'font-medium text-gray-100' : '' }} hover:font-medium hover:text-gray-100">Courses</a>
-                <a wire:navigate href="{{ route('about_new') }}" class="{{ Route::is('about_new') ? 'font-medium text-gray-100' : '' }} hover:font-medium hover:text-gray-100">About</a>
+                {{-- <a wire:navigate href="{{ route('about_new') }}" class="{{ Route::is('about_new') ? 'font-medium text-gray-100' : '' }} hover:font-medium hover:text-gray-100">About</a> --}}
                 <a wire:navigate href="{{ route('contact_new') }}" class="{{ Route::is('contact_new') ? 'font-medium text-gray-100' : '' }} hover:font-medium hover:text-gray-100">Contact</a>
                 <a wire:navigate href="{{ route('pricing') }}" class="{{ Route::is('pricing') ? 'font-medium text-gray-100' : '' }} hover:font-medium hover:text-gray-100">Pricing</a>
             </div>
@@ -103,7 +103,7 @@ new class extends Component {
                         <div class="flex flex-col gap-8 sm:hidden">
                             <a wire:navigate href="{{ route('home_new') }}" class="{{ Route::is('home_new') ? 'font-medium text-gray-100' : '' }} hover:font-medium hover:text-gray-100">Home</a>
                             <a wire:navigate href="{{ route('courses_new') }}" class="{{ Route::is('courses_new') || Route::is('course-item') ? 'font-medium text-gray-100' : '' }} hover:font-medium hover:text-gray-100">Courses</a>
-                            <a wire:navigate href="{{ route('about_new') }}" class="{{ Route::is('about_new') ? 'font-medium text-gray-100' : '' }} hover:font-medium hover:text-gray-100">About</a>
+                            {{-- <a wire:navigate href="{{ route('about_new') }}" class="{{ Route::is('about_new') ? 'font-medium text-gray-100' : '' }} hover:font-medium hover:text-gray-100">About</a> --}}
                             <a wire:navigate href="{{ route('contact_new') }}" class="{{ Route::is('contact_new') ? 'font-medium text-gray-100' : '' }} hover:font-medium hover:text-gray-100">Contact</a>
                             <a wire:navigate href="{{ route('pricing') }}" class="{{ Route::is('pricing') ? 'font-medium text-gray-100' : '' }} hover:font-medium hover:text-gray-100">Pricing</a>
                         </div>

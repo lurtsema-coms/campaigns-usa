@@ -32,12 +32,12 @@
                 list-style-type: decimal;
                 color: #374151;
             }
-        
-            strong{
-                font-weight: 500;
-                color: #252525;
+
+            .description strong,
+            .description * strong {
+                color: #252525 !important;
             }
-        
+
             .description div{
                color: #374151;
             }
