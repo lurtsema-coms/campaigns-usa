@@ -21,19 +21,19 @@ new class extends Component {
     }
 }; ?>
 
-<div class="sticky top-0 z-20 tracking-wider shadow-sm md:text-lg bg-color-blue">
-    <div class="relative flex items-center justify-between w-full h-20 px-5 mx-auto text-gray-400 max-w-8xl">
+<div class="fixed top-0 z-20 w-full tracking-wider md:text-lg bg-color-blue/95">
+    <div class="relative flex items-center justify-between w-full h-20 px-5 mx-auto font-semibold text-gray-100 max-w-8xl">
         <!-- Left section: CAMPAIGNS USA -->
         <div class="flex items-center gap-10 md:gap-16">
             <a wire:navigate href="{{ route('home_new') }}" class="shrink-0">
                 <img class="h-12 sm:h-8 md:h-12" src="{{ asset('frontend/Logo SVG.png') }}" alt="">
             </a>
-            <div class="hidden gap-8 sm:flex">
-                <a wire:navigate href="{{ route('home_new') }}" class="{{ Route::is('home_new') ? 'font-medium text-gray-100' : '' }} hover:font-medium hover:text-gray-100">Home</a>
-                <a wire:navigate href="{{ route('courses_new') }}" class="{{ Route::is('courses_new') || Route::is('course-item')  ? 'font-medium text-gray-100' : '' }} hover:font-medium hover:text-gray-100">Courses</a>
-                {{-- <a wire:navigate href="{{ route('about_new') }}" class="{{ Route::is('about_new') ? 'font-medium text-gray-100' : '' }} hover:font-medium hover:text-gray-100">About</a> --}}
-                <a wire:navigate href="{{ route('contact_new') }}" class="{{ Route::is('contact_new') ? 'font-medium text-gray-100' : '' }} hover:font-medium hover:text-gray-100">Contact</a>
-                <a wire:navigate href="{{ route('pricing') }}" class="{{ Route::is('pricing') ? 'font-medium text-gray-100' : '' }} hover:font-medium hover:text-gray-100">Pricing</a>
+            <div class="absolute hidden gap-8 transform -translate-x-1/2 sm:flex left-1/2">
+                <a wire:navigate href="{{ route('home_new') }}" class="{{ Route::is('home_new') ? 'font-bold text-sky-200' : '' }} hover:font-bold hover:text-sky-200">Home</a>
+                <a wire:navigate href="{{ route('courses_new') }}" class="{{ Route::is('courses_new') || Route::is('course-item')  ? 'font-bold text-sky-200' : '' }} hover:font-bold hover:text-sky-200">Courses</a>
+                {{-- <a wire:navigate href="{{ route('about_new') }}" class="{{ Route::is('about_new') ? 'font-bold text-sky-200' : '' }} hover:font-bold hover:text-sky-200">About</a> --}}
+                <a wire:navigate href="{{ route('contact_new') }}" class="{{ Route::is('contact_new') ? 'font-bold text-sky-200' : '' }} hover:font-bold hover:text-sky-200">Contact</a>
+                <a wire:navigate href="{{ route('pricing') }}" class="{{ Route::is('pricing') ? 'font-bold text-sky-200' : '' }} hover:font-bold hover:text-sky-200">Pricing</a>
             </div>
         </div>
         <!-- Centered navigation links -->
@@ -44,19 +44,19 @@ new class extends Component {
             @auth
                 @role('student')
                     <a wire:navigate href="{{ route('student-dashboard') }}" class="hidden hover:font-medium hover:text-gray-100 lg:block">Dashboard</a>
-                    <a wire:navigate href="{{ route('cart') }}" class="relative">
+                    {{-- <a wire:navigate href="{{ route('cart') }}" class="relative">
                         <span class="absolute flex items-center justify-center w-5 h-5 text-sm text-gray-600 bg-white rounded-full -right-4 -top-3">
                             {{ $cart_items }}
                         </span>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="text-gray-300 size-5 hover:text-gray-100">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
                         </svg>
-                    </a>
+                    </a> --}}
                     @else
-                    <a wire:navigate href="{{ route('dashboard') }}" class="hidden hover:font-medium hover:text-gray-100 md:block">Dashboard</a>
+                    <a wire:navigate href="{{ route('dashboard') }}" class="hidden hover:font-bold hover:text-gray-100 md:block">Dashboard</a>
                 @endrole
                 @else
-                <a wire:navigate href="{{ route('login') }}" class="hidden text-gray-300 lg:block hover:font-medium hover:text-gray-100">Login</a>
+                <a wire:navigate href="{{ route('login') }}" class="hidden text-gray-300 lg:block hover:font-bold hover:text-gray-100">Login</a>
             @endauth
 
             <div x-data="{ navOpen: false}" class="lg:hidden">

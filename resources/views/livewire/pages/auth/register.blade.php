@@ -43,12 +43,12 @@ new #[Layout('layouts.guest')] class extends Component
     }
 }; ?>
 
-<div>
+<div class="py-12">
     <form wire:submit="register" autocomplete="off">
         <div class="mb-5 text-center ">
             <span class="text-2xl font-extrabold">REGISTRATION FORM</span>
         </div>
-        <div class="grid gap-8 sm:grid-cols-2">
+        <div class="grid gap-6 sm:grid-cols-2">
             <!-- Name -->
             <div>
                 <x-input-label for="first_name" :value="__('First Name')"/>

@@ -6,6 +6,7 @@ use App\Models\Courses;
 use Livewire\Attributes\Validate;
 use Livewire\WithFileUploads;
 use Livewire\Volt\Component;
+use Vimeo\Vimeo;
 
 new
 #[Layout('layouts.app')]
@@ -26,6 +27,15 @@ class extends Component {
         $this->title = $this->course->title;
         $this->description = $this->course->description;
         $this->thumbnail = $this->course->thumbnail_url;
+
+        // $client_id = env('VIMEO_CLIENT_ID');
+        // $client_secret = env('VIMEO_CLIENT_SECRET');
+        // $access_token = env('VIMEO_ACCESS_TOKEN');
+        
+        // $client = new Vimeo($client_id, $client_secret, $access_token);
+        // $response = $client->request('/me', [], 'GET');
+
+        // dd($response);
     }
     
 

@@ -123,7 +123,7 @@ class extends Component {
                             x-cloak
                         >
                             <span 
-                                x-on:section-success.window="
+                                x-on:lesson-success.window="
                                     showSuccess = true;
                                     setTimeout(() => showSuccess = false, 3500);
                                     message = $event.detail.message;

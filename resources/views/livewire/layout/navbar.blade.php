@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\User;
+use App\Livewire\Actions\Logout;
 use Livewire\Volt\Component;
 
 new class extends Component {
@@ -17,20 +18,28 @@ new class extends Component {
         $this->last_name = $this->user->last_name;
         $this->contact_number = $this->user->contact_number;
     }
+
+    public function logout(Logout $logout): void
+    {
+        $logout();
+
+        session()->flash('success', 'You have been logged out.'); 
+        $this->redirect('/login', navigate: true);
+    }
 }; ?>
 
 <div>
     <div 
         x-data="{profileBar: false}"
         x-init="
-        // Watch for changes in profileBar and set body overflow accordingly
-        $watch('profileBar', value => {
-            document.body.style.overflow = value ? 'hidden' : 'auto';
-        });
-    "
+            // Watch for changes in profileBar and set body overflow accordingly
+            $watch('profileBar', value => {
+                document.body.style.overflow = value ? 'hidden' : 'auto';
+            });
+        "
     >
         <div 
-            class="fixed inset-0 z-20 bg-gray-600 bg-opacity-75" aria-hidden="true"
+            class="fixed inset-0 bg-gray-600 bg-opacity-75" aria-hidden="true"
             x-show="profileBar"
             x-cloak
             x-transition:enter="transition-opacity ease-linear duration-300"
@@ -117,6 +126,14 @@ new class extends Component {
                     </div>
                 </div>
             </form>
+            <button class="flex justify-center px-4 mt-8" wire:click="logout">
+                <div class="flex items-center gap-1 text-white hover:opacity-70">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15" />
+                        </svg>
+                    Logout
+                </div>
+            </button>
         </div>
     
         <div 
@@ -128,19 +145,27 @@ new class extends Component {
                     scrolled = window.scrollY > 0;
                 });
             "
-            :class="`${scrolled ? 'shadow-sm bg-white' : ''} flex items-center justify-between h-16 px-10 lg:justify-end`"
+            :class="`${scrolled ? 'bg-gray-100' : ''} flex items-center px-10 justify-between h-16`"
         >
-            <button 
-                class="text-gray-400 lg:hidden"
-                type="button" 
-                @click="$dispatch('open-sidebar');"
-            >
-                <span class="sr-only">Open sidebar</span>
-                <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12H12m-8.25 5.25h16.5" />
-                </svg>
-            </button>
-        
+            <div class="flex items-center gap-4">
+                <button 
+                    class="text-gray-400 lg:hidden"
+                    type="button" 
+                    @click="$dispatch('open-sidebar');"
+                >
+                    <span class="sr-only">Open sidebar</span>
+                    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12H12m-8.25 5.25h16.5" />
+                    </svg>
+                </button>
+                <div>
+                    <span class="text-lg font-bold">
+                        {{ Route::is('student-dashboard') ? 'Dashboard' : '' }}
+                        {{ Route::is('student-my-courses') ? 'Courses' : '' }}
+                    </span>
+                </div>
+            </div>
+
             <img 
                 class="w-10 rounded-full hover:cursor-pointer hover:opacity-70" 
                 src="{{ asset('avatars/SVG/1.svg') }}" alt=""

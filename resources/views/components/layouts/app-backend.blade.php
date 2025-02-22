@@ -8,17 +8,20 @@
 
         <!-- Fonts -->
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+        <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
 
         @livewireStyles
         @vite('resources/css/app.css')
     </head>
-    <body class="h-full bg-gray-100">
+    <body class="h-full bg-[#F4F6F8]">
         <livewire:layout.sidebar/>
-        <div class="flex flex-col w-full lg:pl-80">
-            <div class="sticky top-0 ">
+        <div class="flex flex-col w-full lg:pl-72">
+            <div class="sticky top-0 z-20">
                 <livewire:layout.navbar/>
             </div>
-            {{ $slot }}
+            <div class="z-10 py-6">
+                {{ $slot }}
+            </div>
         </div>
 
     </body>

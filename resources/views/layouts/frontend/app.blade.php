@@ -58,7 +58,7 @@
             <footer class="text-slate-400">
                 <!-- Main footer -->
                 <!-- Sub Footer -->
-                <div class="py-4 text-sm border-t border-slate-900 bg-slate-800">
+                <div class="py-4 text-sm bg-gray-900">
                     <div class="container px-6 mx-auto">
                         <div class="grid grid-cols-4 gap-6 md:grid-cols-8 lg:grid-cols-12">
                         <div class="col-span-2 md:col-span-4 lg:col-span-6">&copy; 2024 CAMPAIGNS USA. All rights reserved.</div>

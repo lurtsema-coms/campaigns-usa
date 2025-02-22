@@ -13,8 +13,6 @@
         <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
         <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
         
-        <!-- Scripts -->
-        @livewireStyles
         @vite(['resources/css/app.css'])
         <style>
             .u-bg-fixed{
@@ -41,41 +39,29 @@
 
         </style>
     </head>
-    <body class="flex min-h-screen p-10 m-auto antialiased text-gray-900 bg-slate-800">
-        @if (Request::is('register'))
-            <!-- Register Layout -->
-            <div class="flex w-full px-2 py-10 m-auto ">
-                <div class="relative flex flex-row items-center justify-center w-full max-w-4xl pt-20 pb-10 m-auto shadow-none sm:auto u-bg-grey sm:shadow-md rounded-3xl">
-                    <div class="absolute top-0 flex flex-col items-center justify-center w-full -translate-y-12">
-                        <img class="w-64 p-4 bg-gray-800 rounded-3xl" src="{{ asset('frontend/Logo SVG.png') }}" alt="">
-                    </div>
-                    <img class="absolute -left-[3.57rem] bottom-0" src="{{ asset('frontend/flag-left.png') }}" alt="flag">
-                    <img class="absolute -right-[4.85rem] top-0" src="{{ asset('frontend/flag-right.png') }}" alt="flag">
-                    <div class="w-full py-4 m-auto px-14">
-                        {{ $slot }}
-                    </div>
-                </div>
-            </div>
-        @else
-            <!-- Default Layout -->
-            <div class="flex w-full px-2 py-10 m-auto overflow-x-hidden">
-                <div class="w-full max-w-[30rem] sm:auto relative flex flex-row justify-center items-center m-auto u-bg-grey shadow-none sm:shadow-md  h-[35rem] rounded-3xl">
-                    <div class="absolute top-0 flex flex-col items-center justify-center w-full -translate-y-12">
-                        <img class="w-64 p-4 bg-gray-800 rounded-3xl" src="{{ asset('frontend/Logo SVG.png') }}" alt="">
-                    </div>
-                    <div class="absolute -left-[3.57rem] bottom-0">
-                        <img class="" src="{{ asset('frontend/flag-left.png') }}" alt="flag">
-                    </div>
-                    <div class="absolute -right-[4.85rem] top-0">
-                        <img src="{{ asset('frontend/flag-right.png') }}" alt="flag">
-                    </div>
-                    <div class="w-full py-4 m-auto px-14">
-                        {{ $slot }}
-                    </div>
-                </div>
-            </div>
-        @endif
+    <body class="flex min-h-screen m-auto antialiased text-gray-900 bg-gray-100">
+        <img src="{{ asset('frontend/bg-form.png') }}" alt="" class="fixed object-cover w-full h-full -z-10">
 
-        @livewireScriptConfig 
+        <div class="relative w-full py-10 m-auto overflow-hidden">
+            <div class="relative flex flex-col justify-center w-full {{ Route::is('register') ? 'max-w-4xl' : 'max-w-md' }} px-10 py-12 m-auto mx-auto sm:border sm:shadow sm:bg-gray-100 rounded-3xl">
+                <div class="absolute -left-[3.57rem] -bottom-5 hidden sm:block">
+                    <img class="" src="{{ asset('frontend/flag-left.png') }}" alt="flag">
+                </div>
+                <div class="absolute -right-[4.85rem] -top-5 hidden sm:block">
+                    <img src="{{ asset('frontend/flag-right.png') }}" alt="flag">
+                </div>
+                {{-- LOGO --}}
+                <div class="absolute flex justify-center w-full py-4 mx-auto text-2xl transform -translate-x-1/2 bg-gray-800 left-1/2 -top-9 max-w-60 rounded-3xl">
+                    <img class="w-auto h-14" src="{{ asset('frontend/Logo SVG.png') }}" alt="">
+                </div>
+                
+                @if (Request::is('register'))
+                    {{ $slot }}
+                @else
+                    {{ $slot }}
+                @endif
+            </div>
+        </div>
+
     </body>
 </html>

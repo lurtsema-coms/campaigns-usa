@@ -3,39 +3,41 @@
 use Livewire\Attributes\Title;
 use Livewire\Attributes\Layout;
 use Livewire\Volt\Component;
+use App\Models\Courses;
 
 new
 #[Layout('components.layouts.app-backend')] 
 #[Title('Campaigns USA - My Courses')] 
 class extends Component {
-    //
+
+    public $courses;
+    
+    public function mount()
+    {
+        $this->courses = Courses::all();
+    }
 }; ?>
 
 <div>
     <div class="px-10 pb-10 max-w-8xl">
         <div class="grid grid-cols-2 gap-8">
             <div class="cursor-pointer ">
-                <div class="p-8 bg-white rounded-3xl">
-                    <div class="flex items-center gap-4 p-4 bg-gray-100 rounded-xl">
-                        <img class="w-24" src="{{ asset('envato/004-news politics.png') }}" alt="">
-                        <div class="w-full space-y-1">
-                            <p class="text-xl font-medium">Title</p>
-                            <p class="text-gray-700">Description</p>
-                            <p class="text-gray-700">Progress:</p>
+                <div class="p-8 bg-white shadow-sm rounded-3xl">
+                    @foreach ($courses as $course)
+                        <div class="flex items-center gap-4 p-4 rounded-xl hover:bg-gray-100">
+                            <img class="w-28" src="{{ $course->thumbnail_url }}" alt="">
+                            <div class="w-full space-y-1">
+                                <p class="font-medium text-md">{{ $course->title }}</p>
+                                <p class="text-gray-700 line-clamp-1">
+                                    {{ strip_tags(str_replace(["\r\n", "\n", "\r", "<p>", "</p>", "<br>", "<br/>", "&nbsp;", "&lt;", "&gt;", "&amp;", "&quot;", "&apos;", ""], ' ', $course->description)) }}
+                                </p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="flex items-center gap-4 p-4 rounded-xl hover:bg-gray-100">
-                        <img class="w-24" src="{{ asset('envato/004-news politics.png') }}" alt="">
-                        <div class="w-full space-y-1">
-                            <p class="text-xl font-medium">Title</p>
-                            <p class="text-gray-700">Description</p>
-                            <p class="text-gray-700">Progress:</p>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
             <div class="grid rounded-3xl">
-                <div class="px-8 pb-8 bg-white rounded-3xl">
+                <div class="px-8 pb-8 bg-white shadow-sm rounded-3xl">
                     <img class="object-cover w-full h-52" src="{{ asset('frontend/test.png') }}" alt="">
                     <div class="grid gap-4 mt-4">
                         <div class="flex items-center gap-1.5 text-sm">

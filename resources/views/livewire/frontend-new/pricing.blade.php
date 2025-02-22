@@ -7,15 +7,25 @@ use Livewire\Volt\Component;
 
 new
 #[Layout('layouts.frontend.app')] 
-#[Title('Campaigns USA | Home')] 
+#[Title('Campaigns USA | Pricing')] 
 class extends Component {
-    //
+    
+    public function subscribe()
+    {
+        if (Auth::check()) {
+            return true;
+        } else {
+            session()->flash('cart_message', 'Please login to subscribe.'); 
+            return $this->redirect(route('login'), navigate: true);
+        }
+    }
+
 }; ?>
 
 <div class="relative">
-    <div class="relative" data-aos="zoom-in-up">
+    <div class="relative" data-aos="zoom-in-up" wire:ignore>
         <img src="{{ asset('frontend/bg-img.jpg') }}" class="absolute object-cover w-full h-full -z-10" alt="">
-        <div class="flex flex-col justify-center px-5 pt-28">
+        <div class="flex flex-col justify-center px-5 pt-40">
             <p class="text-2xl font-semibold text-center text-gray-800 sm:text-4xl">🚀 Master Politics. Win Elections.</p>
             <p class="max-w-3xl mx-auto mt-4 font-semibold text-center text-gray-600 sm:text-lg">If you're serious about running a successful campaign, we’ve got the roadmap. Join now and take your political strategy to the next level!</p>
         </div>
@@ -52,7 +62,12 @@ class extends Component {
                             </div>
                         </div>
                         <div class="flex mt-16">
-                            <button class="w-full px-4 py-3 font-semibold text-center text-gray-800 bg-gray-100 rounded-md hover:bg-gray-200">Free Plan</button>
+                            <button
+                                wire:click="subscribe"
+                                class="w-full px-4 py-3 font-semibold text-center text-gray-800 bg-gray-100 rounded-md hover:bg-gray-200"
+                            >
+                                Free Plan
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -88,7 +103,12 @@ class extends Component {
                         </div>
                     </div>
                     <div class="flex mt-16">
-                        <button class="w-full px-4 py-3 font-semibold text-center text-white bg-gray-800 rounded-md hover:bg-gray-900">Monthly Plan</button>
+                        <button 
+                            wire:click="subscribe"
+                            class="w-full px-4 py-3 font-semibold text-center text-white bg-gray-800 rounded-md hover:bg-gray-900"
+                        >
+                            Monthly Plan
+                        </button>
                     </div>
                 </div>
             </div>
@@ -124,7 +144,12 @@ class extends Component {
                             </div>
                         </div>
                         <div class="flex mt-16">
-                            <button class="w-full px-4 py-3 font-semibold text-center text-gray-800 bg-gray-100 rounded-md hover:bg-gray-200">Yearly Plan</button>
+                            <button 
+                                wire:click="subscribe"
+                                class="w-full px-4 py-3 font-semibold text-center text-gray-800 bg-gray-100 rounded-md hover:bg-gray-200"
+                            >
+                                Yearly Plan
+                            </button>
                         </div>
                     </div>
                 </div>
