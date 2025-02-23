@@ -162,6 +162,7 @@ new class extends Component {
                     <span class="text-lg font-bold">
                         {{ Route::is('student-dashboard') ? 'Dashboard' : '' }}
                         {{ Route::is('student-my-courses') ? 'Courses' : '' }}
+                        {{ Route::is('student-my-subscription') ? 'My Subscription' : '' }}
                     </span>
                 </div>
             </div>

@@ -43,7 +43,7 @@
             }
         </style>
     </head>
-    <body class="antialiased text-dark">
+    <body class="antialiased text-dark bg-color-blue">
         <!-- Spinner -->
         {{-- <div id="loader" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800/90">
             <span class="loader"></span>

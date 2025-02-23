@@ -65,4 +65,16 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->role === 'admin';
     }
+
+    public function latestSubscription()
+    {
+        return $this->hasOne(Subscription::class)->latestOfMany();
+    }
+
+    public function isSubscribed()
+    {
+        $subscription = $this->latestSubscription;
+
+        return $subscription && now()->lessThan($subscription->expires_at);
+    }
 }

@@ -56,7 +56,7 @@ class extends Component {
 }; ?>
 
 <div>
-    <div class="relative isolate">
+    <div class="relative bg-white isolate">
         <!-- Header -->
         <div class="relative pb-32 bg-gray-800">
             <div class="absolute inset-0">
@@ -109,7 +109,7 @@ class extends Component {
             </div>
         </section>
           
-		<div class="grid grid-cols-1 mx-auto mb-32 max-w-7xl lg:grid-cols-2">
+		<div class="grid grid-cols-1 pb-32 mx-auto max-w-7xl lg:grid-cols-2">
 			<div class="relative px-5">
 				<div class="max-w-xl mx-auto lg:mx-0 lg:max-w-lg">
 				<h2 class="text-4xl font-semibold tracking-tight text-gray-900 text-pretty sm:text-5xl">Get in touch</h2>

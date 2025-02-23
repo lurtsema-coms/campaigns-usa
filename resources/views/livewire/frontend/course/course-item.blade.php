@@ -169,7 +169,7 @@ class extends Component {
 }; ?>
 
 
-<div class="">
+<div class="bg-white">
     <img class="absolute object-cover w-full h-96 -z-10 opacity-5" src="{{ $course->thumbnail_url }}" alt="">
     <div class="px-5 py-32 mx-auto rounded-xl max-w-8xl">
         <div class="flex flex-wrap items-center justify-between gap-4">
@@ -529,7 +529,7 @@ class extends Component {
                                         <li class="text-center text-red-500">In progress Lessons</li>
                                     @else
                                         @foreach ($course_section->lessons as $section_lesson)
-                                            <li class="text-slate-500">- {{ $section_lesson->title }}</li>
+                                            <li class="text-slate-600">- {{ $section_lesson->title }}</li>
                                         @endforeach
                                     @endif
                                 </ul>

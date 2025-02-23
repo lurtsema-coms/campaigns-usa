@@ -19,7 +19,7 @@ class extends Component {
 
     public function loadCourses()
     {  
-        return Courses::paginate(4);
+        return Courses::where('published', '!=', 0)->paginate(4);
     }
 }; ?>
 
@@ -182,45 +182,48 @@ class extends Component {
             </div>
         </div>
     </div> --}}
-    <div class="px-5 py-16 mx-auto max-w-8xl">
-        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-4">
-            <div class="p-6 text-center transition bg-white border border-gray-200 rounded-lg shadow-lg hover:shadow-xl">
-                <span class="text-3xl">🎓</span>
-                <h3 class="mt-3 text-lg font-semibold">Expert Instructors</h3>
-                <p class="mt-2 text-sm text-gray-600">
-                    Learn from top professionals with years of real-world experience.  
-                    Gain industry insights that keep you ahead.
-                </p>
-            </div>
+    <div class="bg-white">
+        <div class="px-5 py-16 mx-auto max-w-8xl">
+            <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-4">
+                <div class="p-6 text-center transition bg-white border border-gray-200 rounded-lg shadow-lg hover:shadow-xl">
+                    <span class="text-3xl">🎓</span>
+                    <h3 class="mt-3 text-lg font-semibold">Expert Instructors</h3>
+                    <p class="mt-2 text-sm text-gray-600">
+                        Learn from top professionals with years of real-world experience.  
+                        Gain industry insights that keep you ahead.
+                    </p>
+                </div>
+                
+                <div class="p-6 text-center transition bg-white border border-gray-200 rounded-lg shadow-lg hover:shadow-xl">
+                    <span class="text-3xl">📚</span>
+                    <h3 class="mt-3 text-lg font-semibold">Comprehensive Courses</h3>
+                    <p class="mt-2 text-sm text-gray-600">
+                        Explore a diverse selection of courses across multiple fields.  
+                        Each course is designed to provide in-depth, practical knowledge.
+                    </p>
+                </div>
             
-            <div class="p-6 text-center transition bg-white border border-gray-200 rounded-lg shadow-lg hover:shadow-xl">
-                <span class="text-3xl">📚</span>
-                <h3 class="mt-3 text-lg font-semibold">Comprehensive Courses</h3>
-                <p class="mt-2 text-sm text-gray-600">
-                    Explore a diverse selection of courses across multiple fields.  
-                    Each course is designed to provide in-depth, practical knowledge.
-                </p>
-            </div>
-        
-            <div class="p-6 text-center transition bg-white border border-gray-200 rounded-lg shadow-lg hover:shadow-xl">
-                <span class="text-3xl">⏳</span>
-                <h3 class="mt-3 text-lg font-semibold">Flexible Learning</h3>
-                <p class="mt-2 text-sm text-gray-600">
-                    Learn at your own pace without deadlines or pressure.  
-                    Access courses anytime, anywhere, on any device.
-                </p>
-            </div>
-        
-            <div class="p-6 text-center transition bg-white border border-gray-200 rounded-lg shadow-lg hover:shadow-xl">
-                <span class="text-3xl">🌍</span>
-                <h3 class="mt-3 text-lg font-semibold">Learn Anywhere</h3>
-                <p class="mt-2 text-sm text-gray-600">
-                    Enjoy seamless access to your courses across all devices.  
-                    Pick up right where you left off, no matter where you are.
-                </p>
+                <div class="p-6 text-center transition bg-white border border-gray-200 rounded-lg shadow-lg hover:shadow-xl">
+                    <span class="text-3xl">⏳</span>
+                    <h3 class="mt-3 text-lg font-semibold">Flexible Learning</h3>
+                    <p class="mt-2 text-sm text-gray-600">
+                        Learn at your own pace without deadlines or pressure.  
+                        Access courses anytime, anywhere, on any device.
+                    </p>
+                </div>
+            
+                <div class="p-6 text-center transition bg-white border border-gray-200 rounded-lg shadow-lg hover:shadow-xl">
+                    <span class="text-3xl">🌍</span>
+                    <h3 class="mt-3 text-lg font-semibold">Learn Anywhere</h3>
+                    <p class="mt-2 text-sm text-gray-600">
+                        Enjoy seamless access to your courses across all devices.  
+                        Pick up right where you left off, no matter where you are.
+                    </p>
+                </div>
             </div>
         </div>
     </div>
+
     <div class="relative bg-color-blue">
         <div class="absolute transform -translate-x-1/2 left-1/2 -translate-y-1/2 top-1/2 rounded-full h-[100%] w-[100%] bg-[radial-gradient(circle,_rgba(255,255,255,0.1)_0%,_rgba(255,255,255,0)_60%)] -z-0"></div>
         <div class="relative px-5 py-20 mx-auto overflow-hidden max-w-8xl">
@@ -228,7 +231,7 @@ class extends Component {
             <p class="mx-auto mt-4 text-xl text-center text-gray-300 font-sourceserif">Learn the Ins & Outs from Joseph Lurtsema!</p>
             @if ($courses->isEmpty())
                 <div class="flex justify-center mt-8">
-                    <p class="font-medium text-center text-blue-600 sm:text-xl">📚 We're still creating courses, but feel free to browse in the meantime.</p>
+                    <p class="font-medium text-center text-sky-200 sm:text-xl">📚 We're still creating courses, but feel free to browse in the meantime.</p>
                 </div>
                 @else
                 <div
@@ -346,7 +349,7 @@ class extends Component {
             @endif
         </div>
     </div>
-    <div class="pt-32">
+    <div class="pt-32 bg-white">
         <div class="px-5 pb-16 mx-auto sm:px-6 sm:pb-32 lg:px-8">
             <div class="grid gap-8 mx-auto mb-16 sm:mb-32 md:grid-cols-2 max-w-7xl">
                 <div class="flex flex-col justify-center gap-6">

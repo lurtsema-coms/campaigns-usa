@@ -8,20 +8,28 @@ use Livewire\WithFileUploads;
 use Livewire\Volt\Component;
 use App\Models\Section;
 use App\Models\Lesson;
+use Vimeo\Vimeo;
 
 new
 #[Layout('layouts.app')]
 #[Title('Campaigns USA | Manage Section')]
 class extends Component {
 
+    use WithFileUploads;
+
     public $course;
     public $section_title = '';
     public $section_id = '';
     public $lesson_title = '';
+    public $video;
 
     public function mount($id)
     {
         $this->course = Courses::with('sections')->find($id);
+
+
+        // $client = new Vimeo($client_id, $client_secret, $access_token);
+        // $response = $client->request('/tutorial', array(), 'GET');
     }
 
     public function addSection()
@@ -40,9 +48,28 @@ class extends Component {
 
     public function addLesson()
     {
+
+        $client_id = env('VIMEO_CLIENT_ID');
+        $client_secret = env('VIMEO_CLIENT_SECRET');
+        $access_token = env('VIMEO_ACCESS_TOKEN');
+
+        $client = new Vimeo($client_id, $client_secret, $access_token);
+        
+        $response = $client->upload($this->video->getRealPath(), [
+            'name' => 'Lesson 1',
+            'desscription' => 'This is a test upload from laravel'
+        ]);
+
+        dd($response);
+
+        // 1059432489
+
+        return;
+
         $this->validate([
             'section_id' => 'required',
             'lesson_title' => 'required',
+            'video' => 'required',
         ]);
 
         Lesson::create([
@@ -110,9 +137,9 @@ class extends Component {
                         <x-input-error class="mt-2" :messages="$errors->get('lesson_title')" />
                     </div>
                     <div class="mt-4">
-                        <x-input-label for="introduction_video" :value="__('Video')" />
-                        <x-text-input wire:model="introduction_video" id="introduction_video" name="introduction_video" type="file" class="block w-full p-2 mt-2 border" autofocus autocomplete="introduction_video" />
-                        <x-input-error class="mt-2" :messages="$errors->get('thumbnail')" />
+                        <x-input-label for="video" :value="__('Video')" />
+                        <x-text-input wire:model="video" id="video" name="video" type="file" class="block w-full p-2 mt-2 border" autofocus autocomplete="video" />
+                        <x-input-error class="mt-2" :messages="$errors->get('video')" />
                     </div>
                     <div class="mt-4 text-right">
                         <x-primary-button type="submit">{{ __('Create') }}</x-primary-button>

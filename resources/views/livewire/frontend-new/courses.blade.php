@@ -21,7 +21,7 @@ class extends Component {
 
     public function loadCourses()
     {  
-        return Courses::where('title', 'LIKE', '%' . $this->search . '%')->paginate(10);
+        return Courses::where('published', '!=', 0)->where('title', 'LIKE', '%' . $this->search . '%')->paginate(10);
     }
 }; ?>
 
@@ -39,7 +39,7 @@ class extends Component {
             @if ($courses->isEmpty())
                 <div>
                     <div class="flex justify-center mt-8">
-                        <p class="font-medium text-center text-blue-600 sm:text-xl">📚 We're still creating courses, but feel free to browse in the meantime.</p>
+                        <p class="font-medium text-center text-sky-200 sm:text-xl">📚 We're still creating courses, but feel free to browse in the meantime.</p>
                     </div>
                     <div class="flex justify-center">
                         <a wire:navigate href="{{ route('home_new') }}">

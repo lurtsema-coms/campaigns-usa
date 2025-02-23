@@ -17,6 +17,7 @@ return new class extends Migration
             $table->text('description');
             $table->text('thumbnail_url');
             $table->text('introduction_video')->nullable();
+            $table->integer('published')->default(0);
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();

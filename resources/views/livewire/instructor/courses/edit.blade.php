@@ -20,6 +20,7 @@ class extends Component {
     public $description = '';
     public $thumbnail;
     public $introduction_video;
+    public $status;
 
     public function mount()
     {
@@ -27,6 +28,7 @@ class extends Component {
         $this->title = $this->course->title;
         $this->description = $this->course->description;
         $this->thumbnail = $this->course->thumbnail_url;
+        $this->status = $this->course->published;
 
         // $client_id = env('VIMEO_CLIENT_ID');
         // $client_secret = env('VIMEO_CLIENT_SECRET');
@@ -65,6 +67,7 @@ class extends Component {
             'title' => $this->title,
             'description' => $this->description,
             'created_by' => auth()->user()->id,
+            'published' => $this->status,
         ]);
 
         $this->dispatch('success', message: 'Saved Successfully');
@@ -79,7 +82,15 @@ class extends Component {
         </div>
         <div class="py-8 pr-8 mx-auto">
             <form wire:submit="editCourse">
+
                 <div class="grid max-w-4xl grid-cols-2 p-5 mx-auto gap-x-8 gap-y-4 rounded-xl">
+                    <div class="col-span-1">
+                        <x-input-label for="first_name" :value="__('Status')" />
+                        <select wire:model="status" class="w-full border-gray-300 rounded-md shadow-sm focus:ring-0 focus:outline-none focus:border-blue-400">
+                            <option value="0">In Progress</option>
+                            <option value="1">Published</option>
+                        </select>
+                    </div>
                     <div class="col-span-2">
                         <x-input-label for="first_name" :value="__('Title')" />
                         <x-text-input wire:model="title" id="title" name="title" type="text" class="block w-full mt-2" required autofocus autocomplete="title" />

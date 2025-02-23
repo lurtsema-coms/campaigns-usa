@@ -30,4 +30,9 @@ class Courses extends Model
     {
         return $this->hasMany(Section::class);
     }
+
+    public function scopeUpcoming($query)
+    {
+        return $query->where('published', 0)->latest();
+    }
 }

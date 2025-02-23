@@ -11,10 +11,12 @@ new
 class extends Component {
 
     public $courses;
+    public $upcoming;
     
     public function mount()
     {
-        $this->courses = Courses::latest()->take(4)->get();
+        $this->courses = Courses::where('published', '!=', 0)->latest()->take(4)->get();
+        $this->upcoming = Courses::upcoming()->first();
     }
 }; ?>
 
@@ -27,51 +29,56 @@ class extends Component {
                     <p class="text-xl text-gray-200 font-playfair">Online Course</p>
                     <p class="max-w-md mt-4 text-3xl font-bold text-gray-100">Sharpen Your Skills with Professional Online Courses</p>
                     <button class="mt-8 group">
-                        <div class="flex items-center gap-4 px-6 py-3 text-gray-200 bg-gray-800 hover:bg-gray-900 rounded-3xl">
-                            <span>Join now</span>
-                            <span class="bg-white rounded-full group-hover:translate-x-1">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="4" stroke="currentColor" class="p-1 text-gray-800 size-5">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
-                                </svg>
-                            </span>
-                        </div>
+                        <a wire:navigate href="{{ route('student-my-subscription') }}">
+                            <div class="flex items-center gap-4 px-6 py-3 text-gray-200 bg-gray-800 hover:bg-gray-900 rounded-3xl">
+                                <span>Join now</span>
+                                <span class="bg-white rounded-full group-hover:translate-x-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="4" stroke="currentColor" class="p-1 text-gray-800 size-5">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                                    </svg>
+                                </span>
+                            </div>
+                        </a>
                     </button>
                 </div>
             </div>
-                            
-            <div class="col-span-1">
-                <p class="mb-1.5 text-xl">Upcoming Courses</p>
-                <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-1">
-                    <div class="p-5 space-y-3 bg-white shadow-sm rounded-3xl">
-                        <div class="flex justify-between gap-4 text-sm font-medium text-dark">
-                            <span class="line-clamp-2">Lorem ipsum dolor sit amet.</span>
-                            <span>$10</span>
-                        </div>
-                        <div class="text-sm font-light text-gray-600">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi tenetur porro maxime illum consequatur consequuntur?
-                        </div>
-                        <div class="flex gap-2">
-                            <div class="flex items-center gap-1 text-xs text-gray-600">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4 text-sky-600">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                                </svg>
-                                <span class="mt-[1.5px] font-medium text-gray-800">4 Hours</span>
+                        
+            @if($upcoming)
+                <div class="col-span-1">
+                    <p class="mb-1.5 text-xl">Upcoming Courses</p>
+                    <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-1">
+                        <div class="p-5 space-y-3 bg-white shadow-sm rounded-3xl">
+                            <div class="flex justify-between gap-4 font-bold text-dark">
+                                <span class="line-clamp-2">{{ $upcoming->title }}</span>
                             </div>
-                            <div class="flex items-center gap-1 text-xs text-gray-600">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4 text-sky-600">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="m12.75 15 3-3m0 0-3-3m3 3h-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                                </svg>
-                                <span class="mt-[1.5px] font-medium text-gray-800">38 lessons</span>
+                            <div class="text-sm font-light text-gray-600 line-clamp-3">
+                                {{ strip_tags(str_replace(["\r\n", "\n", "\r", "<p>", "</p>", "<br>", "<br/>", "&nbsp;", "&lt;", "&gt;", "&amp;", "&quot;", "&apos;", ""], ' ', $upcoming->description)) }}
                             </div>
-                        </div>
-                        <div class="flex justify-end pt-4 border-t">
-                            <a href="">
-                                <button class="px-4 py-2 text-sm text-white rounded-3xl bg-zinc-800 hover:bg-zinc-900">Subscribe</button>
-                            </a>
+                            <div class="flex gap-2">
+                                <div class="flex items-center gap-1 text-xs text-gray-600">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4 text-sky-600">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                    </svg>
+                                    <span class="mt-[1.5px] font-medium text-gray-800">4 Hours</span>
+                                </div>
+                                <div class="flex items-center gap-1 text-xs text-gray-600">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4 text-sky-600">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="m12.75 15 3-3m0 0-3-3m3 3h-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                    </svg>
+                                    <span class="mt-[1.5px] font-medium text-gray-800">38 lessons</span>
+                                </div>
+                            </div>
+                            @if(!auth()->user()->isSubscribed())
+                                <div class="flex justify-end pt-3 border-t">
+                                    <a wire:navigate href="{{ route('student-my-subscription') }}">
+                                        <button class="px-4 py-2 text-sm text-white rounded-3xl bg-zinc-800 hover:bg-zinc-900">Subscribe to Premium</button>
+                                    </a>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
-            </div>
+            @endif
         </div>
         <div class="space-y-8">
             <div class="bg-white shadow-sm rounded-2xl">
@@ -147,6 +154,10 @@ class extends Component {
                                 </div>
                             </a>
                         @endforeach
+                        @else
+                        <div class="col-span-3">
+                            <p class="text-lg text-center text-sky-600">Courses are still in the making. Thank you for the early access! 🚀</p>
+                        </div>
                     @endif
                 </div>
             </div>

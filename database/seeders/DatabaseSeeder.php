@@ -6,6 +6,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Database\Seeders\PricingSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -44,6 +45,10 @@ class DatabaseSeeder extends Seeder
             'contact_number' => '09*********',
             'password' => bcrypt('password'),
             'email_verified_at' => now()
+        ]);
+
+        $this->call([
+            PricingSeeder::class,
         ]);
     }
 }
