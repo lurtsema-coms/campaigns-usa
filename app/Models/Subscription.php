@@ -9,4 +9,9 @@ class Subscription extends Model
 {
     use HasFactory;
     protected $guarded = [];
+
+    public function pricing()
+    {
+        return $this->belongsTo(Pricing::class);
+    }
 }

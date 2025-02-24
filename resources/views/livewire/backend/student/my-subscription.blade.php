@@ -22,6 +22,7 @@ class extends Component {
     public $summary_date_end;
     public $summary_subscription;
     public $summary_price;
+    public $user_subscription;
 
     public function mount()
     {
@@ -31,13 +32,26 @@ class extends Component {
         $this->free_subscription = $pricing->freeSubscription();
         $this->monthly_subscription = $pricing->monthlySubscription();
         $this->yearly_subscription = $pricing->yearlySubscription();
-        $this->summary_date_start = "Free";
-        $this->summary_date_end = "Free";
-        $this->summary_subscription = "Free";
-        $this->summary_price = "Free";
+
         
         if(!auth()->user()->isSubscribed()){
             $this->input_subscription = $this->free_subscription->id;
+            $this->summary_date_start = "Free";
+            $this->summary_date_end = "Free";
+            $this->summary_subscription = "Free";
+            $this->summary_price = "Free";
+            $this->user_subscription = collect([
+                'starts_at' => 'free',
+                'expires_at' => 'free'
+            ]);
+        } else{
+            $user_subscription = auth()->user()->latestSubscription()->first();
+            $this->user_subscription = $user_subscription;
+            $this->input_subscription = $user_subscription->pricing_id;
+            $this->summary_date_start = Carbon::now()->addMonth();
+            $this->summary_date_end = Carbon::now()->addYear();
+            $this->summary_subscription = $user_subscription->plan_name;
+            $this->summary_price = $user_subscription->pricing->cost;
         }
     }
 
@@ -66,6 +80,17 @@ class extends Component {
             $this->summary_price = "Free";
         }
     }
+
+    public function subscribeUser(){
+        Subscription::create([
+            'user_id' => auth()->user()->id,
+            'pricing_id' => $this->input_subscription,
+            'plan_name' => $this->summary_subscription,
+            'cost' => $this->summary_price,
+            'starts_at' => $this->summary_date_start,
+            'expires_at' => $this->summary_date_end,
+        ]);
+    }
 }; ?>
 
 <div>
@@ -81,7 +106,7 @@ class extends Component {
                         </div>
                         <div>
                             <p class="text-sm font-semibold text-gray-600">Current Plan</p>
-                            <p class="font-bold text-sky-600">Free Subscription</p>
+                            <p class="font-bold text-sky-600">{{ $user_subscription->plan_name }} Subscription</p>
                         </div>
                     </div>
                     <div class="flex items-center gap-4 px-10 py-5 bg-white border rounded-xl">
@@ -91,8 +116,8 @@ class extends Component {
                             </svg>
                         </div>
                         <div>
-                            <p class="text-sm font-semibold text-gray-600">Start Date: xx/xx/xxxx</p>
-                            <p class="text-sm font-semibold text-gray-600">End Date: xx/xx/xxxx</p>
+                            <p class="text-sm font-semibold text-gray-600">Start Date: {{ $user_subscription['starts_at'] == 'free' ? 'Free' : \Carbon\Carbon::parse($user_subscription->starts_at)->format('F j, Y') }}</p>
+                            <p class="text-sm font-semibold text-gray-600">End Date: {{ $user_subscription['expires_at'] == 'free' ? 'Free' : \Carbon\Carbon::parse($user_subscription->expires_at)->format('F j, Y') }}</p>
                         </div>
                     </div>
                 </div>
@@ -256,7 +281,7 @@ class extends Component {
                             </div>
                         </div>
                         <div class="px-10 py-5">
-                            <button type="submit" :disabled="$input_subscription == $free_subscription->id" class="w-full px-6 py-3 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-gray-700 rounded-lg hover:bg-gray-600 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-50">
+                            <button wire:click="subscribeUser" type="button" :disabled="$input_subscription == $free_subscription->id" class="w-full px-6 py-3 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-gray-700 rounded-lg hover:bg-gray-600 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-50">
                                 Start Subscription
                             </button>
                         </div>

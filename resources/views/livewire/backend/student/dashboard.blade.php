@@ -25,7 +25,7 @@ class extends Component {
         <div class="grid grid-cols-1 gap-8 mb-10 xl:grid-cols-3">
             <div class="col-span-2 space-y-4">
                 <div class="relative px-10 py-8 shadow-sm rounded-2xl overfow-hidden">
-                    <img src="{{ asset('envato/student-join.jpg') }}" alt="" class="absolute inset-0 w-full h-full bg-cover brightness-50 rounded-2xl -z-10">
+                    <img x-data x-init="$el.src = '{{ asset('envato/student-join.webp') }}'" src="{{ asset('envato/student-join-thumb.jpg') }}" alt="" class="absolute inset-0 w-full h-full bg-cover brightness-50 rounded-2xl -z-10">
                     <p class="text-xl text-gray-200 font-playfair">Online Course</p>
                     <p class="max-w-md mt-4 text-3xl font-bold text-gray-100">Sharpen Your Skills with Professional Online Courses</p>
                     <button class="mt-8 group">
@@ -83,7 +83,7 @@ class extends Component {
         <div class="space-y-8">
             <div class="bg-white shadow-sm rounded-2xl">
                 <div class="flex items-center justify-between px-10 py-5 border-b hover:opacity-70">
-                    <span class="text-2xl">Latest Courses</span>
+                    <span class="text-2xl font-bold">Latest Classes</span>
                     <a wire:navigate href="{{ route('courses_new') }}">
                         <div class="flex items-center gap-2">
                             <span>Show All</span>

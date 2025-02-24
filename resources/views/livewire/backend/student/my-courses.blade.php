@@ -10,11 +10,20 @@ new
 #[Title('Campaigns USA - My Courses')] 
 class extends Component {
 
+    public $course;
     public $courses;
-    
+    public $display_course;
+
     public function mount()
     {
-        $this->courses = Courses::all();
+        $this->course = Courses::get();
+        $this->courses = $this->course;
+        $this->display_course = $this->course->first();
+    }
+
+    public function courseDisplay($id)
+    {
+        $this->display_course = $this->course->find($id);
     }
 }; ?>
 
@@ -22,24 +31,24 @@ class extends Component {
     <div class="px-10 pb-10 max-w-8xl">
         <div class="grid grid-cols-2 gap-8">
             <div class="cursor-pointer ">
-                <div class="p-8 bg-white shadow-sm rounded-3xl">
+                <div class="p-8 space-y-2 bg-white shadow-sm rounded-3xl">
                     @foreach ($courses as $course)
-                        <div class="flex items-center gap-4 p-4 rounded-xl hover:bg-gray-100">
+                        <div wire:click="courseDisplay({{ $course->id }})" class="flex items-center gap-4 p-4 rounded-xl hover:shadow hover:bg-gray-100 {{ $course->id == $display_course->id ? 'bg-gray-100 shadow' : '' }}" wire:key="course-{{$course->id}}">
                             <img class="w-28" src="{{ $course->thumbnail_url }}" alt="">
                             <div class="w-full space-y-1">
-                                <p class="font-medium text-md">{{ $course->title }}</p>
-                                <p class="text-gray-700 line-clamp-1">
-                                    {{ strip_tags(str_replace(["\r\n", "\n", "\r", "<p>", "</p>", "<br>", "<br/>", "&nbsp;", "&lt;", "&gt;", "&amp;", "&quot;", "&apos;", ""], ' ', $course->description)) }}
+                                <p class="font-medium text-md line-clamp-2">{{ $course->title }}</p>
+                                <p class="text-gray-700">
+                                    {{ $course->created_at->format('M d, Y') }}
                                 </p>
                             </div>
                         </div>
                     @endforeach
                 </div>
             </div>
-            <div class="grid rounded-3xl">
-                <div class="px-8 pb-8 bg-white shadow-sm rounded-3xl">
-                    <img class="object-cover w-full h-52" src="{{ asset('frontend/test.png') }}" alt="">
-                    <div class="grid gap-4 mt-4">
+            <div class="grid overflow-hidden rounded-3xl">
+                <div class="pb-8 bg-white shadow-sm rounded-3xl">
+                    <img class="object-cover w-full h-64" src="{{ $display_course->thumbnail_url }}" alt="">
+                    <div class="grid gap-4 px-8 mt-8">
                         <div class="flex items-center gap-1.5 text-sm">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" stroke="currentColor" fill="currentColor" class="text-yellow-400 size-5">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z" />
@@ -60,8 +69,10 @@ class extends Component {
                                 4.5 (126 reviews)
                             </span>
                         </div>
-                        <p class="text-xl font-medium">Title</p>
-                        <p class="">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quod nobis numquam reprehenderit et ex dicta repudiandae unde? Perspiciatis, non iusto?</p>
+                        <p class="text-xl font-medium">{{ $display_course->title }}</p>
+                        <p class="">
+                            {{ strip_tags(str_replace(["\r\n", "\n", "\r", "<p>", "</p>", "<br>", "<br/>", "&nbsp;", "&lt;", "&gt;", "&amp;", "&quot;", "&apos;", ""], ' ', $display_course->description)) }}
+                        </p>
                         <div class="pb-6 border-b">
                             <button class="flex px-4 py-2 text-sm text-white border rounded-md border-slate-400 bg-slate-600 hover:opacity-70">Continue Watching</button>
                         </div>

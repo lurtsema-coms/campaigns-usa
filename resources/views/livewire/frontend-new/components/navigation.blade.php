@@ -43,7 +43,7 @@ new class extends Component {
 
             @auth
                 @role('student')
-                    <a wire:navigate href="{{ route('student-dashboard') }}" class="hidden hover:font-medium hover:text-gray-100 lg:block">Dashboard</a>
+                    <a wire:navigate href="{{ route('student-dashboard') }}" class="hidden hover:font-bold hover:text-sky-200 lg:block">Dashboard</a>
                     {{-- <a wire:navigate href="{{ route('cart') }}" class="relative">
                         <span class="absolute flex items-center justify-center w-5 h-5 text-sm text-gray-600 bg-white rounded-full -right-4 -top-3">
                             {{ $cart_items }}
